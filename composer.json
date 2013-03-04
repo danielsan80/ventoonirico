@@ -20,7 +20,7 @@
         "jms/di-extra-bundle": "1.1.*",
         "kriswallsmith/assetic": "1.1.*@dev",
         
-        "leafo/lessphp": "dev-master",
+        "leafo/lessphp": "dev-master"
         
     },
     "scripts": {

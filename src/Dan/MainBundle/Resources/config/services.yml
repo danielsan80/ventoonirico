@@ -1,0 +1,7 @@
+parameters:
+#    dan_main.example.class: Dan\MainBundle\Example
+
+services:
+#    dan_main.example:
+#        class: %dan_main.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

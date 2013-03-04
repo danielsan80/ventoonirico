@@ -5,3 +5,17 @@
 /build/
 /vendor/
 /composer.phar
+/nbproject/private/
+
+/nbproject/
+
+/app/config/parameters.yml
+/app/phpunit.xml
+/build/build.properties
+
+/connect
+/backups/*
+/.rsync_cache
+*~
+
+!*.gitkeep

@@ -65,9 +65,30 @@ swiftmailer:
     host:      "%mailer_host%"
     username:  "%mailer_user%"
     password:  "%mailer_password%"
+    encryption: ssl
+    auth_mode:  login
     spool:     { type: memory }
 
 fos_user:
     db_driver: orm 
     firewall_name: main
     user_class: Dan\UserBundle\Entity\User
+    service:
+        mailer: fos_user.mailer.twig_swift
+    from_email:
+        address:        noreply@symfonyapp.com
+        sender_name:    Symfony App
+    registration:
+        confirmation:
+            enabled:    true
+            template: DanUserBundle:User:confirmation.email.twig
+            from_email:
+                address:        confirmation@symfonyapp.com
+                sender_name:    Symfony App Registration
+    resetting:
+        email:
+            template: DanUserBundle:User:resetting.email.twig
+            from_email:
+                address:        resetting@symfonyapp.com
+                sender_name:    Symfony App Resetting
+        

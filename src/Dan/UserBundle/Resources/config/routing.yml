@@ -1,0 +1,3 @@
+dan_user_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: DanUserBundle:Default:index }

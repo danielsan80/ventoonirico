@@ -28,6 +28,7 @@
         "sonata-project/doctrine-orm-admin-bundle": "2.1.*",
         "sonata-project/intl-bundle": "2.1.*",
         
+        "simplethings/entity-audit-bundle": "dev-master",        
         "leafo/lessphp": "dev-master"
               
     },

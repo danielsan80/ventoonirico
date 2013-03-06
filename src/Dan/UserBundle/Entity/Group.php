@@ -1,14 +1,14 @@
 <?php
 namespace Dan\UserBundle\Entity;
 
-use Sonata\UserBundle\Entity\BaseUser as BaseUser;
+use Sonata\UserBundle\Entity\BaseGroup as BaseGroup;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="dan_user")
+ * @ORM\Table(name="dan_group")
  */
-class User extends BaseUser
+class Group extends BaseGroup
 {
     /**
      * @ORM\Id
@@ -17,9 +17,9 @@ class User extends BaseUser
      */
     protected $id;
 
-    public function __construct()
+    public function getId()
     {
-        parent::__construct();
-        // your own logic
+        return $this->id;
     }
+    
 }

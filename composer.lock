@@ -1,5 +1,5 @@
 {
-    "hash": "a0d870ebf8c6207d8df488eabff24c02",
+    "hash": "cfb28e0920ed1890161f3ca91cee1e10",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1371,6 +1371,44 @@
             "time": "2013-01-04 17:09:08"
         },
         {
+            "name": "simplethings/entity-audit-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/simplethings/EntityAudit.git",
+                "reference": "6f96cb48cebc992dc656d36710e5cc39fe2dd66f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/simplethings/EntityAudit/zipball/6f96cb48cebc992dc656d36710e5cc39fe2dd66f",
+                "reference": "6f96cb48cebc992dc656d36710e5cc39fe2dd66f",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/orm": ">=2.1.0,<2.4"
+            },
+            "require-dev": {
+                "symfony/framework-bundle": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SimpleThings\\EntityAudit": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "New BSD"
+            ],
+            "description": "Audit for Doctrine Entities",
+            "keywords": [
+                "Audit",
+                "database",
+                "persistence"
+            ],
+            "time": "2012-11-15 11:29:17"
+        },
+        {
             "name": "sonata-project/admin-bundle",
             "version": "2.1.x-dev",
             "target-dir": "Sonata/AdminBundle",
@@ -2147,6 +2185,7 @@
     "stability-flags": {
         "twig/extensions": 20,
         "kriswallsmith/assetic": 20,
+        "simplethings/entity-audit-bundle": 20,
         "leafo/lessphp": 20
     }
 }

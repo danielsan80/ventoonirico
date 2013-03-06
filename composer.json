@@ -20,10 +20,16 @@
         "jms/di-extra-bundle": "1.1.*",
         "kriswallsmith/assetic": "1.1.*@dev",
         
-        "leafo/lessphp": "dev-master",
         
-        "friendsofsymfony/user-bundle": "*"
+        "friendsofsymfony/user-bundle": "*",
         
+        
+        "sonata-project/admin-bundle": "*",
+        "sonata-project/doctrine-orm-admin-bundle": "2.1.*",
+        "sonata-project/intl-bundle": "2.1.*",
+        
+        "leafo/lessphp": "dev-master"
+              
     },
     "scripts": {
         "post-install-cmd": [
@@ -39,6 +45,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ]
     },
+    "minimum-stability": "dev",
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",

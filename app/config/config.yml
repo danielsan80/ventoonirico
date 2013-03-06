@@ -54,6 +54,8 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        types:
+            json: Sonata\Doctrine\Types\JsonType
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
@@ -72,7 +74,11 @@ swiftmailer:
 fos_user:
     db_driver: orm 
     firewall_name: main
-    user_class: Dan\UserBundle\Entity\User
+    user_class:     Dan\UserBundle\Entity\User
+  
+    group:
+        group_class: Dan\UserBundle\Entity\Group
+
     service:
         mailer: fos_user.mailer.twig_swift
     from_email:
@@ -100,4 +106,9 @@ sonata_block:
 
         sonata.block.service.text:
         sonata.block.service.rss:
+          
+          
+sonata_user:
+    security_acl: true
+    manager_type: orm
         

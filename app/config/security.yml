@@ -3,6 +3,9 @@ jms_security_extra:
     expressions: true
 
 security:
+    factories:
+        - "%kernel.root_dir%/../vendor/bundles/FOS/GoogleBundle/Resources/config/security_factories.xml"
+    
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512
 
@@ -20,6 +23,8 @@ security:
             security: false
         main:
             pattern: ^/
+            fos_google:
+                provider: fos_googlebundle
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
@@ -35,6 +40,10 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
+        
+        - { path: ^/secured/.*, role: [IS_AUTHENTICATED_FULLY] } # This is the route secured with fos_google
+        - { path: ^/.*, role: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #
         # You must uncomment the two following rules to restrict access to paths

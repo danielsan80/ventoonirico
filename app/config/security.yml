@@ -16,6 +16,8 @@ security:
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username_email
+        fos_googlebundle:
+            id: fos_google.user_provider
 
     firewalls:
         dev:

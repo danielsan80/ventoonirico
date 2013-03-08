@@ -20,9 +20,12 @@
         "jms/di-extra-bundle": "1.1.*",
         "kriswallsmith/assetic": "1.1.*@dev",
         
-        "leafo/lessphp": "dev-master",
+        "friendsofsymfony/user-bundle": "*",
         
-        "friendsofsymfony/user-bundle": "*"
+        "bitgandtter/google-bundle": "dev-master",
+        "bitgandtter/google-api": "dev-master",
+        
+        "leafo/lessphp": "dev-master"
         
     },
     "scripts": {

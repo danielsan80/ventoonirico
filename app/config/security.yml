@@ -3,8 +3,6 @@ jms_security_extra:
     expressions: true
 
 security:
-    factories:
-        - "%kernel.root_dir%/../vendor/bundles/FOS/GoogleBundle/Resources/config/security_factories.xml"
     
     encoders:
         FOS\UserBundle\Model\UserInterface: sha512

@@ -33,3 +33,7 @@ _security_logout:
 _google_secured:
     pattern: /secured/
     defaults: { _controller: DanMainBundle:Default:index }
+_googleLogin:
+    pattern: /google/login
+    defaults: { _controller: FOSGoogleBundle:Security:login }
+

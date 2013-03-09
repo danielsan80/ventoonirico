@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="symfony" >
+
+    <target name="dbreset"
+            description="Reset prod db">
+        <exec command="php app/console doctrine:database:drop --force" /> 
+        <exec command="php app/console doctrine:database:create" /> 
+        <exec command="php app/console doctrine:migrations:migrate --no-interaction" /> 
+        <exec command="php app/console cache:clear" /> 
+    </target>
+    
+    <target name="dbreset-test"
+            description="Reset test db">
+        <exec command="php app/console --env=test doctrine:database:drop --force" /> 
+        <exec command="php app/console --env=test doctrine:database:create" /> 
+        <exec command="php app/console --env=test doctrine:migrations:migrate --no-interaction" /> 
+        <exec command="php app/console --env=test cache:clear" /> 
+    </target>
+    
+    <target name="design"
+            description="Run design task (cache,assets,assetic)">
+        <echo msg="Cache" />
+        <exec command="php app/console cache:clear" outputProperty="return" />
+        <echo message="${return}"></echo>       
+        <exec command="php app/console --env=prod cache:clear" outputProperty="return" />
+        <echo message="${return}"></echo>       
+        <exec command="php app/console --env=test cache:clear" outputProperty="return" />
+        <echo message="${return}"></echo>       
+        <echo msg="Assets" />
+        <exec command="php app/console assets:install --symlink web" outputProperty="return" />
+        <echo message="${return}"></echo>       
+        <echo msg="Assetic" />
+        <exec command="php app/console assetic:dump" outputProperty="return" />
+        <echo message="${return}"></echo>       
+    </target>
+    
+    <target name="fixtures"
+            description="Load Fixtures">
+        <exec command="php app/console doctrine:fixtures:load" outputProperty="return" />
+        <echo message="${return}"></echo>       
+    </target>
+    
+    <target name="clear"
+            description="Clear all not required files">
+        <exec command="php app/console cache:clear" outputProperty="return" />
+        <echo message="${return}"></echo>       
+        <exec command="rm app/logs/*" outputProperty="return" />
+        <echo message="${return}"></echo>       
+    </target>
+    
+    <target name="cache"
+            description="Clear all cache files">
+        <echo msg="Cache" />
+        <exec command="rm -Rf app/cache/*" outputProperty="return" />
+    </target>
+ 
+    <target name="admin"
+            description="Create an admin user">
+        <echo msg="Creating an admin user" />
+        <exec command="php app/console fos:user:create admin admin@example.com admin --super-admin" outputProperty="return" />
+    </target>
+    
+</project>

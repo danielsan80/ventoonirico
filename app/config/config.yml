@@ -136,3 +136,15 @@ sonata_user:
         user:  Dan\UserBundle\Entity\User
         group: Dan\UserBundle\Entity\Group
         
+        
+
+
+fos_google:
+    app_name: SymfonyApp
+    client_id: %google_client_id%
+    client_secret: %google_client_secret%
+    state: auth
+    access_type: online
+    scopes: [userinfo.email, userinfo.profile]
+    approval_prompt: auto
+    callback_url: %google_base_url%/login_check

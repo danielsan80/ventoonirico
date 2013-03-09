@@ -20,9 +20,10 @@
         "jms/di-extra-bundle": "1.1.*",
         "kriswallsmith/assetic": "1.1.*@dev",
         
-        
         "friendsofsymfony/user-bundle": "*",
         
+        "bitgandtter/google-bundle": "dev-master",
+        "bitgandtter/google-api": "dev-master",
         
         "sonata-project/admin-bundle": "*",
         "sonata-project/doctrine-orm-admin-bundle": "2.1.*",

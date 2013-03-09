@@ -22,9 +22,24 @@ class User extends BaseUser
         return $this->id;
     }
 
+    /**
+     * @ORM\Column(name="google_id", type="string", length=40, nullable=true)
+     */
+    protected $googleId;
+
     public function __construct()
     {
         parent::__construct();
         // your own logic
+    }
+    
+    public function setGoogleId( $googleId )
+    {
+        $this->googleId = $googleId;
+    }
+
+    public function getGoogleId()
+    {
+        return $this->googleId;
     }
 }

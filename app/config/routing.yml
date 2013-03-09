@@ -37,3 +37,16 @@ _sonata_admin:
 sonata_user:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /admin
+    
+    
+_security_check:
+    pattern:  /login_check
+_security_logout:
+    pattern:  /logout
+_google_secured:
+    pattern: /secured/
+    defaults: { _controller: DanMainBundle:Default:index }
+_googleLogin:
+    pattern: /google/login
+    defaults: { _controller: FOSGoogleBundle:Security:login }
+

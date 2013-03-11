@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="symfony" >
+
+    <target name="chmod"
+            description="Set filesystem permission">
+        <echo msg="mkdir cache, logs, ..." />
+        
+        <echo msg="chmod 777 on cache, logs, ..." />
+        <exec command="chmod -R 777 app/cache" />
+        <exec command="chmod -R 777 app/logs" />
+        <echo msg="setfacl on cache, logs, ..." />
+        <exec command="chmod +x bin/java_wrapper" />
+        <exec command="setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs" />
+        <exec command="setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs" />
+    </target>
+    
+</project>

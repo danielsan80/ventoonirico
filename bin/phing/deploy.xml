@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="symfony" >
+
+    <target name="deploy" description="DEPLOY!!!!">
+        <echo message="cap deploy:migrations"/>
+        <exec command="echo 'y' | cap deploy:migrations" outputProperty="return" />
+        <echo message="${return}" />
+    </target>
+ 
+ <target name="cache-remote" description="Clear remote cache">
+        <echo message="rm -Rf app/cache/prod" />
+        <exec command="ssh ${ssh.user}@${ssh.domain} -p ${ssh.port} 'rm -Rf ${current.dir}/app/cache/prod'" outputProperty="return" />
+        <echo message="${return}"/>
+    </target>
+    
+</project>

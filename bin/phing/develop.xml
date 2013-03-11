@@ -55,4 +55,10 @@
         <exec command="rm -Rf app/cache/*" outputProperty="return" />
     </target>
     
+    <target name="admin"
+            description="Create an admin user">
+        <echo msg="Creating an admin user" />
+        <exec command="php app/console fos:user:create admin admin@example.com admin --super-admin" outputProperty="return" />
+    </target>
+    
 </project>

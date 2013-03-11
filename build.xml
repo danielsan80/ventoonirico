@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="symfony" default="build">
-    <property file="build/build.properties"/>
-    <import file="build/install.xml" />
-    <import file="build/develop.xml" />
-    <import file="build/deploy.xml" />
+    <property file="bin/phing/build.properties"/>
+    <import file="bin/phing/install.xml" />
+    <import file="bin/phing/develop.xml" />
+    <import file="bin/phing/deploy.xml" />
 </project>

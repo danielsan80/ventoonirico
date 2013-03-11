@@ -11,7 +11,7 @@
 
 /app/config/parameters.yml
 /app/phpunit.xml
-/build/build.properties
+/bin/phing/build.properties
 
 /connect
 /backups/*

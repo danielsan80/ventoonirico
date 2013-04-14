@@ -148,3 +148,11 @@ fos_google:
     scopes: [userinfo.email, userinfo.profile]
     approval_prompt: auto
     callback_url: %google_base_url%/login_check
+
+
+guzzle:
+  services:
+    BGGService:
+      class: Dan\MainBundle\Services\BGGService
+      params:
+        base_url: http://www.boardgamegeek.com/xmlapi/

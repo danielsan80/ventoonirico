@@ -34,6 +34,8 @@ class AppKernel extends Kernel
                         
             new Dan\MainBundle\DanMainBundle(),
             new Dan\UserBundle\DanUserBundle(),
+            
+            new Orkestra\Bundle\GuzzleBundle\GuzzleBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

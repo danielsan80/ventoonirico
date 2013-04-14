@@ -31,7 +31,9 @@
         "simplethings/entity-audit-bundle": "dev-master",        
         "sonata-project/user-bundle": "2.1.*",
 
-        "leafo/lessphp": "dev-master"
+        "leafo/lessphp": "dev-master",
+        
+        "orkestra/guzzle-bundle": "dev-master"
               
     },
     "scripts": {

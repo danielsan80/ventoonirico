@@ -4,6 +4,7 @@ namespace Dan\MainBundle\Entity;
 
 class Game
 {
+    private $id;
     private $name;
     private $owners = array();
     private $thumbnail;
@@ -19,6 +20,9 @@ class Game
         if (isset($options) && isset($options['owner'])) {
             $this->addOwner($options['owner']);
         }
+        $attributes = $item->attributes();
+        $this->setId((int)$attributes['objectid']);
+        
         $this->setName((string)$item->name);
         $this->setThumbnail((string)$item->thumbnail);
         $attributes = $item->stats[0]->attributes();
@@ -27,6 +31,16 @@ class Game
     }
     
     
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     public function getName()
     {
         return $this->name;

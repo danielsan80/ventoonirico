@@ -136,8 +136,6 @@ sonata_user:
         user:  Dan\UserBundle\Entity\User
         group: Dan\UserBundle\Entity\Group
         
-        
-
 
 fos_google:
     app_name: SymfonyApp
@@ -149,7 +147,9 @@ fos_google:
     approval_prompt: auto
     callback_url: %google_base_url%/login_check
     
+    
 liip_doctrine_cache:
     namespaces:
         bgg:
             type: file_system
+            

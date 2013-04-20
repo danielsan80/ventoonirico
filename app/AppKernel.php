@@ -31,11 +31,11 @@ class AppKernel extends Kernel
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
+            
+            new Liip\DoctrineCacheBundle\LiipDoctrineCacheBundle(),
                         
             new Dan\MainBundle\DanMainBundle(),
             new Dan\UserBundle\DanUserBundle(),
-            
-            new Orkestra\Bundle\GuzzleBundle\GuzzleBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

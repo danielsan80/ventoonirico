@@ -1,5 +1,6 @@
 {% extends 'DanMainBundle::layout.html.twig' %}
 {% block content %}
+Ventoonirico dispone di <strong>{{games|length}}</strong> giochi
 <table class="games-collection table table-bordered">
     {% for game in games %}
         <tr>
@@ -15,4 +16,3 @@
     {% endfor %}
 </table>
 {% endblock%}
-

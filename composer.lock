@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "f7cd38f374539ce968936fd57e1886e1",
+    "hash": "202118444a430cbf4d3941120aaa1268",
     "packages": [
         {
             "name": "bitgandtter/google-api",
@@ -103,16 +103,16 @@
         },
         {
             "name": "doctrine/annotations",
-            "version": "v1.1",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "v1.1"
+                "reference": "v1.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/v1.1",
-                "reference": "v1.1",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/v1.1.1",
+                "reference": "v1.1.1",
                 "shasum": ""
             },
             "require": {
@@ -123,6 +123,11 @@
                 "doctrine/cache": "1.*"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Doctrine\\Common\\Annotations\\": "lib/"
@@ -152,7 +157,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -165,7 +170,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2013-03-17 14:03:10"
+            "time": "2013-04-20 08:30:17"
         },
         {
             "name": "doctrine/cache",
@@ -306,12 +311,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/common.git",
-                "reference": "33f906e257510247d0bcd60b8b54f47cfb51e3ed"
+                "reference": "3506be7467dbd4f923691a00555cf80065d32e59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/common/zipball/33f906e257510247d0bcd60b8b54f47cfb51e3ed",
-                "reference": "33f906e257510247d0bcd60b8b54f47cfb51e3ed",
+                "url": "https://api.github.com/repos/doctrine/common/zipball/3506be7467dbd4f923691a00555cf80065d32e59",
+                "reference": "3506be7467dbd4f923691a00555cf80065d32e59",
                 "shasum": ""
             },
             "require": {
@@ -357,7 +362,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes M. Schmitt",
+                    "name": "Johannes Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "https://github.com/schmittjoh",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -372,7 +377,7 @@
                 "persistence",
                 "spl"
             ],
-            "time": "2013-03-24 17:52:59"
+            "time": "2013-04-16 21:50:30"
         },
         {
             "name": "doctrine/dbal",
@@ -380,12 +385,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "c75da707518488506efa93e29fb67cf278353f85"
+                "reference": "4abe8f7602e0f4079848950190fb6798781c94c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/c75da707518488506efa93e29fb67cf278353f85",
-                "reference": "c75da707518488506efa93e29fb67cf278353f85",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/4abe8f7602e0f4079848950190fb6798781c94c7",
+                "reference": "4abe8f7602e0f4079848950190fb6798781c94c7",
                 "shasum": ""
             },
             "require": {
@@ -435,7 +440,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2013-04-14 12:36:49"
+            "time": "2013-04-20 08:33:51"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -768,16 +773,16 @@
         },
         {
             "name": "guzzle/guzzle",
-            "version": "v3.4.0",
+            "version": "v3.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "v3.4.0"
+                "reference": "v3.4.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/v3.4.0",
-                "reference": "v3.4.0",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/v3.4.1",
+                "reference": "v3.4.1",
                 "shasum": ""
             },
             "require": {
@@ -858,7 +863,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-04-12 05:58:15"
+            "time": "2013-04-16 20:56:26"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1391,6 +1396,54 @@
             "time": "2013-04-09 01:25:49"
         },
         {
+            "name": "liip/doctrine-cache-bundle",
+            "version": "dev-master",
+            "target-dir": "Liip/DoctrineCacheBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/liip/LiipDoctrineCacheBundle.git",
+                "reference": "ff65149fa6b309c11d3aacecd976a89ad455be7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/liip/LiipDoctrineCacheBundle/zipball/ff65149fa6b309c11d3aacecd976a89ad455be7c",
+                "reference": "ff65149fa6b309c11d3aacecd976a89ad455be7c",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": ">=2.2",
+                "php": ">=5.3.0",
+                "symfony/symfony": ">=2.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Liip\\DoctrineCacheBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Liip AG",
+                    "homepage": "http://www.liip.ch/"
+                }
+            ],
+            "description": "This Bundle provides integration into Symfony2 with the Doctrine Common Cache layer.",
+            "keywords": [
+                "Symfony2",
+                "cache"
+            ],
+            "time": "2013-04-03 20:53:21"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.2.1",
             "source": {
@@ -1445,50 +1498,6 @@
                 "logging"
             ],
             "time": "2012-08-29 11:53:20"
-        },
-        {
-            "name": "orkestra/guzzle-bundle",
-            "version": "dev-master",
-            "target-dir": "Orkestra/Bundle/GuzzleBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/orkestra/OrkestraGuzzleBundle.git",
-                "reference": "2c951e569914b44932a6c26a7d22f9547eb3cef2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/orkestra/OrkestraGuzzleBundle/zipball/2c951e569914b44932a6c26a7d22f9547eb3cef2",
-                "reference": "2c951e569914b44932a6c26a7d22f9547eb3cef2",
-                "shasum": ""
-            },
-            "require": {
-                "guzzle/guzzle": "3.*",
-                "php": ">=5.3.2"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Orkestra\\Bundle\\GuzzleBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache2"
-            ],
-            "authors": [
-                {
-                    "name": "Zach D. Badgett",
-                    "email": "zach.badgett@gmail.com"
-                }
-            ],
-            "description": "Guzzle bundle for Symfony2",
-            "homepage": "https://github.com/orkestra/OrkestraGuzzleBundle",
-            "keywords": [
-                "Guzzle",
-                "guzzlebundle",
-                "web service"
-            ],
-            "time": "2013-01-24 18:54:46"
         },
         {
             "name": "sensio/distribution-bundle",
@@ -2471,12 +2480,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "ef0cebfaa6b32e93aa244c4150b962b8957f80a8"
+                "reference": "1454af723578684f8b7770a0b364c34330131399"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/ef0cebfaa6b32e93aa244c4150b962b8957f80a8",
-                "reference": "ef0cebfaa6b32e93aa244c4150b962b8957f80a8",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/1454af723578684f8b7770a0b364c34330131399",
+                "reference": "1454af723578684f8b7770a0b364c34330131399",
                 "shasum": ""
             },
             "require": {
@@ -2551,7 +2560,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2013-04-13 14:47:44"
+            "time": "2013-04-20 12:53:27"
         },
         {
             "name": "twig/extensions",
@@ -2606,12 +2615,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "f9ad8c089d439a8a41ffd196f6096fbaba0863c1"
+                "reference": "80fd11cbbe68fada461626e7b2d67bda0ef8ecfa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/f9ad8c089d439a8a41ffd196f6096fbaba0863c1",
-                "reference": "f9ad8c089d439a8a41ffd196f6096fbaba0863c1",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/80fd11cbbe68fada461626e7b2d67bda0ef8ecfa",
+                "reference": "80fd11cbbe68fada461626e7b2d67bda0ef8ecfa",
                 "shasum": ""
             },
             "require": {
@@ -2647,7 +2656,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-04-13 06:32:43"
+            "time": "2013-04-17 12:07:50"
         }
     ],
     "packages-dev": [
@@ -2664,7 +2673,7 @@
         "bitgandtter/google-api": 20,
         "simplethings/entity-audit-bundle": 20,
         "leafo/lessphp": 20,
-        "orkestra/guzzle-bundle": 20
+        "liip/doctrine-cache-bundle": 20
     },
     "platform": {
         "php": ">=5.3.3"

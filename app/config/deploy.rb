@@ -25,12 +25,12 @@ set  :use_sudo,      false
 # Update vendors during the deploy
 set :use_composer, true
 set :update_vendors,  true
-#set :copy_vendors, true
+set :copy_vendors, true
 #set :vendors_mode, "install"
 
 # Set some paths to be shared between versions
 set :shared_files,    ["app/config/parameters.yml"]
-set :shared_children, [app_path + "/logs", app_path + "/files", "vendor"]
+set :shared_children, [app_path + "/logs", app_path + "/files"]
 
 #after "deploy" do
 #    run "cd #{current_path} && rm -Rf app/cache/prod"

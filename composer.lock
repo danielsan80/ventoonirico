@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "202118444a430cbf4d3941120aaa1268",
+    "hash": "24a5a5f4d5435a83662e714aee815bf5",
     "packages": [
         {
             "name": "bitgandtter/google-api",
@@ -2480,12 +2480,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "1454af723578684f8b7770a0b364c34330131399"
+                "reference": "499c9e6fdc8a1b1eeb2851b709aba4d24c854335"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/1454af723578684f8b7770a0b364c34330131399",
-                "reference": "1454af723578684f8b7770a0b364c34330131399",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/499c9e6fdc8a1b1eeb2851b709aba4d24c854335",
+                "reference": "499c9e6fdc8a1b1eeb2851b709aba4d24c854335",
                 "shasum": ""
             },
             "require": {
@@ -2560,7 +2560,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2013-04-20 12:53:27"
+            "time": "2013-04-20 18:17:49"
         },
         {
             "name": "twig/extensions",
@@ -2667,6 +2667,7 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "twig/twig": 20,
         "twig/extensions": 20,
         "kriswallsmith/assetic": 20,
         "bitgandtter/google-bundle": 20,

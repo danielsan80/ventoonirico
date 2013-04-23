@@ -1,9 +1,9 @@
 set :application, "ventoonirico"
-set :domain,      "69.195.198.111"
-set :deploy_to,   "/symfony_projects/projects/ventoonirico"
+set :domain,      "ventoonirico.danilosanchi.net"
+set :deploy_to,   "/var/www/vhosts/ventoonirico.danilosanchi.net/symfony_projects/"
 set :app_path,    "app"
 
-set :serverName, "69.195.198.111" # The server's hostname
+set :serverName, "sg111.servergrove.com" # The server's hostname
 set :repository,  "git@github.com:danielsan80/ventoonirico.git"
 set :scm,         :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `subversion`, `mercurial`, `perforce`, or `none`
@@ -27,6 +27,14 @@ set :use_composer, true
 set :update_vendors,  true
 set :copy_vendors, true
 #set :vendors_mode, "install"
+
+set :assets_install,        false
+set :cache_warmup,          false
+
+set :default_environment, { 
+  'GIT_SSL_NO_VERIFY' => 'true'
+}
+
 
 # Set some paths to be shared between versions
 set :shared_files,    ["app/config/parameters.yml"]

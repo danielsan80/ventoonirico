@@ -2,6 +2,8 @@
 
 namespace Dan\MainBundle\Entity;
 
+use Symfony\Component\Yaml\Yaml;
+
 class Game
 {
 
@@ -28,6 +30,25 @@ class Game
             if (isset($options['owner'])) {
                 $this->addOwner($options['owner']);
             }
+        }
+        
+        $comment = trim((string)$item->comment);
+        if ($comment) {
+            try {
+                $data = Yaml::parse($comment);
+                if (is_array($data)) {
+                    $owner = null;
+                    if (isset($data['Owner'])) {
+                        $owner = $data['Owner'];                    
+                    }
+                    if (isset($data['owner'])) {
+                        $owner = $data['owner'];                    
+                    }
+                    if ($owner) {
+                        $this->setOwners(array($owner));
+                    }
+                }
+            } catch (\Exception $e) {}
         }
         $attributes = $item->attributes();
         $this->setId((int) $attributes['objectid']);

@@ -8,7 +8,7 @@ set :repository,  "git@github.com:danielsan80/ventoonirico.git"
 set :scm,         :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `subversion`, `mercurial`, `perforce`, or `none`
 
-set :deploy_via,      :remote_cache
+set :deploy_via,      :rsync_with_remote_cache
 set :user,       "ventoonirico"
 ssh_options[:port] = 22123
 
@@ -24,8 +24,8 @@ set  :use_sudo,      false
 
 # Update vendors during the deploy
 set :use_composer, true
-#set :update_vendors,  true
-#set :copy_vendors, true
+set :update_vendors,  false
+set :copy_vendors, false
 #set :vendors_mode, "install"
 
 set :assets_install,        false
@@ -34,9 +34,10 @@ set :cache_warmup,          false
 after "deploy:update", "deploy:cleanup"
 
 # Set some paths to be shared between versions
-set :shared_files,    ["app/config/parameters.yml"]
 set :shared_children, [app_path + "/logs", app_path + "/files"]
+set :shared_files,    ["app/config/parameters.yml"]
+set :shared_file_dir,    "."
 
-#after "deploy" do
+after "deploy" do
 #    run "cd #{current_path} && rm -Rf app/cache/prod"
-#end
+end

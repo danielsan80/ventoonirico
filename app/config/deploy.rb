@@ -31,13 +31,13 @@ set :copy_vendors, false
 set :assets_install,        false
 set :cache_warmup,          false
 
-after "deploy:update", "deploy:cleanup"
 
 # Set some paths to be shared between versions
 set :shared_children, [app_path + "/logs", app_path + "/files"]
 set :shared_files,    ["app/config/parameters.yml"]
 set :shared_file_dir,    "."
 
+#after "deploy:update", "deploy:cleanup"
 after "deploy" do
 #    run "cd #{current_path} && rm -Rf app/cache/prod"
 end

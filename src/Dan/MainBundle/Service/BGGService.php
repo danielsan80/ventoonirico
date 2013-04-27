@@ -55,7 +55,7 @@ class BGGService
                 $collections[$username] = $collection;
                 continue;
             }
-            $request = $guzzleClient->get('collection/' . $username);
+            $request = $guzzleClient->get('collection/' . $username. '?own=1');
             $request->getParams()->set('cache.override_ttl', 300);
             $requests[] = $request;
         }
@@ -64,7 +64,7 @@ class BGGService
 
         foreach ($responses as $response) {
             $url = $response->getRequest()->getUrl();
-            preg_match('/(?P<username>\w+)$/', $url, $matches);
+            preg_match('/(?P<username>\w+)\\?/', $url, $matches);
             $username = $matches['username'];
             $name = $users[$username];
             $xml = $response->xml();

@@ -47,6 +47,7 @@ class BGGService
             'mcevoli' => 'Marco',
             'rotilio' => 'Rollo',
             'f4br1z10' => 'Fabri',
+            'clivio' => 'Clivio',
         );
 
         $requests = array();

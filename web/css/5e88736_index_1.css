@@ -7372,6 +7372,14 @@ body {
   width: 16px;
   height: 16px;
 }
+.navbar .logo {
+  margin-left: -10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.navbar .logo img {
+  height: 40px;
+}
 @-ms-viewport {
   width: device-width;
 }

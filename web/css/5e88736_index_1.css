@@ -7363,7 +7363,16 @@ body {
   width: 120px;
   text-align: center;
 }
-.login {
+.navbar .login {
+  padding: 17px 0px 17px 20px;
+}
+.navbar .logout {
+  padding: 17px 0px 17px 20px;
+}
+.navbar .logout a {
+  margin-top: 4px;
+}
+.navbar .user {
   padding: 17px 0px 17px 20px;
 }
 .icon-google {

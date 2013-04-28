@@ -16,9 +16,18 @@
                 {#{{ knp_menu_render(mainMenu, {'currentClass': 'active', 'ancestorClass': 'active'}) }}#}
             </div>
 
-            <div class="login pull-right">
-                {{ google_login_button() }}
-            </div>
+                {% if app.user %}
+                    <div class="logout pull-right">
+                        <a href="{{ path('logout')}}" class="icon-off" title="logout" ></a>
+                    </div>
+                    <div class="user pull-right">
+                        {{app.user.username}}
+                    </div>
+                {% else %}
+                    <div class="login pull-right">
+                        {{ google_login_button() }}
+                    </div>
+                {% endif %}
         </div>
     </div>
 </div>

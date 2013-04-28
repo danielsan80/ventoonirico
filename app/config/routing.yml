@@ -50,3 +50,5 @@ _googleLogin:
     pattern: /google/login
     defaults: { _controller: FOSGoogleBundle:Security:login }
 
+logout:
+    pattern: /logout

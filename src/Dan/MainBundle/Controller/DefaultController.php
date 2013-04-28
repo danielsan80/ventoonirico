@@ -25,7 +25,6 @@ class DefaultController extends Controller
      * Home page
      * 
      * @Route("/", name="home")
-     * @Cache(expires="+1 hour")
      * @return html
      */
     public function indexAction()

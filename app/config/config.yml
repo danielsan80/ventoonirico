@@ -153,3 +153,10 @@ liip_doctrine_cache:
         bgg:
             type: file_system
             
+
+avalanche_imagine:
+    filters:
+        mini:
+            type:    thumbnail
+            options: { size: [30, 30], mode: outbound }
+            

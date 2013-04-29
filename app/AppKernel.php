@@ -33,6 +33,8 @@ class AppKernel extends Kernel
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             
             new Liip\DoctrineCacheBundle\LiipDoctrineCacheBundle(),
+            
+            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
                         
             new Dan\MainBundle\DanMainBundle(),
             new Dan\UserBundle\DanUserBundle(),

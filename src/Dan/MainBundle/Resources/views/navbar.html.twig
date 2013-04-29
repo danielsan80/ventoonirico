@@ -23,6 +23,11 @@
                     <div class="user pull-right">
                         {{app.user.username}}
                     </div>
+                    {% if app.user.image %}
+                        <div class="image pull-right">
+                            <img src="{{app.user.image}}" />
+                        </div>
+                     {% endif %}
                 {% else %}
                     <div class="login pull-right">
                         {{ google_login_button() }}

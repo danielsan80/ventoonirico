@@ -17,20 +17,25 @@ class User extends BaseUser
      */
     protected $id;
     
-    public function getId()
-    {
-        return $this->id;
-    }
-
     /**
      * @ORM\Column(name="google_id", type="string", length=40, nullable=true)
      */
     protected $googleId;
+    
+    /**
+     * @ORM\Column(name="image", type="text", nullable=true)
+     */
+    protected $image;
 
     public function __construct()
     {
         parent::__construct();
         // your own logic
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
     
     public function setGoogleId( $googleId )
@@ -41,5 +46,15 @@ class User extends BaseUser
     public function getGoogleId()
     {
         return $this->googleId;
+    }
+    
+    public function setImage( $url )
+    {
+        $this->image = $url;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
     }
 }

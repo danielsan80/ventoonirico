@@ -10,9 +10,15 @@ Ventoonirico dispone di <strong>{{games|length}}</strong> giochi
                 <a href="http://boardgamegeek.com/boardgame/{{game.id}}" target="_blank" ><img src="{{game.thumbnail}}" /></a>
             </td>
             <td>
+                {% if app.user %}
+                    <div class="pull-right">
+                        <a href="#" class="icon-plus" ></a>
+                    </div>
+                {% endif %}
                 <h4>{{game.name}}</h4>
                 di <em>{{game.owners|join(', ')}}</em><br/>
                 {{game.minPlayers}} - {{game.maxPlayers}} giocatori<br/>
+
             </td>
         </tr>
     {% endfor %}

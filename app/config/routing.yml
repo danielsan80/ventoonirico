@@ -49,6 +49,10 @@ _google_secured:
 _googleLogin:
     pattern: /google/login
     defaults: { _controller: FOSGoogleBundle:Security:login }
+    
+_imagine:
+    resource: .
+    type:     imagine
 
 logout:
     pattern: /logout

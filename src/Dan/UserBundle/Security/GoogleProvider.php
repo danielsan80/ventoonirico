@@ -59,6 +59,12 @@ class GoogleProvider implements UserProviderInterface
 //                $user->setSalt('');
             }
 
+            $picture = $gData->getPicture();
+
+            if (isset($picture)) {
+                $user->setImage($picture);
+            }
+            
             $id = $gData->getId();
 
             if (isset($id)) {

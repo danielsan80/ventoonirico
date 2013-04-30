@@ -65,8 +65,9 @@ class GoogleProvider implements UserProviderInterface
 
             if (isset($picture)) {
                 $pi = pathinfo($picture);
-                file_put_contents($this->imagesDir.'/user/photo'.md5($email).'.'.$pi['extension'], file_get_contents($picture));
-                $user->setImage($pi['basename']);
+                $filename = 'user_'.md5($email).'.'.$pi['extension'];
+                file_put_contents($this->imagesDir.'/'.$filename, file_get_contents($picture));
+                $user->setImage($filename);
             }
             
             $id = $gData->getId();

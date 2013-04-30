@@ -2,7 +2,7 @@
 /app/bootstrap.php.cache
 /app/cache/*
 /app/logs/*
-/app/files/*
+/app/files/images/*
 /vendor/
 /composer.phar
 

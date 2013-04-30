@@ -17,13 +17,15 @@ class GoogleProvider implements UserProviderInterface
     protected $userManager;
     protected $validator;
     protected $em;
+    protected $imagesDir;
 
-    public function __construct($googleApi, $userManager, $validator, $em)
+    public function __construct($googleApi, $userManager, $validator, $em, $kernel)
     {
         $this->googleApi = $googleApi;
         $this->userManager = $userManager;
         $this->validator = $validator;
         $this->em = $em;
+        $this->imagesDir = $kernel->getRootDir().'/files/images';
     }
 
     public function supportsClass($class)
@@ -62,7 +64,9 @@ class GoogleProvider implements UserProviderInterface
             $picture = $gData->getPicture();
 
             if (isset($picture)) {
-                $user->setImage($picture);
+                $pi = pathinfo($picture);
+                file_put_contents($this->imagesDir.'/user/photo'.md5($email).'.'.$pi['extension'], file_get_contents($picture));
+                $user->setImage($pi['basename']);
             }
             
             $id = $gData->getId();

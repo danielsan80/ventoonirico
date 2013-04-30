@@ -155,8 +155,9 @@ liip_doctrine_cache:
             
 
 avalanche_imagine:
+    source_root: %kernel.root_dir%/files/images/user
     filters:
         mini:
             type:    thumbnail
-            options: { size: [30, 30], mode: outbound }
+            options: { size: [30, 30], mode: outbound, absolute: true }
             

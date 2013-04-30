@@ -9,3 +9,4 @@ services:
             userManager: @fos_user.user_manager
             validator: @validator
             em: @doctrine.orm.entity_manager
+            kernel: @kernel

@@ -25,7 +25,7 @@
                     </div>
                     {% if app.user.image %}
                         <div class="image pull-right">
-                            <img src="{{app.user.image}}" />
+                            <img src="{{app.user.image | apply_filter('mini', true)}}" />
                         </div>
                      {% endif %}
                 {% else %}

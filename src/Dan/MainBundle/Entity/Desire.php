@@ -58,7 +58,7 @@ class Desire
      * @var datetime $cratedAt
      *
      * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(name="created_at", type="datetime"
+     * @ORM\Column(name="created_at", type="datetime")
      */
     private $createAt;
 

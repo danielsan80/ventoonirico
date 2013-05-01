@@ -3,15 +3,30 @@
 namespace Dan\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\ArrayCollection;
+//use Symfony\Component\Validator\Constraints as Assert;
+use Dan\UserBundle\Entity\User;
+use Dan\MainBundle\Entity\Game;
 
 /**
  * Desire
  *
- * @ORM\Table()
+ * @ORM\Table(name="dan_desire")
  * @ORM\Entity(repositoryClass="Dan\MainBundle\Entity\DesireRepository")
  */
 class Desire
 {
+    
+    /**
+     * Constructor 
+     */
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+        $this->consents = new ArrayCollection();
+    }
+    
     /**
      * @var integer
      *
@@ -20,25 +35,38 @@ class Desire
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Dan\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="game_id", type="string", length=255)
+     * @ORM\Column(name="game_id", type="text")
      */
-    private $game_id;
+    private $gameId;
+    
+    /**
+     * @var Game
+     */
+    private $game;
 
     /**
-     * @var \DateTime
+     * @var datetime $cratedAt
      *
-     * @ORM\Column(name="createAt", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime"
      */
     private $createAt;
 
     /**
-     * @var \DateTime
+     * @var datetime $updatedAt
      *
-     * @ORM\Column(name="updateAt", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at", type="datetime")
      */
     private $updateAt;
 
@@ -87,7 +115,30 @@ class Desire
      */
     public function getGameId()
     {
-        return $this->game_id;
+        return $this->gameId;
+    }
+    
+    /**
+     * Set game
+     *
+     * @param Game $game
+     * @return Desire
+     */
+    public function setGame(Game $game)
+    {
+        $this->game = $game;
+    
+        return $this;
+    }
+
+    /**
+     * Get game_id
+     *
+     * @return string 
+     */
+    public function getGame()
+    {
+        return $this->game;
     }
 
     /**

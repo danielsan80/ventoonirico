@@ -34,4 +34,17 @@ class DefaultController extends Controller
         $games = $service->shiftGames($games);
         return $this->render('DanMainBundle:Default:index.html.twig', array('games' => $games));
     }
+    
+    /**
+     * Request 
+     * 
+     * @Route("/requests", name="request")
+     * @Method("POST")
+     * 
+     * @return json
+     */
+    public function requestsAction()
+    {
+        
+    }
 }

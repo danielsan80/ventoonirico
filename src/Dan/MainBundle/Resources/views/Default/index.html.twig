@@ -5,14 +5,14 @@
 Ventoonirico dispone di <strong>{{games|length}}</strong> giochi
 <table class="games-collection table table-bordered">
     {% for game in games %}
-        <tr>
+        <tr id="game_{{game.id}}" >
             <td class="image">
                 <a href="http://boardgamegeek.com/boardgame/{{game.id}}" target="_blank" ><img src="{{game.thumbnail}}" /></a>
             </td>
             <td>
                 {% if app.user %}
                     <div class="pull-right">
-                        <a href="#" class="icon-plus" ></a>
+                        <a href="#" class="create-request icon-plus" ></a>
                     </div>
                 {% endif %}
                 <h4>{{game.name}}</h4>

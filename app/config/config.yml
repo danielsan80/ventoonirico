@@ -161,3 +161,13 @@ avalanche_imagine:
             type:    thumbnail
             options: { size: [30, 30], mode: outbound, absolute: true }
             
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            timestampable: true
+            sluggable: false
+            loggable: false
+            translatable: false
+            sortable: false
+            

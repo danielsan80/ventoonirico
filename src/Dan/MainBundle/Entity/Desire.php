@@ -232,4 +232,18 @@ class Desire
     {
         return $this->reward;
     }
+    
+    public function getAsJson()
+    {
+        return json_encode(array(
+           'id' => $this->getId(),
+           'user_id' => $this->getUser()->getId(),
+           'game_id' => $this->getGameId(),
+           'username' => $this->getUser()->getUsername(),
+           'created_at' => $this->getCreateAt(),
+           'updated_at' => $this->getUpdatedAt(),
+           'note' => $this->getNote(),
+           'reward' => $this->getReward(),            
+        ));
+    }
 }

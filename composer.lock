@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ed464ebadfb7d0fe450aff05aa152378",
+    "hash": "dba6660aa2be7fc36ff890e85dda3f5d",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -147,6 +147,52 @@
                 "google"
             ],
             "time": "2013-03-04 19:30:59"
+        },
+        {
+            "name": "dan/common-bundle",
+            "version": "dev-master",
+            "target-dir": "Dan/CommonBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/danielsan80/DanCommonBundle.git",
+                "reference": "2a3ff8b72bcb30249b36779863227ea2f0cc55ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/danielsan80/DanCommonBundle/zipball/2a3ff8b72bcb30249b36779863227ea2f0cc55ff",
+                "reference": "2a3ff8b72bcb30249b36779863227ea2f0cc55ff",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "2.1.*"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "Dan\\CommonBundle": ""
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Danilo Sanchi",
+                    "email": "danilo.sanchi@gmail.com",
+                    "homepage": "http://danilosanchi.net"
+                }
+            ],
+            "description": "An indipendent toolkit for all my projects",
+            "homepage": "https://github.com/danielsan80/DanCommonBundle.git",
+            "keywords": [
+                "common",
+                "toolkit"
+            ],
+            "support": {
+                "source": "https://github.com/danielsan80/DanCommonBundle/tree/master",
+                "issues": "https://github.com/danielsan80/DanCommonBundle/issues"
+            },
+            "time": "2013-05-02 13:16:32"
         },
         {
             "name": "doctrine/annotations",
@@ -432,12 +478,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "1053e625723ba65e8442b787e67851277aac1809"
+                "reference": "ac0c0630e63ae5b3c569996aac8f174a74ba599b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/1053e625723ba65e8442b787e67851277aac1809",
-                "reference": "1053e625723ba65e8442b787e67851277aac1809",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/ac0c0630e63ae5b3c569996aac8f174a74ba599b",
+                "reference": "ac0c0630e63ae5b3c569996aac8f174a74ba599b",
                 "shasum": ""
             },
             "require": {
@@ -487,7 +533,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2013-05-01 12:53:14"
+            "time": "2013-05-01 17:16:27"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -932,12 +978,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "91d608d5f4a437b47df4e482a964ef534da1e8a8"
+                "reference": "6b263e633615003fe9026fc8146a0e6a5a7f80b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/91d608d5f4a437b47df4e482a964ef534da1e8a8",
-                "reference": "91d608d5f4a437b47df4e482a964ef534da1e8a8",
+                "url": "https://api.github.com/repos/l3pp4rd/DoctrineExtensions/zipball/6b263e633615003fe9026fc8146a0e6a5a7f80b4",
+                "reference": "6b263e633615003fe9026fc8146a0e6a5a7f80b4",
                 "shasum": ""
             },
             "require": {
@@ -1003,7 +1049,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2013-04-26 14:37:18"
+            "time": "2013-05-01 16:51:50"
         },
         {
             "name": "guzzle/guzzle",
@@ -1011,12 +1057,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "cb8439f1ca209f764057d0e9c3f015333907a0f0"
+                "reference": "6e48b4db00ba6a460378783860c0f4590231a43b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/cb8439f1ca209f764057d0e9c3f015333907a0f0",
-                "reference": "cb8439f1ca209f764057d0e9c3f015333907a0f0",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/6e48b4db00ba6a460378783860c0f4590231a43b",
+                "reference": "6e48b4db00ba6a460378783860c0f4590231a43b",
                 "shasum": ""
             },
             "require": {
@@ -1097,7 +1143,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-05-01 06:04:08"
+            "time": "2013-05-02 00:13:13"
         },
         {
             "name": "imagine/imagine",
@@ -2958,12 +3004,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "2acd63ae31f035084e57f0fbbd06b180507205ab"
+                "reference": "7f70bbf77581c25a5b225823e2dde578b63fddb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/2acd63ae31f035084e57f0fbbd06b180507205ab",
-                "reference": "2acd63ae31f035084e57f0fbbd06b180507205ab",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/7f70bbf77581c25a5b225823e2dde578b63fddb3",
+                "reference": "7f70bbf77581c25a5b225823e2dde578b63fddb3",
                 "shasum": ""
             },
             "require": {
@@ -2972,7 +3018,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.12-dev"
+                    "dev-master": "1.13-dev"
                 }
             },
             "autoload": {
@@ -2999,7 +3045,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2013-05-01 08:03:10"
+            "time": "2013-05-01 19:03:39"
         }
     ],
     "packages-dev": [

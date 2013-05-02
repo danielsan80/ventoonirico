@@ -2,7 +2,9 @@
     "name": "symfony/framework-standard-edition",
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": {
+            "": "src/"
+        }
     },
     "require": {
         "php": ">=5.3.3",
@@ -38,21 +40,29 @@
         
         "avalanche123/imagine-bundle": "v2.1",
         "doctrine/doctrine-migrations-bundle": "dev-master",
-        "stof/doctrine-extensions-bundle": "~1.1@dev"
+        "stof/doctrine-extensions-bundle": "~1.1@dev",
+        
+        "dan/common-bundle": "*"
         
     },
+    "repositories": [
+    {
+        "type": "vcs",
+        "url": "git@github.com:danielsan80/DanCommonBundle.git"
+    }
+    ],
     "scripts": {
         "post-install-cmd": [
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-update-cmd": [
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+        "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ]
     },
     "minimum-stability": "dev",

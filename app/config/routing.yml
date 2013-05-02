@@ -1,3 +1,7 @@
+dan_common:
+    resource: "@DanCommonBundle/Resources/config/routing.yml"
+    prefix:   /
+
 dan_main:
     resource: "@DanMainBundle/Resources/config/routing.yml"
     prefix:   /

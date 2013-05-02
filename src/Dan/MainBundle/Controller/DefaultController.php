@@ -2,18 +2,22 @@
 
 namespace Dan\MainBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Dan\CommonBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Cache;
 
-use Doctrine\Common\Cache\FilesystemCache;
-use Guzzle\Cache\DoctrineCacheAdapter;
-use Guzzle\Cache\NullCacheAdapter;
-use Guzzle\Plugin\Cache\CachePlugin;
+use Symfony\Component\HttpFoundation\Response;
 
-use Dan\MainBundle\Entity\Game;
+//use Doctrine\Common\Cache\FilesystemCache;
+//use Guzzle\Cache\DoctrineCacheAdapter;
+//use Guzzle\Cache\NullCacheAdapter;
+//use Guzzle\Plugin\Cache\CachePlugin;
+
+//use Dan\MainBundle\Entity\Game;
+use Dan\MainBundle\Entity\Desire;
+use Dan\MainBundle\Service\BGGService;
 
 /**
  * @Route("") 
@@ -29,7 +33,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $service = new \Dan\MainBundle\Service\BGGService($this->get('liip_doctrine_cache.ns.bgg'));
+        $service = new BGGService($this->get('liip_doctrine_cache.ns.bgg'));
         $games = $service->getGames();
         $games = $service->shiftGames($games);
         return $this->render('DanMainBundle:Default:index.html.twig', array('games' => $games));
@@ -38,13 +42,31 @@ class DefaultController extends Controller
     /**
      * Request 
      * 
-     * @Route("/requests", name="request")
+     * @Route("/desires", name="desires")
      * @Method("POST")
      * 
      * @return json
      */
-    public function requestsAction()
+    public function desiresAction()
     {
+        $user = $this->getCurrentUser();
         
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getEntityManager();
+        $desireRepo = $em->getRepository('DanMainBundle:Desire')->setUser($user);
+        $gameId = $request->get('game_id');
+        $desire = $desireRepo->findOneByGameId($gameId);
+        if (!$desire) {
+            $desire = new Desire($user);
+            $desire->setGameId($gameId);
+        }
+        
+        $em->persist($desire);
+        $em->flush();
+
+        $response = new Response();
+        $response->setContent($desire->getAsJson());
+
+        return $response;
     }
 }

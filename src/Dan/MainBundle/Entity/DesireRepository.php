@@ -4,6 +4,8 @@ namespace Dan\MainBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+use Dan\UserBundle\Entity\User;
+
 /**
  * DesireRepository
  *
@@ -12,4 +14,33 @@ use Doctrine\ORM\EntityRepository;
  */
 class DesireRepository extends EntityRepository
 {
+    /**
+     * @see EntityRepository
+     */
+    private $user;    
+    public function setUser(User $user) {
+        $this->user = $user;
+        
+        return $this;
+    }
+    
+    /**
+     * Get accounts ordered by position
+     *
+     * @return \DateTime 
+     */
+    public function findOneByGameId($game_id) {
+        if (!$this->user) {
+            throw new \Exception('You did not set the user');
+        }
+        $user = $this->user;
+        $qb = $this->createQueryBuilder('d')
+                ->where("d.game_id = :game_id")
+                ->setParameter('game_id', $game_id);
+        if ($user) {
+            $qb->where("d.user = :user")
+                ->setParameter('user', $user);
+        }
+        return $qb->getQuery()->getResult()->fetchOne();
+    }
 }

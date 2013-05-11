@@ -18,14 +18,9 @@
                 game_id: id
             });
             desire.save({}, {
-                success: function (model) {
-                   console.log(model);
-//                    var a = $('tr#transaction_'+model.id+' a.isTransfer');
-//                    if (model.attributes.isTransfer) {
-//                        a.replaceWith(_.template($("#isTransfer_true").html(),{}));                    
-//                    } else {
-//                        a.replaceWith(_.template($("#isTransfer_false").html(),{}));                    
-//                    }
+                success: function (desire) {
+                   var actions = $('table.games-collection tr#game_'+(desire.get('game_id'))+' td .actions');
+                   actions.html(_.template($("#user_image").html(),{}));   
                 }
             });
             return false;

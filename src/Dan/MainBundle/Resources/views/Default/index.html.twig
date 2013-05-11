@@ -2,6 +2,9 @@
 
 {% block title %}Ventoonirico's collection{% endblock %}
 {% block content %}
+<script type="text/template" id="user_image">
+    <img src="{{app.user.image | apply_filter('mini', true)}}" />
+</script>
 Ventoonirico dispone di <strong>{{games|length}}</strong> giochi
 <table class="games-collection table table-bordered">
     {% for game in games %}
@@ -11,7 +14,7 @@ Ventoonirico dispone di <strong>{{games|length}}</strong> giochi
             </td>
             <td>
                 {% if app.user %}
-                    <div class="pull-right">
+                    <div class="pull-right actions">
                         <a href="#" class="create-desire icon-plus" ></a>
                     </div>
                 {% endif %}

@@ -49,20 +49,22 @@ class DefaultController extends Controller
      */
     public function desiresAction()
     {
-        $user = $this->getCurrentUser();
+
+        $user = $this->get('user');
         
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
         $desireRepo = $em->getRepository('DanMainBundle:Desire')->setUser($user);
-        $gameId = $request->get('game_id');
-        $desire = $desireRepo->findOneByGameId($gameId);
+        $gameId = json_decode($request->getContent())->game_id;
+        $desires = $desireRepo->findOneByGameId($gameId);
+        $desire = $desires[0];
+        
         if (!$desire) {
             $desire = new Desire($user);
             $desire->setGameId($gameId);
+            $em->persist($desire);
+            $em->flush();
         }
-        
-        $em->persist($desire);
-        $em->flush();
 
         $response = new Response();
         $response->setContent($desire->getAsJson());

@@ -73,14 +73,14 @@ class Desire
     /**
      * @var string
      *
-     * @ORM\Column(name="note", type="text")
+     * @ORM\Column(name="note", type="text", nullable=true)
      */
     private $note;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="reward", type="integer")
+     * @ORM\Column(name="reward", type="integer", nullable=true)
      */
     private $reward;
 
@@ -96,6 +96,16 @@ class Desire
     }
 
     /**
+     * Get user
+     *
+     * @return Dan\UserBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+    
+    /**
      * Set game_id
      *
      * @param string $gameId
@@ -103,10 +113,12 @@ class Desire
      */
     public function setGameId($gameId)
     {
-        $this->game_id = $gameId;
+        $this->gameId = $gameId;
     
         return $this;
     }
+    
+    
 
     /**
      * Get game_id
@@ -147,7 +159,7 @@ class Desire
      * @param \DateTime $createAt
      * @return Desire
      */
-    public function setCreateAt($createAt)
+    public function setCreatedAt($createAt)
     {
         $this->createAt = $createAt;
     
@@ -159,7 +171,7 @@ class Desire
      *
      * @return \DateTime 
      */
-    public function getCreateAt()
+    public function getCreatedAt()
     {
         return $this->createAt;
     }
@@ -170,7 +182,7 @@ class Desire
      * @param \DateTime $updateAt
      * @return Desire
      */
-    public function setUpdateAt($updateAt)
+    public function setUpdatedAt($updateAt)
     {
         $this->updateAt = $updateAt;
     
@@ -182,7 +194,7 @@ class Desire
      *
      * @return \DateTime 
      */
-    public function getUpdateAt()
+    public function getUpdatedAt()
     {
         return $this->updateAt;
     }
@@ -240,8 +252,8 @@ class Desire
            'user_id' => $this->getUser()->getId(),
            'game_id' => $this->getGameId(),
            'username' => $this->getUser()->getUsername(),
-           'created_at' => $this->getCreateAt(),
-           'updated_at' => $this->getUpdatedAt(),
+           'created_at' => $this->getCreatedAt()->format('Y-m-d H:i:s'),
+           'updated_at' => $this->getUpdatedAt()->format('Y-m-d H:i:s'),
            'note' => $this->getNote(),
            'reward' => $this->getReward(),            
         ));

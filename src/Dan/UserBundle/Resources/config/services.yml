@@ -10,3 +10,12 @@ services:
             validator: @validator
             em: @doctrine.orm.entity_manager
             kernel: @kernel
+            
+    user.factory:
+        class: Dan\UserBundle\Service\User
+        arguments: [@security.context]
+        
+    user:
+        class: Dan\UserBundle\Entity\User
+        factory_service: user.factory
+        factory_method: get

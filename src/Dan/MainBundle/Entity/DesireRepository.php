@@ -29,18 +29,18 @@ class DesireRepository extends EntityRepository
      *
      * @return \DateTime 
      */
-    public function findOneByGameId($game_id) {
+    public function findOneByGameId($gameId) {
         if (!$this->user) {
             throw new \Exception('You did not set the user');
         }
         $user = $this->user;
         $qb = $this->createQueryBuilder('d')
-                ->where("d.game_id = :game_id")
-                ->setParameter('game_id', $game_id);
+                ->where("d.gameId = :gameId")
+                ->setParameter('gameId', $gameId);
         if ($user) {
-            $qb->where("d.user = :user")
+            $qb->andWhere("d.user = :user")
                 ->setParameter('user', $user);
         }
-        return $qb->getQuery()->getResult()->fetchOne();
+        return $qb->getQuery()->getResult();
     }
 }

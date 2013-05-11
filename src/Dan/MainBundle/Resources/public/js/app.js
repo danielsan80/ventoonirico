@@ -1,7 +1,7 @@
 (function ($) {
     
-    Request = Backbone.Model.extend({
-        urlRoot: '/requests'
+    Desire = Backbone.Model.extend({
+        urlRoot: '/app_dev.php/desires'
     });
     
     AppView = Backbone.View.extend({
@@ -9,17 +9,17 @@
         initialize: function(){
         },        
         events: {
-            "click .create-request":    "createRequest"
+            "click .create-desire":    "createDesire"
         },
         
-        createRequest: function(el) {
+        createDesire: function(el) {
             var id = $(el.srcElement).parents('tr').attr('id').substr(5);
-            var request = new Request({
+            var desire = new Desire({
                 game_id: id
             });
-            request.save({}, {
+            desire.save({}, {
                 success: function (model) {
-                    alert(model);
+                   console.log(model);
 //                    var a = $('tr#transaction_'+model.id+' a.isTransfer');
 //                    if (model.attributes.isTransfer) {
 //                        a.replaceWith(_.template($("#isTransfer_true").html(),{}));                    

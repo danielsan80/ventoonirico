@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Dan\MainBundle\Entity\Desire;
 use Dan\MainBundle\Service\BGGService;
 
+use Symfony\Component\Yaml\Yaml;
+
 /**
  * @Route("") 
  */
@@ -39,36 +41,4 @@ class DefaultController extends Controller
         return $this->render('DanMainBundle:Default:index.html.twig', array('games' => $games));
     }
     
-    /**
-     * Request 
-     * 
-     * @Route("/desires", name="desires")
-     * @Method("POST")
-     * 
-     * @return json
-     */
-    public function desiresAction()
-    {
-
-        $user = $this->get('user');
-        
-        $request = $this->getRequest();
-        $em = $this->getDoctrine()->getEntityManager();
-        $desireRepo = $em->getRepository('DanMainBundle:Desire')->setUser($user);
-        $gameId = json_decode($request->getContent())->game_id;
-        $desires = $desireRepo->findOneByGameId($gameId);
-        $desire = $desires[0];
-        
-        if (!$desire) {
-            $desire = new Desire($user);
-            $desire->setGameId($gameId);
-            $em->persist($desire);
-            $em->flush();
-        }
-
-        $response = new Response();
-        $response->setContent($desire->getAsJson());
-
-        return $response;
-    }
 }

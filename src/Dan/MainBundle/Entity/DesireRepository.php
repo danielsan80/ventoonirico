@@ -30,9 +30,9 @@ class DesireRepository extends EntityRepository
      * @return \DateTime 
      */
     public function findOneByGameId($gameId) {
-        if (!$this->user) {
-            throw new \Exception('You did not set the user');
-        }
+//        if (!$this->user) {
+//            throw new \Exception('You did not set the user');
+//        }
         $user = $this->user;
         $qb = $this->createQueryBuilder('d')
                 ->where("d.gameId = :gameId")

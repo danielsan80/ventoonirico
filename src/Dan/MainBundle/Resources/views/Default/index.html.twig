@@ -2,9 +2,6 @@
 
 {% block title %}Ventoonirico's collection{% endblock %}
 {% block content %}
-<script type="text/template" id="user_image">
-    <img src="{{app.user.image | apply_filter('mini', true)}}" />
-</script>
 Ventoonirico dispone di <strong>{{games|length}}</strong> giochi
 <table class="games-collection table table-bordered">
     {% for game in games %}
@@ -13,17 +10,46 @@ Ventoonirico dispone di <strong>{{games|length}}</strong> giochi
                 <a href="http://boardgamegeek.com/boardgame/{{game.id}}" target="_blank" ><img src="{{game.thumbnail}}" /></a>
             </td>
             <td>
-                {% if app.user %}
-                    <div class="pull-right actions">
-                        <a href="#" class="create-desire icon-plus" ></a>
-                    </div>
-                {% endif %}
+                <div class="pull-right game-status well"></div>
                 <h4>{{game.name}}</h4>
                 di <em>{{game.owners|join(', ')}}</em><br/>
                 {{game.minPlayers}} - {{game.maxPlayers}} giocatori<br/>
-
             </td>
         </tr>
     {% endfor %}
 </table>
+{% endblock %}
+
+{% block templates %}
+    {{parent()}}
+    <script type="text/template" id="user_image">
+        {% if app.user %}
+            <img src="{{app.user.image | apply_filter('mini', true)}}" />
+        {% endif %}
+    </script>
+    <script type="text/template" id="icon-plus">
+        <a href="#" class="create-desire icon-plus" ></a>
+    </script>
+    <script type="text/template" id="game-status">
+        <% if ( !desire.owner ){ %>
+            <%= desire.game_id %>
+        <% } %>
+    </script>
+    <script type="text/template" id="game-status2">
+        <ul>
+            <% _.each( desire., function( listItem ){ %>
+ 
+                <li>
+ 
+                    <%- listItem.name %>
+ 
+                    <% if ( listItem.hasOlympicGold ){ %>
+                        <em>*</em>
+                    <% } %>
+ 
+                </li>
+ 
+            <% }); %>
+        </ul>
+    </script>
 {% endblock%}

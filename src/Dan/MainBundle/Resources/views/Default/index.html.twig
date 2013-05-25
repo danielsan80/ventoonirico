@@ -28,16 +28,21 @@ Ventoonirico dispone di <strong>{{games|length}}</strong> giochi
         {% endif %}
     </script>
     <script type="text/template" id="icon-plus">
-        <a href="#" class="create-desire icon-plus" ></a>
+        
     </script>
-    <script type="text/template" id="game-status">
+    <script type="text/template" id="game-status-unlogged">
         <% if ( !desire.owner ){ %>
-            <%= desire.game_id %>
+            <a href="#" class="create-desire icon-plus" ></a>
+        <% } else { %>
+            <img src="<%= desire.owner.image %>" />
         <% } %>
     </script>
-    <script type="text/template" id="game-status2">
+    <script type="text/template" id="game-status-logged">
+        logged
+    </script>
+    <script type="text/template" id="game-status-logged2">
         <ul>
-            <% _.each( desire., function( listItem ){ %>
+            <% _.each( desire, function( listItem ){ %>
  
                 <li>
  

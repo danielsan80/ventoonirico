@@ -57,4 +57,13 @@ class User extends BaseUser
     {
         return $this->image;
     }
+    
+    public function getAsJson()
+    {
+        return json_encode(array(
+           'id' => $this->getId(),
+           'image' => $this->getImage(),
+           'username' => $this->getUsername(),
+        ));
+    }
 }

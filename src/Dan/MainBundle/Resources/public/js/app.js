@@ -34,16 +34,9 @@ $.ventoonirico.Desire = Backbone.RelationalModel.extend({
 ]
 });
 
-$.ventoonirico.AppUser = Backbone.RelationalModel.extend({
-    urlRoot: '/api/user',
-    idAttribute: 'id',
-    relations: []
-});
-
 $.ventoonirico.User = Backbone.RelationalModel.extend({
     urlRoot: '/api/users',
-    idAttribute: 'id',
-    relations: []
+    idAttribute: 'id'
 });
 
 $.ventoonirico.DesireView = Backbone.View.extend({
@@ -51,14 +44,40 @@ $.ventoonirico.DesireView = Backbone.View.extend({
     className: 'desire_view',
     initialize: function(){
         _.bindAll(this, 'render');
-        this.model.bind('change', this.render);
+        this.model.desire.bind('change', this.render);
         this.render();
     },
     events: {
+        "click .create-desire":     "createDesire"
     },
     render: function() {
-        return $(this.el).html(_.template($('#game-status').html(),{desire: this.model.toJSON()}));
+        if ( this.model.appUser.get('id')) {
+            return $(this.el).html(
+                _.template(
+                    $('#game-status-logged').html(),
+                    this.model
+                )
+            );
+        } else {
+            return $(this.el).html(
+                _.template(
+                    $('#game-status-unlogged').html(),
+                    this.model
+                )
+            );
+        }
+    },
+    createDesire: function() {
+        var desire = this.model.desire;
+        var el = this.el;
+        desire.save({}, {
+            success: function (desire) {
+                $(el).html(_.template($("#user_image").html(),{}));   
+            }
+        });
+        return false;
     }
+    
 });
 
 $.ventoonirico.AppView = Backbone.View.extend({
@@ -66,8 +85,7 @@ $.ventoonirico.AppView = Backbone.View.extend({
     initialize: function(){
     },        
     events: {
-        "click div.game-status":    "showStatus",
-        "click .create-desire":     "createDesire"
+        "click div.game-status":    "showStatus"        
     },
 
     showStatus: function(el) {
@@ -75,24 +93,25 @@ $.ventoonirico.AppView = Backbone.View.extend({
         var desire = new $.ventoonirico.Desire({
             game_id: id
         });
-        var appUser = new $.ventoonirico.AppUser({
-        });
-        appUser.fetch();
-        var desireView = new $.ventoonirico.DesireView({el: el.srcElement, model: desire});
-        
-    },
-    createDesire: function(el) {
-        var id = $(el.srcElement).parents('tr').attr('id').substr(5);
-        var desire = new Desire({
-            game_id: id
-        });
-        desire.save({}, {
-            success: function (desire) {
-                var actions = $('table.games-collection tr#game_'+(desire.get('game_id'))+' td .actions');
-                actions.html(_.template($("#user_image").html(),{}));   
+        var appUser;
+        var desireView;
+        $.ajax({
+            url: '/api/user',
+            dataType: 'json',
+            success: function(data) {
+                appUser = new $.ventoonirico.User(data);
+                desireView = new $.ventoonirico.DesireView({
+                el: el.srcElement,
+                model: {
+                    desire: desire,
+                    appUser: appUser
+                }});
             }
+            
         });
-        return false;
+        
+        
+        
     }
 
 });

@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 //use Guzzle\Plugin\Cache\CachePlugin;
 
 //use Dan\MainBundle\Entity\Game;
-//use Dan\MainBundle\Entity\Desire;
+use Dan\MainBundle\Entity\Desire;
 //use Dan\MainBundle\Service\BGGService;
 
 /**
@@ -24,6 +24,28 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ApiController extends Controller
 {
+    
+    
+    /**
+     * Request 
+     * 
+     * @Route("/user", name="user")
+     * @Method("GET")
+     * 
+     * @return json
+     */
+    public function getUserAction()
+    {
+        $user = $this->get('user');
+        $response = new Response();
+        if ($user) {
+            $response->setContent($user->getAsJson());
+        } else {
+            $response->setContent('{}');
+        }
+
+        return $response;
+    }
     
     /**
      * Request 
@@ -84,6 +106,39 @@ class ApiController extends Controller
             $response->setContent(json_encode(array('game_id' => $gameId)));
         }
 
+        return $response;
+    }
+    
+    /**
+     * Request 
+     * 
+     * @Route("/desires/{gameId}", name="desire_put")
+     * @Method("PUT")
+     * 
+     * @return json
+     */
+    public function putDesireAction($gameId)
+    {
+
+        $user = $this->get('user');
+        
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getEntityManager();
+        $desireRepo = $em->getRepository('DanMainBundle:Desire');
+        $desires = $desireRepo->findOneByGameId($gameId);
+        
+        $response = new Response();
+        if ($desires) {
+            $desire = $desires[0];
+        } else {
+            $desire = new Desire($user);
+            $desire->setGameId($gameId);
+            $em->persist($desire);
+        }
+        
+        $em->flush();
+        
+        $response->setContent($desire->getAsJson());
         return $response;
     }
 }

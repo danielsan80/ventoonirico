@@ -21,10 +21,10 @@ class Desire
     /**
      * Constructor 
      */
-    public function __construct(User $user)
+    public function __construct(User $owner)
     {
-        $this->user = $user;
-        $this->consents = new ArrayCollection();
+        $this->owner = $owner;
+        //$this->joinedUsers = new ArrayCollection();
     }
     
     /**
@@ -38,9 +38,9 @@ class Desire
     
     /**
      * @ORM\ManyToOne(targetEntity="Dan\UserBundle\Entity\User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
      */
-    private $user;
+    private $owner;
 
     /**
      * @var string
@@ -100,9 +100,9 @@ class Desire
      *
      * @return Dan\UserBundle\Entity\User 
      */
-    public function getUser()
+    public function getOwner()
     {
-        return $this->user;
+        return $this->owner;
     }
     
     /**
@@ -249,9 +249,8 @@ class Desire
     {
         return json_encode(array(
            'id' => $this->getId(),
-           'user_id' => $this->getUser()->getId(),
+           'owner' => $this->getOwner()->getAsJson(),
            'game_id' => $this->getGameId(),
-           'username' => $this->getUser()->getUsername(),
            'created_at' => $this->getCreatedAt()->format('Y-m-d H:i:s'),
            'updated_at' => $this->getUpdatedAt()->format('Y-m-d H:i:s'),
            'note' => $this->getNote(),

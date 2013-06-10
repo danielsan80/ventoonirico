@@ -66,8 +66,9 @@ $.ventoonirico.AppView = Backbone.View.extend({
         var game = new $.ventoonirico.Game({
             id: id
         });
-        game.fetch();
-        game.fetchRelated('desire');
+        console.log(
+        game.fetch()
+    );
         console.log(game);
         var desireView = new $.ventoonirico.DesireView({
             el: el.srcElement,
@@ -107,7 +108,6 @@ $.ventoonirico.DesireView = Backbone.View.extend({
         }
     },
     createDesire: function() {
-        console.log(this.model.get('desire').get('id'));
         var desire = new $.ventoonirico.Desire({
             owner: $.ventoonirico.appUser,
             game: this.model

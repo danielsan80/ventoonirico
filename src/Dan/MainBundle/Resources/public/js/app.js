@@ -23,6 +23,11 @@ $.ventoonirico.Desire = Backbone.RelationalModel.extend({
     relations: [
     {
         type: Backbone.HasOne,
+        key: 'game',
+        relatedModel: '$.ventoonirico.Game'
+    },
+    {
+        type: Backbone.HasOne,
         key: 'owner',
         relatedModel: '$.ventoonirico.User'
     },{
@@ -102,6 +107,7 @@ $.ventoonirico.DesireView = Backbone.View.extend({
         }
     },
     createDesire: function() {
+        console.log(this.model.get('desire').get('id'));
         var desire = new $.ventoonirico.Desire({
             owner: $.ventoonirico.appUser,
             game: this.model

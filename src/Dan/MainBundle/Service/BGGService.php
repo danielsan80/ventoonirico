@@ -99,6 +99,12 @@ class BGGService
 
         return $games;
     }
+    
+    public function getGame($id)
+    {
+        $games = $this->getGames();
+        return $games[$id];
+    }
 
     private function sortGames($games)
     {

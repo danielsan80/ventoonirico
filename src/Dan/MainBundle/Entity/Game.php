@@ -134,5 +134,17 @@ class Game
     {
         $this->maxPlayers = $pax;
     }
+    
+    public function getAsArray()
+    {
+        return array(
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'minPlayers' => $this->getMinPlayers(),
+            'maxPlayers' => $this->getMaxPlayers(),
+            'owners' => $this->getOwners(),
+            'thumbnail' => $this->getThumbnail()
+        );
+    }
 
 }

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 //use Dan\MainBundle\Entity\Game;
 use Dan\MainBundle\Entity\Desire;
-//use Dan\MainBundle\Service\BGGService;
+use Dan\MainBundle\Service\BGGService;
 
 /**
  * @Route("/api") 
@@ -50,7 +50,37 @@ class ApiController extends Controller
     /**
      * Request 
      * 
-     * @Route("/desires", name="desire_post")
+     * @Route("/games/{id}", name="get_game")
+     * @Method("GET")
+     * 
+     * @return json
+     */
+    public function getGameAction($id)
+    {
+        $user = $this->get('user');
+        
+        $service = new BGGService($this->get('liip_doctrine_cache.ns.bgg'));
+        $game = $service->getGame($id);
+        $game = $game->getAsArray();
+        
+        $em = $this->getDoctrine()->getEntityManager();
+        $desireRepo = $em->getRepository('DanMainBundle:Desire');
+        $desires = $desireRepo->findByGameId($id);
+        
+        $response = new Response();
+        if ($desires) {
+            $desire = $desires[0];
+            $game['desire'] = $desire->getAsArray();
+        }
+        $response->setContent(json_encode($game));
+
+        return $response;
+    }
+    
+    /**
+     * Request 
+     * 
+     * @Route("/desires", name="post_desire")
      * @Method("POST")
      * 
      * @return json
@@ -64,7 +94,7 @@ class ApiController extends Controller
         $em = $this->getDoctrine()->getEntityManager();
         $desireRepo = $em->getRepository('DanMainBundle:Desire')->setUser($user);
         $gameId = json_decode($request->getContent())->game_id;
-        $desires = $desireRepo->findOneByGameId($gameId);
+        $desires = $desireRepo->findByGameId($gameId);
         $desire = $desires[0];
         
         if (!$desire) {
@@ -83,12 +113,12 @@ class ApiController extends Controller
     /**
      * Request 
      * 
-     * @Route("/desires/{gameId}", name="desire_get")
+     * @Route("/desires/{id}", name="get_desire")
      * @Method("GET")
      * 
      * @return json
      */
-    public function getDesireAction($gameId)
+    public function getDesireAction($id)
     {
 
         $user = $this->get('user');
@@ -96,14 +126,13 @@ class ApiController extends Controller
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
         $desireRepo = $em->getRepository('DanMainBundle:Desire');
-        $desires = $desireRepo->findOneByGameId($gameId);
+        $desires = $desireRepo->find($id);
         
         $response = new Response();
         if ($desires) {
-            $desire = $desires[0];
             $response->setContent($desire->getAsJson());
         } else {
-            $response->setContent(json_encode(array('game_id' => $gameId)));
+            $response->setStatusCode('404');
         }
 
         return $response;
@@ -112,20 +141,21 @@ class ApiController extends Controller
     /**
      * Request 
      * 
-     * @Route("/desires/{gameId}", name="desire_put")
+     * @Route("/desires/{id}", name="desire_put")
      * @Method("PUT")
      * 
      * @return json
      */
-    public function putDesireAction($gameId)
+    public function putDesireAction($id)
     {
 
         $user = $this->get('user');
         
         $request = $this->getRequest();
+        $gameId = $request->get('gameId');
         $em = $this->getDoctrine()->getEntityManager();
         $desireRepo = $em->getRepository('DanMainBundle:Desire');
-        $desires = $desireRepo->findOneByGameId($gameId);
+        $desires = $desireRepo->find($id);
         
         $response = new Response();
         if ($desires) {

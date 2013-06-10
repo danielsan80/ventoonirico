@@ -29,7 +29,7 @@ class DesireRepository extends EntityRepository
      *
      * @return \DateTime 
      */
-    public function findOneByGameId($gameId) {
+    public function findByGameId($gameId) {
 //        if (!$this->user) {
 //            throw new \Exception('You did not set the user');
 //        }

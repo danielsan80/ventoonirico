@@ -30,31 +30,30 @@ Ventoonirico dispone di <strong>{{games|length}}</strong> giochi
     <script type="text/template" id="icon-plus">
         
     </script>
+
     <script type="text/template" id="game-status-unlogged">
-        <% if ( !desire.owner ){ %>
+        <% if ( !desire ){ %>
+            ok
+        <% } else { %>
+            <img src="<%= desire.owner.image %>" />
+            <% if (desire.joinedUsers){ %>
+                <% _.each( desire.joinedUsers, function( user ){ %>
+                    <img src="<%= user.image %>" />
+                <% }); %>
+            <% } %>
+        <% } %>
+    </script>
+
+    <script type="text/template" id="game-status-logged">
+        <% if ( !desire ){ %>
             <a href="#" class="create-desire icon-plus" ></a>
         <% } else { %>
             <img src="<%= desire.owner.image %>" />
+            <% if (desire.joinedUsers){ %>
+                <% _.each( desire.joinedUsers, function( user ){ %>
+                    <img src="<%= user.image %>" />
+                <% }); %>
+            <% } %>
         <% } %>
-    </script>
-    <script type="text/template" id="game-status-logged">
-        logged
-    </script>
-    <script type="text/template" id="game-status-logged2">
-        <ul>
-            <% _.each( desire, function( listItem ){ %>
- 
-                <li>
- 
-                    <%- listItem.name %>
- 
-                    <% if ( listItem.hasOlympicGold ){ %>
-                        <em>*</em>
-                    <% } %>
- 
-                </li>
- 
-            <% }); %>
-        </ul>
     </script>
 {% endblock%}

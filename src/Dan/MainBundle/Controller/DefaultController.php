@@ -30,7 +30,7 @@ class DefaultController extends Controller
     /**
      * Home page
      * 
-     * @Route("/", name="home")
+     * Route("/", name="home")
      * @return html
      */
     public function indexAction()
@@ -39,6 +39,17 @@ class DefaultController extends Controller
         $games = $service->getGames();
         $games = $service->shiftGames($games);
         return $this->render('DanMainBundle:Default:index.html.twig', array('games' => $games));
+    }
+    
+    /**
+     * Home page
+     * 
+     * @Route("/", name="home")
+     * @return html
+     */
+    public function index2Action()
+    {
+        return $this->render('DanMainBundle:Default:index2.html.twig', array());
     }
     
 }

@@ -7363,6 +7363,14 @@ body {
   width: 120px;
   text-align: center;
 }
+.navbar .logo {
+  margin-left: -10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.navbar .logo img {
+  height: 40px;
+}
 .navbar .login {
   padding: 17px 0px 17px 20px;
 }
@@ -7375,19 +7383,14 @@ body {
 .navbar .user {
   padding: 17px 0px 17px 20px;
 }
+.navbar .image {
+  padding: 15px 0px 15px 20px;
+}
 .icon-google {
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB90EFA4CHRMh4AgAAALTSURBVDjLRZNPaCRFFMZ/Vd3b6Z7OJjPpjDuJ7RBcE0xUdEBhNclFPXgxK3ja04LCHrzt0T16F8S77EUEFy8ieJD1JCyE1Yj/MNlDMDqOiek/u51JT7qnaspLBQse1IP3fbz3fe8J/n9NYAtYsvkAmAWOgTmgArSNP4BvAYQtfge4BYwBD/gb+AW4JYT4bGZm5k4cx35VVUlRFJeNMfNZlq1orW84wCrwLPAaMLGEC8BzwFfA157nba2vrw9XVlYuuK6bLC8vy3a7vX1wcPC2BF4EfgKOgBowtk0H2AR267puHh0dtZMkeXw0GsnxeFyEYfhEEATPuMApkAGXgIdAaEd5BJQASqlXdnZ2fvY8zw2CoJfn+UOt9Z9KKeUCPvCrBZZWrJHN7wA9rfX9k5OTRAjhSykDKeXYGPPCeDyecYGLgAvcAD624Hn718D77XZ7V0rZU0rpIAimRqORStP0GBhKC74PdIE3gU+ADSHEd77v346i6Mx13ad93//39PR0OsuyanFxcS6KIgkYab2eslbeAx4Ae8BbzWaTpaWlKcdx5sqyvCClPAZm+/1+2Ww2HwMmLjC0BBeBH4FDAGPMB1mWfSmEmI6iaFsp9VQYhnmj0cgGg0EHOBZCuA5wBVgDrruu+7sQoiuEuGqM2dVaf1iWZbMoiq00Tf9qtVrK2uxXVXU2HA7FudfvOo7z3ubm5je9Xi+N4/iHfr9/U2t9zxhzVyl13RjjNxoN33Ec8jz/J01Tc67BI+DlhYWFz9fW1mZXV1cvdbvdK3Ecfwq8bjdz1/f93PO8+TAMz+q6ftKOGjlWfR+IfN8PtNbz+/v7B3t7extKqW2AVqt1rdPp4LruYZIkzxdFMQBmgPr8mG4LIb73PG8UBEG/ruuNsix/A+aklFc7nc6DPM9fmkwmh1VVTQBpRf/inKABvAHEwDSQAK/aHTkBIiC1oCl7xXeBj/4DFHMlMU7prz8AAAAASUVORK5CYII=);
   background-position: 0 0;
   width: 16px;
   height: 16px;
-}
-.navbar .logo {
-  margin-left: -10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-.navbar .logo img {
-  height: 40px;
 }
 @-ms-viewport {
   width: device-width;

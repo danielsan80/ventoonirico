@@ -50,6 +50,40 @@ class ApiController extends Controller
     /**
      * Request 
      * 
+     * @Route("/games", name="get_games")
+     * @Method("GET")
+     * 
+     * @return json
+     */
+    public function getGamesAction()
+    {
+        $service = new BGGService($this->get('liip_doctrine_cache.ns.bgg'));
+        $games = $service->getGames();
+        $games = $service->shiftGames($games);
+        
+        foreach($games as $game) {
+            $result[] = $game->getAsArray();
+        }
+        
+        $result = array(
+          array(
+              'id'=>1,
+              'name' => 'Agricola'
+          ),  
+          array(
+              'id'=>2,
+              'name' => 'Red Planet'
+          ),  
+        );
+        $response = new Response();
+        $response->setContent(json_encode($result));
+
+        return $response;
+    }
+    
+    /**
+     * Request 
+     * 
      * @Route("/games/{id}", name="get_game")
      * @Method("GET")
      * 

@@ -1,4 +1,4 @@
-(function($) {
+$(function($) {
 
     $.ventoonirico = {};
 
@@ -102,8 +102,9 @@
             pushState: true
         });
     };
+    
+    $.ventoonirico.bootstrap();
 
 })(jQuery);
 
 
-$.ventoonirico.bootstrap();

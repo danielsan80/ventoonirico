@@ -65,16 +65,6 @@ class ApiController extends Controller
             $result[] = $game->getAsArray();
         }
         
-        $result = array(
-          array(
-              'id'=>1,
-              'name' => 'Agricola'
-          ),  
-          array(
-              'id'=>2,
-              'name' => 'Red Planet'
-          ),  
-        );
         $response = new Response();
         $response->setContent(json_encode($result));
 

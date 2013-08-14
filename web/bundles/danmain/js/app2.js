@@ -1,0 +1,111 @@
+$(function($) {
+
+    $.ventoonirico = {};
+
+    $.ventoonirico.Game = Backbone.Model.extend({
+        urlRoot: '/api/games',
+        defaults: function() {
+            return {};
+        }
+//        idAttribute: 'id',
+//        relations: [
+//        {
+//            type: Backbone.HasOne,
+//            key: 'desire',
+//            relatedModel: '$.ventoonirico.Desire',
+//            reverseRelation: {
+//                key: 'game',
+//                includeInJSON: 'id'
+//            }
+//        }
+//        ]
+    });
+
+    $.ventoonirico.GameCollection = Backbone.Collection.extend({
+        url: '/api/games',
+        model: $.ventoonirico.Game
+    });
+
+    $.ventoonirico.GameCountView = Backbone.View.extend({
+        initialize: function() {
+            this.listenTo(this.model, 'sync', this.render);
+        },
+        template: _.template($('#game-count').html()),
+        render: function() {
+            this.$el.html(this.template({count: this.model.length}));
+            return this;
+        },
+    });
+
+    $.ventoonirico.GameListView = Backbone.View.extend({
+        initialize: function() {
+            this.listenTo(this.model, 'sync', this.render);
+        },
+        template: _.template($('#game-list').html()),
+        render: function() {
+            this.$el.html(this.template(this.model));
+            this.model.forEach(this.renderGame);
+            return this;
+        },
+        renderGame: function(game) {
+            var gameView = new $.ventoonirico.GameView({
+                model: game
+            });
+            this.$('table.game-list').prepend(gameView.render().el);
+        }
+    });
+
+    $.ventoonirico.GameView = Backbone.View.extend({
+        initialize: function() {
+            this.listenTo(this.model, 'change', this.render);
+        },
+        template: _.template($('#game').html()),
+        render: function() {
+            console.log($('#game').html());
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+    });
+
+    $.ventoonirico.AppView = Backbone.View.extend({
+        el: $("#app"),
+        template: _.template($('#games').html()),
+        events: {
+        },
+        initialize: function() {
+            this.render();
+        },
+        render: function() {
+            this.$el.html(this.template({}));
+
+            var gameCollection = new $.ventoonirico.GameCollection();
+            var gameListView = new $.ventoonirico.GameListView({'model':gameCollection});
+
+            var gameCountView = new $.ventoonirico.GameCountView({'model':gameCollection});
+            
+            this.listenTo(gameCollection, 'all', this.logme);
+            
+            gameCollection.fetch();
+            
+
+            this.$("#game-list").append(gameListView.render().el);
+            this.$("#game-count").append(gameCountView.render().el);
+        },
+        addGames: function(collection) {
+            collection.create({
+                id:1,
+                name: 'Agricola',
+                minPlayers: 2,
+                maxPlayers: 5,
+                thumbnail: 'aaa.jpg'
+            });
+        },
+        logme: function(model) {
+            console.log(model);
+        }
+        
+    });
+
+    $.ventoonirico.app = new $.ventoonirico.AppView;
+
+}(jQuery));

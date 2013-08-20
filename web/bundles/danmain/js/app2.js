@@ -3,10 +3,7 @@ $(function($) {
     $.ventoonirico = {};
 
     $.ventoonirico.Game = Backbone.Model.extend({
-        urlRoot: '/api/games',
-        defaults: function() {
-            return {};
-        }
+        urlRoot: '/api/games'
 //        idAttribute: 'id',
 //        relations: [
 //        {
@@ -56,13 +53,14 @@ $(function($) {
     });
 
     $.ventoonirico.GameView = Backbone.View.extend({
+        tagName: 'tr',
         initialize: function() {
             this.listenTo(this.model, 'change', this.render);
         },
         template: _.template($('#game').html()),
         render: function() {
-            console.log($('#game').html());
-            this.$el.html(this.template(this.model.toJSON()));
+            console.log(this.model.toJSON());
+            this.el = this.template({game: this.model.toJSON()});
             return this;
         }
     });
@@ -79,30 +77,15 @@ $(function($) {
             this.$el.html(this.template({}));
 
             var gameCollection = new $.ventoonirico.GameCollection();
-            var gameListView = new $.ventoonirico.GameListView({'model':gameCollection});
-
-            var gameCountView = new $.ventoonirico.GameCountView({'model':gameCollection});
             
-            this.listenTo(gameCollection, 'all', this.logme);
+            var gameListView = new $.ventoonirico.GameListView({'model':gameCollection});
+            var gameCountView = new $.ventoonirico.GameCountView({'model':gameCollection});
             
             gameCollection.fetch();
             
-
             this.$("#game-list").append(gameListView.render().el);
             this.$("#game-count").append(gameCountView.render().el);
         },
-        addGames: function(collection) {
-            collection.create({
-                id:1,
-                name: 'Agricola',
-                minPlayers: 2,
-                maxPlayers: 5,
-                thumbnail: 'aaa.jpg'
-            });
-        },
-        logme: function(model) {
-            console.log(model);
-        }
         
     });
 

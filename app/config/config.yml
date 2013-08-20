@@ -171,3 +171,14 @@ stof_doctrine_extensions:
             translatable: false
             sortable: false
             
+jms_serializer:
+  metadata:
+    auto_detection: true
+    directories:
+      FOSUserBundle:
+        namespace_prefix: FOS\UserBundle
+        path: "@DanUserBundle/Resources/config/serializer/FOS"
+      SonataUserBundle:
+        namespace_prefix: Sonata\UserBundle
+        path: "@DanUserBundle/Resources/config/serializer/Sonata"
+            

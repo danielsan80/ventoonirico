@@ -22,7 +22,23 @@ $(function($) {
         url: '/api/games',
         model: $.ventoonirico.Game
     });
-
+    
+    $.ventoonirico.User = Backbone.Model.extend({
+        urlRoot: '/api/users'
+//        idAttribute: 'id',
+//        relations: [
+//        {
+//            type: Backbone.HasMany,
+//            key: 'desires',
+//            relatedModel: '$.ventoonirico.Desire',
+//            reverseRelation: {
+//                key: 'owner',
+//                includeInJSON: 'id'
+//            }
+//        }
+//        ]
+    });
+    
     $.ventoonirico.GameCountView = Backbone.View.extend({
         initialize: function() {
             this.listenTo(this.model, 'sync', this.render);

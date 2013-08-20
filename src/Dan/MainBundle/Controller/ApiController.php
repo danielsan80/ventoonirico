@@ -36,13 +36,10 @@ class ApiController extends Controller
      */
     public function getUserAction()
     {
+        $serializer = $this->get('jms_serializer');
+        
         $user = $this->get('user');
-        $response = new Response();
-        if ($user) {
-            $response->setContent($user->getAsJson());
-        } else {
-            $response->setContent('{}');
-        }
+        $response = new Response($serializer->serialize($user, 'json'), 200, array('Content-Type'=>'application/json'));
 
         return $response;
     }

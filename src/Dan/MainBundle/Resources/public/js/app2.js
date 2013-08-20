@@ -65,7 +65,7 @@ $(function($) {
         }
     });
 
-    $.ventoonirico.AppView = Backbone.View.extend({
+    $.ventoonirico.IndexView = Backbone.View.extend({
         el: $("#app"),
         template: _.template($('#games').html()),
         events: {
@@ -93,10 +93,10 @@ $(function($) {
     
     $.ventoonirico.Router = Backbone.Router.extend({
         routes: {
-            "":"showGameList"
+            "":"index"
         },
-        showGameList: function() {
-            var appView = new $.ventoonirico.AppView({});
+        index: function() {
+            var indexView = new $.ventoonirico.IndexView({});
         }
     });
 

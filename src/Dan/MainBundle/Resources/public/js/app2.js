@@ -89,6 +89,28 @@ $(function($) {
         
     });
 
-    $.ventoonirico.app = new $.ventoonirico.AppView;
+//    $.ventoonirico.app = new $.ventoonirico.AppView;
+    
+    $.ventoonirico.Router = Backbone.Router.extend({
+        routes: {
+            "":"showGameList"
+        },
+        showGameList: function() {
+            var appView = new $.ventoonirico.AppView({});
+        }
+    });
+
+
+    $.ventoonirico.app = null;
+    
+    $.ventoonirico.bootstrap = function() {
+        
+        $.ventoonirico.app = new $.ventoonirico.Router(); 
+        Backbone.history.start({
+            pushState: true
+        });
+    };
+    
+    $.ventoonirico.bootstrap();
 
 }(jQuery));

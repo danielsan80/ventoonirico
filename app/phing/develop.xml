@@ -21,12 +21,7 @@
     <target name="design"
             description="Run design task (cache,assets,assetic)">
         <echo msg="Cache" />
-        <exec command="php app/console cache:clear" outputProperty="return" />
-        <echo message="${return}"></echo>       
-        <exec command="php app/console --env=prod cache:clear" outputProperty="return" />
-        <echo message="${return}"></echo>       
-        <exec command="php app/console --env=test cache:clear" outputProperty="return" />
-        <echo message="${return}"></echo>       
+        <phingcall target="cc" />
         <echo msg="Assets" />
         <exec command="php app/console assets:install web" outputProperty="return" />
         <echo message="${return}"></echo>       
@@ -52,6 +47,11 @@
     <target name="cache"
             description="Clear all cache files">
         <echo msg="Cache" />
+        <exec command="rm -Rf app/cache/*" outputProperty="return" />
+    </target>
+    
+        <target name="cc"
+            description="Run cache clear in dev env">
         <exec command="rm -Rf app/cache/*" outputProperty="return" />
     </target>
 

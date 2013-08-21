@@ -3642,6 +3642,8 @@ a._keyEvent=!1;return K},_generateMonthYearHeader:function(a,b,c,d,e,f,g,h){var 
 $(function($) {
 
     $.ventoonirico = {};
+    
+    $.ventoonirico.user = null;
 
     $.ventoonirico.Game = Backbone.Model.extend({
         urlRoot: '/api/games'
@@ -3663,7 +3665,7 @@ $(function($) {
         url: '/api/games',
         model: $.ventoonirico.Game
     });
-    
+
     $.ventoonirico.User = Backbone.Model.extend({
         urlRoot: '/api/users'
 //        idAttribute: 'id',
@@ -3680,6 +3682,10 @@ $(function($) {
 //        ]
     });
     
+    $.ventoonirico.CurrentUser = $.ventoonirico.User.extend({
+        url: '/api/user'
+    });
+
     $.ventoonirico.GameCountView = Backbone.View.extend({
         initialize: function() {
             this.listenTo(this.model, 'sync', this.render);
@@ -3716,8 +3722,21 @@ $(function($) {
         },
         template: _.template($('#game').html()),
         render: function() {
-            console.log(this.model.toJSON());
             this.el = this.template({game: this.model.toJSON()});
+            return this;
+        }
+    });
+    
+    $.ventoonirico.CurrentUserView = Backbone.View.extend({
+        tagName: 'span',
+        initialize: function() {
+            this.listenTo(this.model, 'change', this.render);
+        },
+        template: _.template($('#current-user').html()),
+        render: function() {
+    
+            this.$el.html(this.template({user: this.model.toJSON()}));
+            console.log(this.el);
             return this;
         }
     });
@@ -3729,45 +3748,65 @@ $(function($) {
         },
         initialize: function() {
             this.render();
+//            this.loadCurrentUser();
         },
         render: function() {
             this.$el.html(this.template({}));
 
             var gameCollection = new $.ventoonirico.GameCollection();
-            
-            var gameListView = new $.ventoonirico.GameListView({'model':gameCollection});
-            var gameCountView = new $.ventoonirico.GameCountView({'model':gameCollection});
+
+            var gameListView = new $.ventoonirico.GameListView({'model': gameCollection});
+            var gameCountView = new $.ventoonirico.GameCountView({'model': gameCollection});
+            var currentUserView = new $.ventoonirico.CurrentUserView({'model': $.ventoonirico.user});
+
+
+            this.$("#game-list").append(gameListView.el);
+            this.$("#game-count").append(gameCountView.el);
+            this.$("#current-user").append(currentUserView.el);
             
             gameCollection.fetch();
-            
-            this.$("#game-list").append(gameListView.render().el);
-            this.$("#game-count").append(gameCountView.render().el);
+            $.ventoonirico.user.fetch();
         },
-        
+        loadCurrentUser: function() {
+            $.ajax({
+                url: '/api/user',
+                success: function(data) {
+                    if (data) {
+                        $.ventoonirico.user = new $.ventoonirico.User(data);
+                    } else {
+                        $.ventoonirico.user = null;
+                    }
+                }
+            });
+
+        }
     });
 
 //    $.ventoonirico.app = new $.ventoonirico.AppView;
-    
+    $.ventoonirico.user = null;
+
     $.ventoonirico.Router = Backbone.Router.extend({
         routes: {
-            "":"index"
+            "": "index"
+        },
+        initialize: function() {
+            $.ventoonirico.user = new $.ventoonirico.CurrentUser();
         },
         index: function() {
             var indexView = new $.ventoonirico.IndexView({});
         }
     });
 
-
     $.ventoonirico.app = null;
-    
+
     $.ventoonirico.bootstrap = function() {
         
-        $.ventoonirico.app = new $.ventoonirico.Router(); 
+        $.ventoonirico.app = new $.ventoonirico.Router();
         Backbone.history.start({
             pushState: true
         });
     };
-    
+
     $.ventoonirico.bootstrap();
 
 }(jQuery));

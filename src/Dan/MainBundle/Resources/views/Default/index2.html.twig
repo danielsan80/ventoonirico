@@ -8,11 +8,15 @@
 {% block templates %}
     {{parent()}}
     <script type="text/template" id="games">
+        <div id="current-user"></div>
         <div id="game-count"></div>
         <div id="game-list"></div>
     </script>
     <script type="text/template" id="game-count">
         Ventoonirico dispone di <strong><% if (!count) { %>...<% } else { %><%= count %><% } %></strong> giochi
+    </script>
+    <script type="text/template" id="current-user">
+        <%= user.email %>
     </script>
     <script type="text/template" id="game-list">
         <table class="game-list table table-bordered">

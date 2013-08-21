@@ -3683,7 +3683,10 @@ $(function($) {
     });
     
     $.ventoonirico.CurrentUser = $.ventoonirico.User.extend({
-        url: '/api/user'
+        url: '/api/user',
+        isLogged: function() {
+            return this.get('id');
+        }
     });
 
     $.ventoonirico.GameCountView = Backbone.View.extend({
@@ -3714,6 +3717,47 @@ $(function($) {
             this.$('table.game-list').prepend(gameView.render().el);
         }
     });
+    
+    $.ventoonirico.GameStatusView = Backbone.View.extend({
+        initialize: function() {
+            this.listenTo(this.model.game, 'change', this.render);
+            this.listenTo(this.model.user, 'change', this.render);
+            this.render()
+        },
+        render: function() {
+            var desire = this.model.game.get('desire');
+            if (!this.model.user.isLogged()) {
+                if (!desire) {
+                    this.template = _.template($('#game-status-nouser-nodesire').html()),
+                    this.$el.html(this.template(this.model));
+                    return this;
+                }
+                if (desire) {
+                    this.template = _.template($('#game-status-nouser-desire').html()),
+                    this.$el.html(this.template(this.model));
+                    return this;
+                }
+            }
+            if (this.model.user.isLogged()) {
+                if (!desire) {
+                    this.template = _.template($('#game-status-user-nodesire').html()),
+                    this.$el.html(this.template(this.model));
+                    return this;
+                }
+                if (desire) {
+                    if (desire.get('owner')==this.model.user) {
+                        this.template = _.template($('#game-status-user-desire-owner').html()),
+                        this.$el.html(this.template(this.model));
+                        return this;
+                    } else {
+                        this.template = _.template($('#game-status-user-desire-noowner').html()),
+                        this.$el.html(this.template(this.model));
+                        return this;
+                    }
+                }
+            }
+        }
+    });
 
     $.ventoonirico.GameView = Backbone.View.extend({
         tagName: 'tr',
@@ -3722,7 +3766,14 @@ $(function($) {
         },
         template: _.template($('#game').html()),
         render: function() {
-            this.el = this.template({game: this.model.toJSON()});
+            this.setElement(this.template({game: this.model.toJSON()}));
+            var gameStatusView = new $.ventoonirico.GameStatusView({
+                el: this.$el.find(".game-status"),
+                model: {
+                    game: this.model,
+                    user: $.ventoonirico.user
+                }
+            });
             return this;
         }
     });
@@ -3736,7 +3787,6 @@ $(function($) {
         render: function() {
     
             this.$el.html(this.template({user: this.model.toJSON()}));
-            console.log(this.el);
             return this;
         }
     });
@@ -3748,7 +3798,6 @@ $(function($) {
         },
         initialize: function() {
             this.render();
-//            this.loadCurrentUser();
         },
         render: function() {
             this.$el.html(this.template({}));
@@ -3767,22 +3816,8 @@ $(function($) {
             gameCollection.fetch();
             $.ventoonirico.user.fetch();
         },
-        loadCurrentUser: function() {
-            $.ajax({
-                url: '/api/user',
-                success: function(data) {
-                    if (data) {
-                        $.ventoonirico.user = new $.ventoonirico.User(data);
-                    } else {
-                        $.ventoonirico.user = null;
-                    }
-                }
-            });
-
-        }
     });
 
-//    $.ventoonirico.app = new $.ventoonirico.AppView;
     $.ventoonirico.user = null;
 
     $.ventoonirico.Router = Backbone.Router.extend({

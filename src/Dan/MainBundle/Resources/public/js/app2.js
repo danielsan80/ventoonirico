@@ -4,25 +4,38 @@ $(function($) {
     
     $.ventoonirico.user = null;
 
-    $.ventoonirico.Game = Backbone.Model.extend({
-        urlRoot: '/api/games'
-//        idAttribute: 'id',
-//        relations: [
-//        {
-//            type: Backbone.HasOne,
-//            key: 'desire',
-//            relatedModel: '$.ventoonirico.Desire',
-//            reverseRelation: {
-//                key: 'game',
-//                includeInJSON: 'id'
-//            }
-//        }
-//        ]
+    $.ventoonirico.Game = Backbone.RelationalModel.extend({
+        urlRoot: '/api/games',
+        relations: [
+        {
+            type: Backbone.HasOne,
+            key: 'desire',
+            relatedModel: '$.ventoonirico.Desire',
+            reverseRelation: {
+                key: 'game',
+                includeInJSON: 'id'
+            }
+        }
+        ],
+        createDesire: function(user) {
+            var desire = new $.ventoonirico.Desire({game: this});
+            this.set('desire', desire);
+            desire.save();
+        }
     });
 
     $.ventoonirico.GameCollection = Backbone.Collection.extend({
         url: '/api/games',
         model: $.ventoonirico.Game
+    });
+    
+    $.ventoonirico.Desire = Backbone.RelationalModel.extend({
+        urlRoot: '/api/desires',
+    });
+    
+    $.ventoonirico.DesireCollection = Backbone.Collection.extend({
+        url: '/api/desires',
+        model: $.ventoonirico.Desire
     });
 
     $.ventoonirico.User = Backbone.Model.extend({
@@ -83,6 +96,9 @@ $(function($) {
             this.listenTo(this.model.user, 'change', this.render);
             this.render()
         },
+        events: {
+            "click .desire-create": "createDesire"
+        },
         render: function() {
             var desire = this.model.game.get('desire');
             if (!this.model.user.isLogged()) {
@@ -115,6 +131,9 @@ $(function($) {
                     }
                 }
             }
+        },
+        createDesire: function() {
+            this.model.game.createDesire(this.model.user);
         }
     });
 

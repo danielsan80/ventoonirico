@@ -39,7 +39,6 @@
 {% endblock %}
 
 {% block foot_script %}
-    {#'@DanMainBundle/Resources/public/js/backbone-relational.js'#}
     {# To only use a subset or add more js overwrite and copy paste this block #}
     {% javascripts
             'http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'
@@ -49,6 +48,7 @@
 
             '@DanMainBundle/Resources/public/js/underscore.js'
             '@DanMainBundle/Resources/public/js/backbone.js'
+            '@DanMainBundle/Resources/public/js/backbone-relational.js'
             
             '@DanMainBundle/Resources/public/js/app2.js'
             '@DanMainBundle/Resources/public/bootstrap/js/bootstrap-transition.js'

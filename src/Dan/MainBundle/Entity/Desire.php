@@ -44,7 +44,7 @@ class Desire
      * @ORM\ManyToOne(targetEntity="Dan\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
      * @Serializer\Expose
-     * @Serializer\Type("integer")
+     * @Serializer\Type("Dan\UserBundle\Entity\User")
      */
     private $owner;
 
@@ -54,12 +54,14 @@ class Desire
      * @ORM\Column(name="game_id", type="text")
      * @Serializer\Expose
      * @Serializer\Type("integer")
-     * @Serializer\SerializedName("game")
+     * Serializer\SerializedName("game")
      */
     private $gameId;
     
     /**
      * @var Game
+     * @Serializer\Expose
+     * @Serializer\Type("Dan\MainBundle\Entity\Game")
      */
     private $game;
 
@@ -104,6 +106,12 @@ class Desire
         return $this->id;
     }
 
+    public function setOwner(User $owner)
+    {
+        $this->owner = $owner;
+        return $this;
+    }
+    
     /**
      * Get user
      *

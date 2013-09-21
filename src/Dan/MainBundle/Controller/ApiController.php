@@ -112,6 +112,7 @@ class ApiController extends Controller
         $desireRepo = $em->getRepository('DanMainBundle:Desire')->setUser($user);
 
         $desire = $this->deserialize('Dan\MainBundle\Entity\Desire',$request);
+        
         $em->persist($desire);
         $em->flush($desire);        
 
@@ -121,7 +122,7 @@ class ApiController extends Controller
 
         return $response;
     }
-
+    
     /**
      * Request 
      * 

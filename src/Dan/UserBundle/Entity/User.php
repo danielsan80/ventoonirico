@@ -66,4 +66,5 @@ class User extends BaseUser
            'username' => $this->getUsername(),
         ));
     }
+    
 }

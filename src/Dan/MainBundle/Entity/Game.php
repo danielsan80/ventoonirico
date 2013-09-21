@@ -3,15 +3,48 @@
 namespace Dan\MainBundle\Entity;
 
 use Symfony\Component\Yaml\Yaml;
+use JMS\Serializer\Annotation as Serializer
 
+/**
+ * @Serializer\ExclusionPolicy("all")
+ */
 class Game
 {
 
+    /**
+     * @Serializer\Expose
+     * @Serializer\Type("integer")
+     */
     private $id;
+    
+    /**
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     */
     private $name;
+    
+    /**
+     * @Serializer\Expose
+     * @Serializer\Type("array<string>")
+     */
     private $owners = array();
+    
+    /**
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     */
     private $thumbnail;
+    
+    /**
+     * @Serializer\Expose
+     * @Serializer\Type("integer")
+     */
     private $minPlayers;
+    
+    /**
+     * @Serializer\Expose
+     * @Serializer\Type("integer")
+     */
     private $maxPlayers;
 
     public function __construct($item, $options = null)

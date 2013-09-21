@@ -19,6 +19,7 @@ $(function($) {
             var desire = new $.ventoonirico.Desire({owner: user, game: this});
 //            this.set('desire', desire);
             desire.save();
+            this.set('desire', desire);
         }
     });
 
@@ -101,6 +102,7 @@ $(function($) {
             "click .desire-create": "createDesire"
         },
         render: function() {
+    console.log('changed');
             var desire = this.model.game.get('desire');
             if (!this.model.user.isLogged()) {
                 if (!desire) {

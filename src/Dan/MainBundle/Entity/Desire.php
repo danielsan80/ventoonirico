@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 //use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as Serializer;
 use Dan\UserBundle\Entity\User;
 use Dan\MainBundle\Entity\Game;
 
@@ -14,6 +15,7 @@ use Dan\MainBundle\Entity\Game;
  *
  * @ORM\Table(name="dan_desire")
  * @ORM\Entity(repositoryClass="Dan\MainBundle\Entity\DesireRepository")
+ * @Serializer\ExclusionPolicy("all")
  */
 class Desire
 {
@@ -33,12 +35,16 @@ class Desire
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Expose
+     * @Serializer\Type("integer")
      */
     private $id;
     
     /**
      * @ORM\ManyToOne(targetEntity="Dan\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     * @Serializer\Expose
+     * @Serializer\Type("integer")
      */
     private $owner;
 
@@ -46,6 +52,9 @@ class Desire
      * @var string
      *
      * @ORM\Column(name="game_id", type="text")
+     * @Serializer\Expose
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("game")
      */
     private $gameId;
     

@@ -5,3 +5,7 @@ services:
 #    dan_main.example:
 #        class: %dan_main.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+    dan_desire_subscriber:
+        class: Dan\MainBundle\Subscriber\DesireEventSubscriber
+        tags:
+            - { name: jms_serializer.event_subscriber, event: preDeserialize, direction: deserialization, format: json }

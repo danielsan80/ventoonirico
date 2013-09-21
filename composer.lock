@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "3413e6bd191799235ef73a4def53e20c",
+    "hash": "391f67c015aeeb8b6c30e86fb188bcb8",
     "packages": [
         {
             "name": "avalanche123/imagine-bundle",
@@ -147,52 +147,6 @@
                 "google"
             ],
             "time": "2013-03-04 19:30:59"
-        },
-        {
-            "name": "dan/common-bundle",
-            "version": "dev-master",
-            "target-dir": "Dan/CommonBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/danielsan80/DanCommonBundle.git",
-                "reference": "2a3ff8b72bcb30249b36779863227ea2f0cc55ff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/danielsan80/DanCommonBundle/zipball/2a3ff8b72bcb30249b36779863227ea2f0cc55ff",
-                "reference": "2a3ff8b72bcb30249b36779863227ea2f0cc55ff",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/framework-bundle": "2.1.*"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Dan\\CommonBundle": ""
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Danilo Sanchi",
-                    "email": "danilo.sanchi@gmail.com",
-                    "homepage": "http://danilosanchi.net"
-                }
-            ],
-            "description": "An indipendent toolkit for all my projects",
-            "homepage": "https://github.com/danielsan80/DanCommonBundle.git",
-            "keywords": [
-                "common",
-                "toolkit"
-            ],
-            "support": {
-                "source": "https://github.com/danielsan80/DanCommonBundle/tree/master",
-                "issues": "https://github.com/danielsan80/DanCommonBundle/issues"
-            },
-            "time": "2013-05-02 13:16:32"
         },
         {
             "name": "doctrine/annotations",

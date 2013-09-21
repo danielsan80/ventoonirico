@@ -2,6 +2,7 @@
 
 {% block title %}Ventoonirico's collection{% endblock %}
 {% block content %}
+
     <div id="app"></div>
 {% endblock %}
 
@@ -9,9 +10,10 @@
     {{parent()}}
     
     <script type="text/template" id="games">
+        
         <div id="current-user"></div>
         <div id="game-count"></div>
-        <div id="game-list"></div>
+        <div id="game-list"><div class="loading"></div></div>
     </script>
     
     <script type="text/template" id="game-count">

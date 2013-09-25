@@ -2,54 +2,86 @@
 
 namespace Dan\MainBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Yaml\Yaml;
-use JMS\Serializer\Annotation as Serializer
+use JMS\Serializer\Annotation as Serializer;
 
 /**
+ * Game
+ *
+ * @ORM\Table(name="dan_game")
+ * @ORM\Entity(repositoryClass="Dan\MainBundle\Entity\GameRepository")
  * @Serializer\ExclusionPolicy("all")
  */
 class Game
 {
-
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      * @Serializer\Expose
      * @Serializer\Type("integer")
      */
     private $id;
-    
+
     /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
      * @Serializer\Expose
      * @Serializer\Type("string")
      */
     private $name;
-    
+
     /**
+     * @var array
+     *
+     * @ORM\Column(name="owners", type="array")
      * @Serializer\Expose
      * @Serializer\Type("array<string>")
      */
-    private $owners = array();
-    
+    private $owners;
+
     /**
+     * @var string
+     *
+     * @ORM\Column(name="thumbnail", type="text")
      * @Serializer\Expose
      * @Serializer\Type("string")
      */
     private $thumbnail;
-    
+
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="minPlayer", type="integer")
      * @Serializer\Expose
      * @Serializer\Type("integer")
      */
-    private $minPlayers;
-    
+    private $minPlayer;
+
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="maxPlayers", type="integer")
      * @Serializer\Expose
      * @Serializer\Type("integer")
      */
     private $maxPlayers;
 
-    public function __construct($item, $options = null)
+
+    public function __construct($item=null, $options = null)
     {
-        if (isset($options)) {
+        if (isset($item)) {
+            $this->loadFromItem($item, $options);
+        }
+    }
+    
+    public function loadFromItem($item, $options=null)
+    {
+                if (isset($options)) {
             if (isset($options['user'])) {
                 $attributes = $item->status[0]->attributes();
                 if ( (bool)(int)$attributes['own']) {
@@ -92,92 +124,139 @@ class Game
         $this->setMinPlayers((int) $attributes['minplayers']);
         $this->setMaxPlayers((int) $attributes['maxplayers']);
     }
-
+    
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
     public function getId()
     {
         return $this->id;
     }
 
-    public function setId($id)
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Game
+     */
+    public function setName($name)
     {
-        $this->id = $id;
+        $this->name = $name;
+    
+        return $this;
     }
 
+    /**
+     * Get name
+     *
+     * @return string 
+     */
     public function getName()
     {
         return $this->name;
     }
 
-    public function setName($name)
+    /**
+     * Set owners
+     *
+     * @param array $owners
+     * @return Game
+     */
+    public function setOwners($owners)
     {
-        $this->name = $name;
+        $this->owners = $owners;
+    
+        return $this;
     }
 
+    /**
+     * Get owners
+     *
+     * @return array 
+     */
+    public function getOwners()
+    {
+        return $this->owners;
+    }
+    
     public function getOwner()
     {
         return $this->owners[0];
     }
-
+    
     public function addOwner($owner)
     {
         $this->owners[] = $owner;
     }
 
-    public function getOwners()
+    /**
+     * Set thumbnail
+     *
+     * @param string $thumbnail
+     * @return Game
+     */
+    public function setThumbnail($thumbnail)
     {
-        return $this->owners;
-    }
-
-    public function setOwners($owners)
-    {
-        $this->owners = $owners;
-    }
+        $this->thumbnail = $thumbnail;
     
-    public function isOwned()
-    {
-        return (bool)count($this->owners);
+        return $this;
     }
 
+    /**
+     * Get thumbnail
+     *
+     * @return string 
+     */
     public function getThumbnail()
     {
         return $this->thumbnail;
     }
 
-    public function setThumbnail($thumbnail)
+    /**
+     * Set minPlayer
+     *
+     * @param integer $minPlayer
+     * @return Game
+     */
+    public function setMinPlayer($minPlayer)
     {
-        $this->thumbnail = $thumbnail;
+        $this->minPlayer = $minPlayer;
+    
+        return $this;
     }
 
-    public function getMinPlayers()
+    /**
+     * Get minPlayer
+     *
+     * @return integer 
+     */
+    public function getMinPlayer()
     {
-        return $this->minPlayers;
+        return $this->minPlayer;
     }
 
-    public function setMinPlayers($pax)
+    /**
+     * Set maxPlayers
+     *
+     * @param integer $maxPlayers
+     * @return Game
+     */
+    public function setMaxPlayers($maxPlayers)
     {
-        $this->minPlayers = $pax;
+        $this->maxPlayers = $maxPlayers;
+    
+        return $this;
     }
 
+    /**
+     * Get maxPlayers
+     *
+     * @return integer 
+     */
     public function getMaxPlayers()
     {
         return $this->maxPlayers;
     }
-
-    public function setMaxPlayers($pax)
-    {
-        $this->maxPlayers = $pax;
-    }
-    
-    public function getAsArray()
-    {
-        return array(
-            'id' => $this->getId(),
-            'name' => $this->getName(),
-            'minPlayers' => $this->getMinPlayers(),
-            'maxPlayers' => $this->getMaxPlayers(),
-            'owners' => $this->getOwners(),
-            'thumbnail' => $this->getThumbnail()
-        );
-    }
-
 }

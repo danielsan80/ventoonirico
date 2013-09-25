@@ -12,4 +12,10 @@ use Doctrine\ORM\EntityRepository;
  */
 class GameRepository extends EntityRepository
 {
+    public function findAll()
+    {
+        $qb = $this->createQueryBuilder('g')
+                ->orderBy('g.name','asc');
+        return $qb->getQuery()->getResult();
+    }
 }

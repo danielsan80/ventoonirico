@@ -50,16 +50,16 @@ class ApiController extends Controller
      */
     public function getGamesAction()
     {
-        $service = new BGGService($this->get('liip_doctrine_cache.ns.bgg'));
-        $games = $service->getGames();
-        $games = $service->shiftGames($games);
+        $manager = $this->get('model.manager.game');
+        $serializer = $this->get('serializer');
+        $games = $manager->getAllGames();
+        
+        $games = $manager->shiftGames($games);
 
-        foreach ($games as $game) {
-            $result[] = $game->getAsArray();
-        }
-
+        $result = $serializer->serialize($games, 'json');
+        
         $response = new Response();
-        $response->setContent(json_encode($result));
+        $response->setContent($result);
 
         return $response;
     }

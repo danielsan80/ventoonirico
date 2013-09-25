@@ -76,7 +76,7 @@ class BGGService
             foreach ($items as $item) {
                 $game = new Game($item, array('user' => $name));
                 if ($game->isOwned()) {
-                    $games[$game->getId()] = $game;
+                    $games[$game->getBggId()] = $game;
                 }
             }
             $collections[$username] = $games;
@@ -86,11 +86,11 @@ class BGGService
         $games = array();
         foreach ($collections as $username => $collection) {
             $name = $users[$username];
-            foreach ($collection as $id => $game) {
-                if (isset($games[$id])) {
-                    $games[$id]->addOwner($name);
+            foreach ($collection as $bggId => $game) {
+                if (isset($games[$bggId])) {
+                    $games[$bggId]->addOwner($name);
                 } else {
-                    $games[$id] = $game;
+                    $games[$bggId] = $game;
                 }
             }
         }

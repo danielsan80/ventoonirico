@@ -68,6 +68,7 @@ class Game
      * @ORM\Column(name="min_players", type="integer")
      * @Serializer\Expose
      * @Serializer\Type("integer")
+     * @Serializer\SerializedName("minPlayers")
      */
     private $minPlayers;
 
@@ -77,6 +78,7 @@ class Game
      * @ORM\Column(name="max_players", type="integer")
      * @Serializer\Expose
      * @Serializer\Type("integer")
+     * @Serializer\SerializedName("maxPlayers")
      */
     private $maxPlayers;
 
@@ -222,6 +224,11 @@ class Game
     {
         $this->owners[] = $owner;
     }
+    
+    public function isOwned()
+    {
+        return (bool)count($this->owners);
+    }
 
     /**
      * Set thumbnail
@@ -296,11 +303,11 @@ class Game
     private function getCompareProperties()
     {
         return array(
-            'code',
+            'bggId',
             'owners',
             'thumbnail',
-            'minPlayer',
-            'maxPlayer',
+            'minPlayers',
+            'maxPlayers',
         );
     }
     

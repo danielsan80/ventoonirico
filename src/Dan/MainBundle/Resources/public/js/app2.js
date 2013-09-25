@@ -88,7 +88,7 @@ $(function($) {
             var gameView = new $.ventoonirico.GameView({
                 model: game
             });
-            this.$('table.game-list').prepend(gameView.render().el);
+            this.$('table.game-list').append(gameView.render().el);
         }
     });
     
@@ -181,7 +181,6 @@ $(function($) {
             this.render();
         },
         render: function() {
-    console.log('aaa');
             this.$el.html(this.template({}));
 
             var gameCollection = new $.ventoonirico.GameCollection();
@@ -218,6 +217,7 @@ $(function($) {
     $.ventoonirico.app = null;
 
     $.ventoonirico.bootstrap = function() {
+        
         $.ventoonirico.app = new $.ventoonirico.Router();
         Backbone.history.start({
             pushState: true

@@ -181,6 +181,7 @@ $(function($) {
             this.render();
         },
         render: function() {
+    console.log('aaa');
             this.$el.html(this.template({}));
 
             var gameCollection = new $.ventoonirico.GameCollection();
@@ -217,7 +218,6 @@ $(function($) {
     $.ventoonirico.app = null;
 
     $.ventoonirico.bootstrap = function() {
-        
         $.ventoonirico.app = new $.ventoonirico.Router();
         Backbone.history.start({
             pushState: true

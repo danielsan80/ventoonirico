@@ -123,17 +123,4 @@ class BGGService
         return ($aName < $bName) ? -1 : 1;
     }
 
-    public function shiftGames($games)
-    {
-        $now = new \DateTime();
-        $year = $now->format('Y') - 2010;
-        $days = $now->format('z') + ($year * 365);
-        $offset = $days % count($games);
-        $offset = count($games) - $offset;
-        $slice = array_slice($games, $offset, null, true);
-        $games = array_slice($games, 0, $offset, true);
-        $games = array_merge($slice, $games);
-        return $games;
-    }
-
 }

@@ -9,7 +9,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * Game
  *
- * @ORM\Table(name="dan_game")
+ * @ORM\Table(name="dan_game", indexes={@ORM\Index(name="bgg_id", columns={"bgg_id"})})
  * @ORM\Entity(repositoryClass="Dan\MainBundle\Entity\GameRepository")
  * @Serializer\ExclusionPolicy("all")
  */
@@ -25,6 +25,15 @@ class Game
      * @Serializer\Type("integer")
      */
     private $id;
+    
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="bgg_id", type="string", length=255)
+     * @Serializer\Expose
+     * @Serializer\Type("string")
+     */
+    private $bggId;
 
     /**
      * @var string
@@ -56,16 +65,16 @@ class Game
     /**
      * @var integer
      *
-     * @ORM\Column(name="minPlayer", type="integer")
+     * @ORM\Column(name="min_players", type="integer")
      * @Serializer\Expose
      * @Serializer\Type("integer")
      */
-    private $minPlayer;
+    private $minPlayers;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="maxPlayers", type="integer")
+     * @ORM\Column(name="max_players", type="integer")
      * @Serializer\Expose
      * @Serializer\Type("integer")
      */
@@ -116,7 +125,7 @@ class Game
             } catch (\Exception $e) {}
         }
         $attributes = $item->attributes();
-        $this->setId((int) $attributes['objectid']);
+        $this->setBggId((int) $attributes['objectid']);
 
         $this->setName((string) $item->name);
         $this->setThumbnail((string) $item->thumbnail);
@@ -133,6 +142,29 @@ class Game
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set bgg id
+     *
+     * @param string $bggId
+     * @return Game
+     */
+    public function setBggId($bggId)
+    {
+        $this->bggId = $bggId;
+    
+        return $this;
+    }
+    
+    /**
+     * Get bgg id
+     *
+     * @return integer 
+     */
+    public function getBggId()
+    {
+        return $this->bggId;
     }
 
     /**
@@ -217,12 +249,12 @@ class Game
     /**
      * Set minPlayer
      *
-     * @param integer $minPlayer
+     * @param integer $minPlayers
      * @return Game
      */
-    public function setMinPlayer($minPlayer)
+    public function setMinPlayers($minPlayers)
     {
-        $this->minPlayer = $minPlayer;
+        $this->minPlayers = $minPlayers;
     
         return $this;
     }
@@ -232,9 +264,9 @@ class Game
      *
      * @return integer 
      */
-    public function getMinPlayer()
+    public function getMinPlayers()
     {
-        return $this->minPlayer;
+        return $this->minPlayers;
     }
 
     /**
@@ -258,5 +290,40 @@ class Game
     public function getMaxPlayers()
     {
         return $this->maxPlayers;
+    }
+    
+    
+    private function getCompareProperties()
+    {
+        return array(
+            'code',
+            'owners',
+            'thumbnail',
+            'minPlayer',
+            'maxPlayer',
+        );
+    }
+    
+    public function isEquals(Game $game)
+    {
+        $properties = $this->getCompareProperties();
+        foreach($properties as $property) {
+            $method = 'get'.ucfirst($property);
+            if ($this->$method() != $game->$method()) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public function merge(Game $game)
+    {
+        $properties = $this->getCompareProperties();
+        foreach($properties as $property) {
+            $setMethod = 'set'.ucfirst($property);
+            $getMethod = 'get'.ucfirst($property);
+            $this->$setMethod($game->$getMethod());
+        }
+        return true;
     }
 }

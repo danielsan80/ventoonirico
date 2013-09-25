@@ -5500,7 +5500,6 @@ a._keyEvent=!1;return K},_generateMonthYearHeader:function(a,b,c,d,e,f,g,h){var 
 	};
 })();
 
-console.log('1');
 $(function($) {
 
     $.ventoonirico = {};
@@ -5522,6 +5521,7 @@ $(function($) {
             var desire = new $.ventoonirico.Desire({owner: user, game: this});
 //            this.set('desire', desire);
             desire.save();
+            this.set('desire', desire);
         }
     });
 
@@ -5581,6 +5581,7 @@ $(function($) {
         },
         template: _.template($('#game-list').html()),
         render: function() {
+            this.$el.parents().find(".loading").hide();
             this.$el.html(this.template(this.model));
             this.model.forEach(this.renderGame);
             return this;
@@ -5603,6 +5604,7 @@ $(function($) {
             "click .desire-create": "createDesire"
         },
         render: function() {
+    console.log('changed');
             var desire = this.model.game.get('desire');
             if (!this.model.user.isLogged()) {
                 if (!desire) {
@@ -5667,7 +5669,6 @@ $(function($) {
         },
         template: _.template($('#current-user').html()),
         render: function() {
-    
             this.$el.html(this.template({user: this.model.toJSON()}));
             return this;
         }
@@ -5689,7 +5690,6 @@ $(function($) {
             var gameListView = new $.ventoonirico.GameListView({'model': gameCollection});
             var gameCountView = new $.ventoonirico.GameCountView({'model': gameCollection});
             var currentUserView = new $.ventoonirico.CurrentUserView({'model': $.ventoonirico.user});
-
 
             this.$("#game-list").append(gameListView.el);
             this.$("#game-count").append(gameCountView.el);

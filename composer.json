@@ -36,13 +36,16 @@
         "leafo/lessphp": "dev-master",
         
         "liip/doctrine-cache-bundle": "dev-master",
+        "liip/functional-test-bundle": "dev-master",
+ 
         "guzzle/guzzle": "~3.1",
         
         "avalanche123/imagine-bundle": "v2.1",
         "doctrine/doctrine-migrations-bundle": "dev-master",
         "stof/doctrine-extensions-bundle": "~1.1@dev",
         
-        "jms/serializer-bundle": "dev-master"
+        "jms/serializer-bundle": "dev-master",
+        "doctrine/doctrine-fixtures-bundle": "dev-master"
         
     },
     "repositories": [

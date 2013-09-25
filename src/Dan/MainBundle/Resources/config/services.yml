@@ -12,3 +12,15 @@ services:
         tags:
             - { name: jms_serializer.event_subscriber, event: preDeserialize, direction: deserialization, format: json }
             - { name: jms_serializer.event_subscriber, event: postDeserialize, direction: deserialization, format: json }
+    
+    bgg:
+        class: Dan\MainBundle\Service\BGGService
+        arguments:
+            - @liip_doctrine_cache.ns.bgg
+            
+    model.manager.game:
+        class: Dan\MainBundle\Model\GameManager
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @bgg
+            - @liip_doctrine_cache.ns.bgg

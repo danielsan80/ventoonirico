@@ -30,26 +30,12 @@ class DefaultController extends Controller
     /**
      * Home page
      * 
-     * Route("/", name="home")
-     * @return html
+     * @Route("/", name="home")
+     * @Template
      */
     public function indexAction()
     {
-        $service = new BGGService($this->get('liip_doctrine_cache.ns.bgg'));
-        $games = $service->getGames();
-        $games = $service->shiftGames($games);
-        return $this->render('DanMainBundle:Default:index.html.twig', array('games' => $games));
-    }
-    
-    /**
-     * Home page
-     * 
-     * @Route("/", name="home")
-     * @return html
-     */
-    public function index2Action()
-    {
-        return $this->render('DanMainBundle:Default:index2.html.twig', array());
+        return array();
     }
     
 }

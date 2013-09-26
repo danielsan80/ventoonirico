@@ -3,7 +3,6 @@ $(function($) {
     $.ventoonirico = {};
     
     $.ventoonirico.user = null;
-    console.log(window.location.pathname);
     $.ventoonirico.urlPrefix = window.location.pathname.substring(1);
 
     $.ventoonirico.Game = Backbone.RelationalModel.extend({

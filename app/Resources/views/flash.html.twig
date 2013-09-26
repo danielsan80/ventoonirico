@@ -1,0 +1,40 @@
+{% macro flash(type, message, close, use_raw) %}
+    <div class="alert alert-{{ type }}" data-alert="alert">
+	{% if close|default(false) %}
+            <a class="close pull-right" data-dismiss="alert" href="#">×</a>
+	{% endif %}
+	<p>
+            {% if use_raw|default(false) %}
+                {{ message|trans|raw }}
+            {% else %}
+                {{ message|trans }}
+            {% endif %}
+	</p>
+    </div>
+{% endmacro %}
+
+{% macro session_flash(type, close, use_raw, class) %}
+    {% set types = ['info', 'error', 'warning', 'success'] %}
+    {% if close is not defined %}
+        {% set close = false %}
+    {% endif %}
+    {% if use_raw is not defined %}
+        {% set use_raw = false %}
+    {% endif %}
+    {% if app.session.flashbag.count() %}
+        <div class="{{ class|default('flashes') }}">
+            {% if type|default(false) %}
+                {% if app.session.flashbag.has(type) %}
+                    {{ _self.flash(type, app.session.flashbag.get(type)|join('<br/>'), close, use_raw) }}
+                {% endif %}
+            {% else %}
+                {% for type in types %}
+                    {% if app.session.flashbag.has(type) %}
+                        {{ _self.flash(type, app.session.flashbag.get(type)|join('<br/>'), close, use_raw) }}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}
+

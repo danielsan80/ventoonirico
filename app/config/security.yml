@@ -65,6 +65,11 @@ security:
                 failure_path:      /login
                 oauth_user_provider:
                     service: oauth.user_provider
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000 # 365 giorni in secondi
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
             
     access_control:
         - { path: ^/_wdt, role: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -7398,6 +7398,14 @@ body {
   background-position: center;
   height: 32px;
 }
+#remember_me {
+  margin-top: 0px;
+  margin-left: 20px;
+}
+.page-center {
+  margin: 0 auto;
+  width: 260px;
+}
 @-ms-viewport {
   width: device-width;
 }

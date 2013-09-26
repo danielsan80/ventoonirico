@@ -3,7 +3,7 @@ $(function($) {
     $.ventoonirico = {};
     
     $.ventoonirico.user = null;
-    $.ventoonirico.urlPrefix = 'app_dev.php';
+    $.ventoonirico.urlPrefix = window.location.pathname.substring(1);
 
     $.ventoonirico.Game = Backbone.RelationalModel.extend({
         urlRoot: $.ventoonirico.urlPrefix + '/api/games',
@@ -102,7 +102,6 @@ $(function($) {
             "click .desire-create": "createDesire"
         },
         render: function() {
-    console.log('changed');
             var desire = this.model.game.get('desire');
             if (!this.model.user.isLogged()) {
                 if (!desire) {

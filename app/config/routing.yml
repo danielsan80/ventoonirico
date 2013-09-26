@@ -29,6 +29,18 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
 
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix: /login
+
+hwi_oauth_security:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix: /login
+ 
+hwi_oauth_connect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/connect.xml"
+    prefix: /login
+
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
@@ -42,17 +54,19 @@ sonata_user:
     resource: '@SonataUserBundle/Resources/config/routing/admin_security.xml'
     prefix: /admin
     
+google_login:
+    pattern: /login/check-google
     
-_security_check:
-    pattern:  /login_check
-_security_logout:
-    pattern:  /logout
-_google_secured:
-    pattern: /secured/
-    defaults: { _controller: DanMainBundle:Default:index }
-_googleLogin:
-    pattern: /google/login
-    defaults: { _controller: FOSGoogleBundle:Security:login }
+#_security_check:
+#    pattern:  /login_check
+#_security_logout:
+#    pattern:  /logout
+#_google_secured:
+#    pattern: /secured/
+#    defaults: { _controller: DanMainBundle:Default:index }
+#_googleLogin:
+#    pattern: /google/login
+#    defaults: { _controller: FOSGoogleBundle:Security:login }
     
 _imagine:
     resource: .

@@ -172,13 +172,27 @@ stof_doctrine_extensions:
             sortable: false
             
 jms_serializer:
-  metadata:
-    auto_detection: true
-    directories:
-      FOSUserBundle:
-        namespace_prefix: FOS\UserBundle
-        path: "@DanUserBundle/Resources/config/serializer/FOS"
-      SonataUserBundle:
-        namespace_prefix: Sonata\UserBundle
-        path: "@DanUserBundle/Resources/config/serializer/Sonata"
-            
+    metadata:
+        auto_detection: true
+        directories:
+            FOSUserBundle:
+                namespace_prefix: FOS\UserBundle
+                path: "@DanUserBundle/Resources/config/serializer/FOS"
+            SonataUserBundle:
+                namespace_prefix: Sonata\UserBundle
+                path: "@DanUserBundle/Resources/config/serializer/Sonata"
+          
+hwi_oauth:
+    firewall_name: main
+    connect:
+        account_connector: oauth.user_provider
+    fosub:
+        username_iterations: 30
+        properties:
+            google: googleId
+    resource_owners:
+        google:
+            type:                google
+            client_id:           %google_client_id%
+            client_secret:       %google_client_secret%
+            scope:               "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"

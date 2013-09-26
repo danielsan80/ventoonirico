@@ -18,9 +18,14 @@ class User extends BaseUser
     protected $id;
     
     /**
-     * @ORM\Column(name="google_id", type="string", length=40, nullable=true)
+     * @ORM\Column(name="google_id", type="string", length=255, nullable=true)
      */
     protected $googleId;
+ 
+    /**
+     * @ORM\Column(name="google_access_token", type="string", length=255, nullable=true)
+     */
+    protected $googleAccessToken;
     
     /**
      * @ORM\Column(name="image", type="text", nullable=true)
@@ -46,6 +51,16 @@ class User extends BaseUser
     public function getGoogleId()
     {
         return $this->googleId;
+    }
+    
+    public function setGoogleAccessToken( $accessToken )
+    {
+        $this->googleAccessToken = $accessToken;
+    }
+
+    public function getGoogleAccessToken()
+    {
+        return $this->googleAccessToken;
     }
     
     public function setImage( $url )

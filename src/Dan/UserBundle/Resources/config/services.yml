@@ -1,15 +1,24 @@
 parameters:
 #    dan_user.example.class: Dan\UserBundle\Example
-
+    oauth.user_provider.class: Dan\UserBundle\Security\FOSUBUserProvider
+ 
 services:
-    fos_google.user_provider:
-        class: Dan\UserBundle\Security\GoogleProvider
-        arguments:
-            google: @fos_google.api
-            userManager: @fos_user.user_manager
-            validator: @validator
-            em: @doctrine.orm.entity_manager
-            kernel: @kernel
+    oauth.user_provider:
+        class: "%oauth.user_provider.class%"
+        arguments: 
+            - @fos_user.user_manager
+            - {google: googleId}
+        calls:
+            - [setKernel,[@kernel]]
+
+#    fos_google.user_provider:
+#        class: Dan\UserBundle\Security\GoogleProvider
+#        arguments:
+#            google: @fos_google.api
+#            userManager: @fos_user.user_manager
+#            validator: @validator
+#            em: @doctrine.orm.entity_manager
+#            kernel: @kernel
             
     user.factory:
         class: Dan\UserBundle\Service\User

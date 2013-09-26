@@ -28,3 +28,12 @@ services:
         class: Dan\UserBundle\Entity\User
         factory_service: user.factory
         factory_method: get
+
+
+    dan_user.registration.form.type:
+        class: Dan\UserBundle\Form\Type\RegistrationFormType
+        arguments: [Dan\UserBundle\Entity\User]
+        calls:
+            - [ setUserManager, [ @fos_user.user_manager ]]
+        tags:
+            - { name: form.type, alias: dan_user_registration }

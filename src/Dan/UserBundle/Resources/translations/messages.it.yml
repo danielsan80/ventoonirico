@@ -1,8 +1,3 @@
-registration:
-  flash:
-    wrong_pariva: La partita IVA inserita non corrisponde al codice cliente
-    wrong_codcon: Il codice cliente inserito non esiste
-    
 "User account is disabled.": Account disabilitato. Ti è stata inviata un'email con il link di attivazione.
 "User account is locked.": Account bloccato. 
 "User account has expired.": Account scaduto.
@@ -11,7 +6,6 @@ profile:
   flash:
     updated: |
       I tuoi dati di accesso sono stati salvati.
-      (Se hai modificato l'indirizzo email dovrai riconfermalo cliccando sul link che ti abbiamo inviato)
 
 change_password:
   flash:

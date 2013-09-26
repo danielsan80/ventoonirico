@@ -85,6 +85,8 @@ fos_user:
         address:        noreply@symfonyapp.com
         sender_name:    Symfony App
     registration:
+        form: 
+            type: dan_user_registration
         confirmation:
             enabled:    true
             template: DanUserBundle:User:confirmation.email.twig

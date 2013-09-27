@@ -94,6 +94,8 @@ fos_user:
                 address:        confirmation@symfonyapp.com
                 sender_name:    Symfony App Registration
     resetting:
+        form: 
+            type: dan_user_resetting
         email:
             template: DanUserBundle:User:resetting.email.twig
             from_email:

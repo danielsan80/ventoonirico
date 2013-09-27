@@ -7,7 +7,6 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RegistrationFormType extends BaseType
 {

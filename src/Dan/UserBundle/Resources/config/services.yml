@@ -37,3 +37,8 @@ services:
             - [ setUserManager, [ @fos_user.user_manager ]]
         tags:
             - { name: form.type, alias: dan_user_registration }
+
+    dan_user.resetting.form.type:
+        class: Dan\UserBundle\Form\Type\ResettingFormType
+        tags:
+            - { name: form.type, alias: dan_user_resetting }

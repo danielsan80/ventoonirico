@@ -30,8 +30,9 @@
                      {% endif %}
                 {% else %}
                     <div class="login pull-right">
+                        <a href="{{path('fos_user_security_login')}}" class="btn btn-mini btn-mini-micro" >login</a>
+                        &nbsp;
                         <a alt="Login with Google" title="Login with Google" href="{{path('hwi_oauth_service_redirect', { service: 'google' })}}" class="icon-google"></a>
-                        {#{ google_login_button() }#}
                     </div>
                 {% endif %}
         </div>

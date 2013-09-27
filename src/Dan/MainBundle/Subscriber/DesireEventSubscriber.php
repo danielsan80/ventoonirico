@@ -20,9 +20,8 @@ class DesireEventSubscriber implements \JMS\Serializer\EventDispatcher\EventSubs
         $type = $event->getType();
         if ($type['name']=='Dan\MainBundle\Entity\Desire') {
             $data = $event->getData();
-            if (isset($data['game']) && is_int($data['game'])) {
-                $data['game_id'] = $data['game'];
-                unset($data['game']);
+            if (isset($data['game']) && !is_array($data['game'])) {
+                $data['game'] = array('id' => $data['game']);
             }
             if (isset($data['owner']) && !is_array($data['owner'])) {
                 $data['owner'] = array('id' => $data['owner']);
@@ -36,10 +35,16 @@ class DesireEventSubscriber implements \JMS\Serializer\EventDispatcher\EventSubs
         $type = $event->getType();
         if ($type['name']=='Dan\MainBundle\Entity\Desire') {
             $desire = $event->getObject();
+            
             $user = $desire->getOwner();
             $user = $this->em->merge($user);
             $this->em->refresh($user);
             $desire->setOwner($user);
+            
+            $game = $desire->getGame();
+            $game = $this->em->merge($game);
+            $this->em->refresh($game);
+            $desire->setGame($game);
         }
     }
 

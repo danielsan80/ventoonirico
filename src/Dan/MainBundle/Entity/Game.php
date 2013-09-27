@@ -12,6 +12,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Table(name="dan_game", indexes={@ORM\Index(name="bgg_id", columns={"bgg_id"})})
  * @ORM\Entity(repositoryClass="Dan\MainBundle\Entity\GameRepository")
  * @Serializer\ExclusionPolicy("all")
+ * Serializer\AccessType("public_method")
  */
 class Game
 {
@@ -23,6 +24,7 @@ class Game
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Serializer\Expose
      * @Serializer\Type("integer")
+     * Serializer\ReadOnly
      */
     private $id;
     
@@ -47,11 +49,20 @@ class Game
     /**
      * @var array
      *
-     * @ORM\Column(name="owners", type="array")
+     * @ORM\Column(name="owners", type="simple_array")
      * @Serializer\Expose
      * @Serializer\Type("array<string>")
      */
     private $owners;
+    
+    /**
+     * @var array
+     * @ORM\OneToMany(targetEntity="Desire", mappedBy="game")
+     * @ORM\OrderBy({"id" = "DESC"})
+     * @Serializer\Expose
+     * @Serializer\Type("ArrayCollection<Dan\MainBundle\Entity\Desire>")
+     */
+    private $desires;
 
     /**
      * @var string
@@ -135,6 +146,7 @@ class Game
         $this->setMinPlayers((int) $attributes['minplayers']);
         $this->setMaxPlayers((int) $attributes['maxplayers']);
     }
+    
     
     /**
      * Get id
@@ -228,6 +240,28 @@ class Game
     public function isOwned()
     {
         return (bool)count($this->owners);
+    }
+
+    public function setDesires($desires)
+    {
+        $this->desires = $desires;
+    
+        return $this;
+    }
+
+    public function getDesires()
+    {
+        return $this->desires;
+    }
+    
+    public function getLastDesire()
+    {
+        return $this->desires->first();
+    }
+    
+    public function addDesire($desire)
+    {
+        $this->desires[] = $desire;
     }
 
     /**

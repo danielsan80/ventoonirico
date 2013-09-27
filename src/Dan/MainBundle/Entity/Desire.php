@@ -48,18 +48,10 @@ class Desire
      */
     private $owner;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="game_id", type="text")
-     * @Serializer\Expose
-     * @Serializer\Type("integer")
-     * Serializer\SerializedName("game")
-     */
-    private $gameId;
     
     /**
-     * @var Game
+     * @ORM\ManyToOne(targetEntity="Dan\MainBundle\Entity\Game")
+     * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
      * @Serializer\Expose
      * @Serializer\Type("Dan\MainBundle\Entity\Game")
      */
@@ -120,31 +112,6 @@ class Desire
     public function getOwner()
     {
         return $this->owner;
-    }
-    
-    /**
-     * Set game_id
-     *
-     * @param string $gameId
-     * @return Desire
-     */
-    public function setGameId($gameId)
-    {
-        $this->gameId = $gameId;
-    
-        return $this;
-    }
-    
-    
-
-    /**
-     * Get game_id
-     *
-     * @return string 
-     */
-    public function getGameId()
-    {
-        return $this->gameId;
     }
     
     /**
@@ -262,16 +229,4 @@ class Desire
         return $this->reward;
     }
     
-    public function getAsJson()
-    {
-        return json_encode(array(
-           'id' => $this->getId(),
-           'owner' => $this->getOwner()->getAsJson(),
-           'game_id' => $this->getGameId(),
-           'created_at' => $this->getCreatedAt()->format('Y-m-d H:i:s'),
-           'updated_at' => $this->getUpdatedAt()->format('Y-m-d H:i:s'),
-           'note' => $this->getNote(),
-           'reward' => $this->getReward(),            
-        ));
-    }
 }

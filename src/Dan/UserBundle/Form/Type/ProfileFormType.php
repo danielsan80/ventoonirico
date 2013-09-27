@@ -1,6 +1,6 @@
 <?php
 
-namespace Iabadabadu\UserBundle\Form\Type;
+namespace Dan\UserBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\ProfileFormType as BaseProfileFormType;
@@ -12,6 +12,7 @@ class ProfileFormType extends BaseProfileFormType
     {
         parent::buildForm($builder, $options);
         $builder->remove('current_password');
+        $builder->remove('email');
     }
 
     /**
@@ -21,7 +22,7 @@ class ProfileFormType extends BaseProfileFormType
      */
     public function getName()
     {
-        return 'iaba_user_profile_account';
+        return 'dan_user_profile_account';
     }
 
 }

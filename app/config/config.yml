@@ -22,6 +22,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    form:
+        resources:
+            - 'DanMainBundle:Form:theme.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -94,6 +97,13 @@ fos_user:
             from_email:
                 address:        confirmation@symfonyapp.com
                 sender_name:    Symfony App Registration
+    change_password:
+        form: 
+            type: dan_user_change_password
+    profile:
+        form:
+            type: dan_user_profile_account
+    
     resetting:
         form: 
             type: dan_user_resetting

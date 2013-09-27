@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Iabadabadu\UserBundle\Form\Type;
+namespace Dan\UserBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use FOS\UserBundle\Form\Type\ChangePasswordFormType as BaseChangePasswordFormType;
@@ -20,10 +20,12 @@ class ChangePasswordFormType extends BaseChangePasswordFormType
     {
         parent::buildForm($builder, $options);
         $builder->remove('current_password');
+        $builder->remove('new');
+        $builder->add('new', 'password', array('label' => 'Password:'));
     }
     
     public function getName()
     {
-        return 'iaba_user_change_password';
+        return 'dan_user_change_password';
     }
 }

@@ -29,8 +29,10 @@
             <div>
                 <br/>
                 <small>
-                    <a href="{{ path('fos_user_resetting_request') }}">Hai dimenticato la password?</a><br/>
-                    Oppure <a href="{{ path('fos_user_registration_register') }}" class="" >vuoi registrarti?</a> 
+                    Puoi anche autenticarti con: 
+                    <a alt="Login con Google" title="Login con Google" href="{{path('hwi_oauth_service_redirect', { service: 'google' })}}" class="icon-google"></a><br/>
+                    Oppure puoi <a href="{{ path('fos_user_registration_register') }}" class="" >registrarti</a>.<br/> 
+                    Hai <a href="{{ path('fos_user_resetting_request') }}">dimenticato la password</a>?
                 </small>
             </div>
         </form>

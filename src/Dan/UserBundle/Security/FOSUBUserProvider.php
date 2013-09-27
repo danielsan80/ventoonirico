@@ -5,22 +5,9 @@ use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
  
 class FOSUBUserProvider extends BaseClass implements UserProviderInterface
 {
-    private $kernel;
-
-    public function setKernel(KernelInterface $kernel)
-    {
-        $this->kernel = $kernel;
-    }
-    
-    private function getImagesDir()
-    {
-        return $this->kernel->getRootDir().'/files/images';
-    }
- 
     /**
      * {@inheritDoc}
      */
@@ -56,17 +43,27 @@ class FOSUBUserProvider extends BaseClass implements UserProviderInterface
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
         $username = $response->getUsername();
+        $email = $response->getEmail();
+        
+        
+        $service = $response->getResourceOwner()->getName();
+        $getServiceId = 'get'.ucfirst($service).'Id';
+        $setServiceId = 'set'.ucfirst($service).'Id';
+        $getServiceAccessToken = 'get'.ucfirst($service).'AccessToken';
+        $setServiceAccessToken = 'set'.ucfirst($service).'AccessToken';
+        
         $user = $this->userManager->findUserBy(array($this->getProperty($response) => $username));
+        if (null === $user) {
+            $user = $this->userManager->findUserBy(array('email' => $email));
+        }
+        
         //when the user is registrating
         if (null === $user) {
-            $service = $response->getResourceOwner()->getName();
-            $setter = 'set'.ucfirst($service);
-            $setter_id = $setter.'Id';
-            $setter_token = $setter.'AccessToken';
+            
             // create new user here
             $user = $this->userManager->createUser();
-            $user->$setter_id($username);
-            $user->$setter_token($response->getAccessToken());
+            $user->$setServiceId($username);
+            $user->$setServiceAccessToken($response->getAccessToken());
             //I have set all requested data with the user's username
             //modify here with relevant data
             if ($response->getEmail()) {
@@ -80,26 +77,34 @@ class FOSUBUserProvider extends BaseClass implements UserProviderInterface
             $user->setEnabled(true);
             
             $picture = $response->getProfilePicture();
-
             if (isset($picture)) {
-                $pi = pathinfo($picture);
-                $filename = 'user_'.md5($response->getEmail()).'.'.$pi['extension'];
-                file_put_contents($this->getImagesDir().'/'.$filename, file_get_contents($picture));
-                $user->setImage($filename);
+                $this->userManager->setUserImage($user, $picture);
             }
             
             $this->userManager->updateUser($user);
             return $user;
         }
+        
+        if (!$user->$getServiceId()) {
+            $user->$setServiceId($username);            
+            $user->$setServiceAccessToken($response->getAccessToken());
+            if (!$user->getImage()) {
+                $this->userManager->setUserImage($user, $response->getProfilePicture());
+            }
+            
+            $this->userManager->updateUser($user);
+            return $user;
+        }
+        
  
         //if user exists - go with the HWIOAuth way
         $user = parent::loadUserByOAuthUserResponse($response);
  
         $serviceName = $response->getResourceOwner()->getName();
-        $setter = 'set' . ucfirst($serviceName) . 'AccessToken';
+        $setService = 'set' . ucfirst($serviceName) . 'AccessToken';
  
         //update access token
-        $user->$setter($response->getAccessToken());
+        $user->$setService($response->getAccessToken());
  
         return $user;
     }

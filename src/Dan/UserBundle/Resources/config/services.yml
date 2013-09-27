@@ -8,8 +8,6 @@ services:
         arguments: 
             - @fos_user.user_manager
             - {google: googleId}
-        calls:
-            - [setKernel,[@kernel]]
 
 #    fos_google.user_provider:
 #        class: Dan\UserBundle\Security\GoogleProvider
@@ -42,3 +40,14 @@ services:
         class: Dan\UserBundle\Form\Type\ResettingFormType
         tags:
             - { name: form.type, alias: dan_user_resetting }
+
+    model.manager.user:
+        class: Dan\UserBundle\Model\UserManager
+        arguments:
+            - @security.encoder_factory
+            - @fos_user.util.username_canonicalizer
+            - @fos_user.util.email_canonicalizer
+            - @fos_user.entity_manager
+            - %fos_user.model.user.class%
+        calls:
+            - [setKernel,[@kernel]]

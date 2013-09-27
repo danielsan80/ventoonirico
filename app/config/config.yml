@@ -81,6 +81,7 @@ fos_user:
 
     service:
         mailer: fos_user.mailer.twig_swift
+        user_manager: model.manager.user
     from_email:
         address:        noreply@symfonyapp.com
         sender_name:    Symfony App

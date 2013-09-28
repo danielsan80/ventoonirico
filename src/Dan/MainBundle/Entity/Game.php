@@ -12,7 +12,7 @@ use JMS\Serializer\Annotation as Serializer;
  * @ORM\Table(name="dan_game", indexes={@ORM\Index(name="bgg_id", columns={"bgg_id"})})
  * @ORM\Entity(repositoryClass="Dan\MainBundle\Entity\GameRepository")
  * @Serializer\ExclusionPolicy("all")
- * Serializer\AccessType("public_method")
+ * @Serializer\AccessType("public_method")
  */
 class Game
 {
@@ -59,8 +59,8 @@ class Game
      * @var array
      * @ORM\OneToMany(targetEntity="Desire", mappedBy="game")
      * @ORM\OrderBy({"id" = "DESC"})
-     * @Serializer\Expose
-     * @Serializer\Type("ArrayCollection<Dan\MainBundle\Entity\Desire>")
+     * Serializer\Expose
+     * Serializer\Type("ArrayCollection<Dan\MainBundle\Entity\Desire>")
      */
     private $desires;
 
@@ -147,6 +147,19 @@ class Game
         $this->setMaxPlayers((int) $attributes['maxplayers']);
     }
     
+    
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return Game 
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    
+        return $this;
+    }
     
     /**
      * Get id
@@ -254,6 +267,10 @@ class Game
         return $this->desires;
     }
     
+    /**
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("desire")
+     */
     public function getLastDesire()
     {
         return $this->desires->first();

@@ -2,12 +2,32 @@
 
 namespace Dan\UserBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Dan\CommonBundle\Controller\Controller;
 
-class DefaultController extends Controller
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * @Route("/user")
+ */
+class UserController extends Controller
 {
-    public function indexAction($name)
+    
+    
+    /**
+     * @Route("/{username}/image", name="user_image")
+     */
+    public function imageAction($username, $filter='mini')
     {
-        return $this->render('DanUserBundle:Default:index.html.twig', array('name' => $name));
+        $userManager = $this->get('model.manager.user');
+
+        $user = $userManager->findUserBy(array('username' => $username));
+
+        $controller = $this->get('imagine.controller');
+        return $controller->filter($user->getImage(), $filter);
+        
     }
 }

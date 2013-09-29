@@ -50,13 +50,19 @@
         <div class="well" ><a class="desire-create icon icon-plus" href="#"></a></div>
     </script>
     <script type="text/template" id="game-status-nouser-desire">
-        <div class="well" >game-status-nouser-desire</div>
+        <div class="well" >
+            <img src="<%= String('{{path('user_image', {username: '_username_', filter: 'mini'})}}').replace('_username_', desire.get('owner').get('username')) %>" />
+        </div>
     </script>
     <script type="text/template" id="game-status-user-desire-owner">
-        <div class="well" >game-status-user-desire-owner</div>
+        <div class="well" >
+            <a class="desire-remove" href="#"><img src="<%= String('{{path('user_image', {username: '_username_', filter: 'mini'})}}').replace('_username_', desire.get('owner').get('username')) %>" /></a>
+        </div>
     </script>
     <script type="text/template" id="game-status-user-desire-noowner">
-        <div class="well" >game-status-user-desire-noowner</div>
+        <div class="well" >
+            <img src="<%= String('{{path('user_image', {username: '_username_', filter: 'mini'})}}').replace('_username_', desire.get('owner').get('username')) %>" />
+        </div>
     </script>
 
 {% endblock%}

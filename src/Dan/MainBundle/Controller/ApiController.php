@@ -185,4 +185,39 @@ class ApiController extends Controller
         return $response;
     }
 
+    /**
+     * Request 
+     * 
+     * @Route("/desires/{id}", name="delete_desire")
+     * @Method("DELETE")
+     * 
+     * @return json
+     */
+    public function deleteDesireAction($id)
+    {
+
+        $user = $this->get('user');
+
+        $request = $this->getRequest();
+        $gameId = $request->get('gameId');
+        $em = $this->getDoctrine()->getEntityManager();
+        $desireRepo = $em->getRepository('DanMainBundle:Desire');
+        $desire = $desireRepo->findOneById($id);
+
+        $response = new Response();
+        if ($desire) {
+            if ($desire->getOwner()->getId()==$user->getId()) {
+                $em->remove($desire);
+                $em->flush();
+                $response->setStatusCode(200);
+            } else {
+                $response->setStatusCode(401);
+            }
+        } else {
+            $response->setStatusCode(410);
+        }
+        
+        return $response;
+    }
+
 }

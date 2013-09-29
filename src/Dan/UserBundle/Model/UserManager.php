@@ -9,15 +9,17 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class UserManager extends BaseUserManager
 {
     private $kernel;
+    
+    private $imagesDir = '/files/images';
 
     public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
     }
     
-    private function getImagesDir()
+    public function getImagesDir()
     {
-        return $this->kernel->getRootDir().'/files/images';
+        return $this->kernel->getRootDir().$this->imagesDir;
     }
     
     public function setUserImage(User $user, $image) {

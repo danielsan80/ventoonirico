@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation as Serializer;
 use Dan\UserBundle\Entity\User;
 use Dan\MainBundle\Entity\Game;
+use Dan\MainBundle\Entity\Join;
 
 /**
  * Desire
@@ -56,6 +57,15 @@ class Desire
      * @Serializer\Type("Dan\MainBundle\Entity\Game")
      */
     private $game;
+    
+    /**
+     * @var array
+     * @ORM\OneToMany(targetEntity="Join", mappedBy="desire")
+     * @ORM\OrderBy({"id" = "ASC"})
+     * Serializer\Expose
+     * Serializer\Type("ArrayCollection<Dan\MainBundle\Entity\Join>")
+     */
+    private $joins;
 
     /**
      * @var datetime $cratedAt
@@ -135,6 +145,45 @@ class Desire
     public function getGame()
     {
         return $this->game;
+    }
+    
+    public function setJoins($joins)
+    {
+        $this->joins = $joins;
+    
+        return $this;
+    }
+
+    public function getJoins()
+    {
+        return $this->joins;
+    }
+    
+    
+    public function addJoin(Join $join)
+    {
+        $this->joins[] = $join;
+    }
+    
+    /**
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("joined")
+     */    
+    public function getJoinedUsers()
+    {
+        $joins = $this->getJoins();
+        $result = new ArrayCollection();
+        foreach($joins as $join) {
+            $result->add(new JoinedUser($join));            
+        }
+        return $result;
+    }
+    
+    public function addJoinedUser(User $user, $options =null)
+    {
+        $join = new Join($this, $user);
+        $join->setOptions($options);
+        $this->addJoin($join);
     }
 
     /**

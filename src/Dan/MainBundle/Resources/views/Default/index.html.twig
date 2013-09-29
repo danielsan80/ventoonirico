@@ -5,6 +5,12 @@
 
     <div id="app"></div>
 {% endblock %}
+    
+{% macro player_user_image(user, filter) %}
+    {% autoescape false %}
+        <img class="img-polaroid" src="<%= String('{{path('user_image', {username: '_username_', filter: filter})}}').replace('_username_', {{user}}.get('username')) %>" />
+    {% endautoescape %}
+{% endmacro %}
 
 {% block templates %}
     {{parent()}}
@@ -52,12 +58,12 @@
     <script type="text/template" id="game-status-nouser-desire">
         <div class="game-status well" >
             <div class="player player-main">
-                <img class="img-polaroid" src="<%= String('{{path('user_image', {username: '_username_', filter: 'player_main'})}}').replace('_username_', desire.get('owner').get('username')) %>" />
+                {{_self.player_user_image("desire.get('owner')", 'player_main')}}
             </div>
             <% for(var i=0; i<game.get('maxPlayers')-1; i++) { %>
                 <% if (desire.joined && desire.joined[i]) { %>
                     <div class="player player-joined">
-                        <img class="img-polaroid" src="<%= String('{{path('user_image', {username: '_username_', filter: 'player_joined'})}}').replace('_username_', desire.joined[i].get('username')) %>" />
+                        {{_self.player_user_image("desire.joined[i]", 'player_joined')}}
                     </div>
                 <% } else { %>
                     <div class="player player-nobody">
@@ -69,12 +75,68 @@
     </script>
     <script type="text/template" id="game-status-user-desire-owner">
         <div class="game-status well" >
-            <a class="desire-remove" href="#"><img src="<%= String('{{path('user_image', {username: '_username_', filter: 'mini'})}}').replace('_username_', desire.get('owner').get('username')) %>" /></a>
+            <a class="desire-remove" href="#">
+                {{_self.player_user_image("desire.get('owner')", 'player_main')}}
+            </a>
         </div>
     </script>
     <script type="text/template" id="game-status-user-desire-noowner">
         <div class="game-status well" >
-            <img src="<%= String('{{path('user_image', {username: '_username_', filter: 'mini'})}}').replace('_username_', desire.get('owner').get('username')) %>" />
+            {{_self.player_user_image("desire.get('owner')", 'player_main')}}
+        </div>
+    </script>
+    
+    
+    
+    
+    
+    
+    <script type="text/template" id="game-status-desire">
+        <div class="game-status well" >
+            <%= _.template($('#game-status-desire-player_main').html(), {user: user, owner: desire.get('owner')}) %>
+            <% for(var i=0; i<game.get('maxPlayers')-1; i++) { %>
+                <% if (desire.joined && desire.joined[i]) { %>
+                    <%= _.template($('#game-status-desire-player_joined').html(), {user: user, joined: desire.joined[i]}) %>
+                <% } else { %>
+                    <%= _.template($('#game-status-desire-player_nobody').html(), {user: user}) %>
+                <% } %>
+            <% } %>
+        </div>
+    </script>
+    
+    <script type="text/template" id="game-status-desire-player_main">
+        <div class="player player-main">
+            <% if (user.id && user.id==owner.id) { %>
+                <a class="desire-remove" href="#">
+                    {{_self.player_user_image("owner", 'player_main')}}
+                </a>
+            <% } else { %>
+                {{_self.player_user_image("owner", 'player_main')}}
+            <% } %>
+        </div>
+    </script>
+    
+    <script type="text/template" id="game-status-desire-player_joined">
+        <div class="player player-joined">
+            <% if (user.id && user.id==joined.id) { %>
+                <a class="joined-remove" href="#">
+                    {{_self.player_user_image("joined", 'player_joined')}}
+                </a>
+            <% } else { %>
+                {{_self.player_user_image("joined", 'player_joined')}}
+            <% } %>
+        </div>
+    </script>
+    
+    <script type="text/template" id="game-status-desire-player_nobody">
+        <div class="player player-nobody">
+            <% if (user.id) { %>
+                <a class="joined-add" href="#">
+                    <img class="img-polaroid" src="{{ '/icons/player-nobody.png' | apply_filter('player_joined') }}" alt="Posto libero" />
+                </a>
+            <% } else { %>
+                <img class="img-polaroid" src="{{ '/icons/player-nobody.png' | apply_filter('player_joined') }}" alt="Posto libero" />
+            <% } %>
         </div>
     </script>
 

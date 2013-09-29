@@ -24,6 +24,9 @@ $(function($) {
             var desire = this.get('desire');
             this.set('desire', false);
             desire.destroy();
+        },
+        addJoined: function(user) {
+            //todo
         }
     });
 
@@ -104,7 +107,8 @@ $(function($) {
         },
         events: {
             "click .desire-create": "createDesire",
-            "click .desire-remove": "removeDesire"
+            "click .desire-remove": "removeDesire",
+            "click .joined-add": "addJoined"
         },
         render: function() {
             var desire = this.model.game.get('desire');
@@ -115,8 +119,8 @@ $(function($) {
                     return this;
                 }
                 if (desire) {
-                    this.template = _.template($('#game-status-nouser-desire').html()),
-                    this.$el.html(this.template({game: this.model.game, desire: this.model.game.get('desire')}));
+                    this.template = _.template($('#game-status-desire').html()),
+                    this.$el.html(this.template({user: this.model.user, game: this.model.game, desire: desire}));
                     return this;
                 }
             }
@@ -127,15 +131,20 @@ $(function($) {
                     return this;
                 }
                 if (desire) {
-                    if (desire.get('owner').id==this.model.user.id) {
-                        this.template = _.template($('#game-status-user-desire-owner').html()),
-                        this.$el.html(this.template({desire: desire}));
-                        return this;
-                    } else {
-                        this.template = _.template($('#game-status-user-desire-noowner').html()),
-                        this.$el.html(this.template(this.model));
-                        return this;
-                    }
+                    
+                    this.template = _.template($('#game-status-desire').html()),
+                    this.$el.html(this.template({user: this.model.user, game: this.model.game, desire: desire}));
+                    return this;
+                    
+//                    if (desire.get('owner').id==this.model.user.id) {
+//                        this.template = _.template($('#game-status-user-desire-owner').html()),
+//                        this.$el.html(this.template({desire: desire}));
+//                        return this;
+//                    } else {
+//                        this.template = _.template($('#game-status-user-desire-noowner').html()),
+//                        this.$el.html(this.template(this.model));
+//                        return this;
+//                    }
                 }
             }
         },
@@ -145,6 +154,10 @@ $(function($) {
         },        
         removeDesire: function() {
             this.model.game.removeDesire();
+            return false;
+        },
+        addJoined: function() {
+            this.model.game.addJoined(this.model.user);
             return false;
         }
     });

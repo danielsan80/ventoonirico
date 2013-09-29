@@ -10,7 +10,7 @@ class UserManager extends BaseUserManager
 {
     private $kernel;
     
-    private $imagesDir = '/files/images';
+    private $imagesDir = '/files/images/users';
 
     public function setKernel(KernelInterface $kernel)
     {

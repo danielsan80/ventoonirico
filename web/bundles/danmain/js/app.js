@@ -17,9 +17,13 @@ $(function($) {
         ],
         createDesire: function(user) {
             var desire = new $.ventoonirico.Desire({owner: user, game: this});
-//            this.set('desire', desire);
             desire.save();
             this.set('desire', desire);
+        },
+        removeDesire: function() {
+            var desire = this.get('desire');
+            this.set('desire', false);
+            desire.destroy();
         }
     });
 
@@ -99,19 +103,20 @@ $(function($) {
             this.render()
         },
         events: {
-            "click .desire-create": "createDesire"
+            "click .desire-create": "createDesire",
+            "click .desire-remove": "removeDesire"
         },
         render: function() {
             var desire = this.model.game.get('desire');
             if (!this.model.user.isLogged()) {
                 if (!desire) {
                     this.template = _.template($('#game-status-nouser-nodesire').html()),
-                    this.$el.html(this.template(this.model));
+                    this.$el.html(this.template({}));
                     return this;
                 }
                 if (desire) {
                     this.template = _.template($('#game-status-nouser-desire').html()),
-                    this.$el.html(this.template(this.model));
+                    this.$el.html(this.template({game: this.model.game, desire: this.model.game.get('desire')}));
                     return this;
                 }
             }
@@ -122,9 +127,9 @@ $(function($) {
                     return this;
                 }
                 if (desire) {
-                    if (desire.get('owner')==this.model.user) {
+                    if (desire.get('owner').id==this.model.user.id) {
                         this.template = _.template($('#game-status-user-desire-owner').html()),
-                        this.$el.html(this.template(this.model));
+                        this.$el.html(this.template({desire: desire}));
                         return this;
                     } else {
                         this.template = _.template($('#game-status-user-desire-noowner').html()),
@@ -136,6 +141,10 @@ $(function($) {
         },
         createDesire: function() {
             this.model.game.createDesire(this.model.user);
+            return false;
+        },        
+        removeDesire: function() {
+            this.model.game.removeDesire();
             return false;
         }
     });

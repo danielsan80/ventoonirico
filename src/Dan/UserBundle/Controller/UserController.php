@@ -23,11 +23,12 @@ class UserController extends Controller
     public function imageAction($username, $filter='mini')
     {
         $userManager = $this->get('model.manager.user');
+        $imageExtension = $this->get('dan_user.twig.image_extension');
 
         $user = $userManager->findUserBy(array('username' => $username));
 
         $controller = $this->get('imagine.controller');
-        return $controller->filter($user->getImage(), $filter);
+        return $controller->filter($imageExtension->user_image($user), $filter);
         
     }
 }

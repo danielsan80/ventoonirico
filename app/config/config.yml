@@ -175,6 +175,15 @@ avalanche_imagine:
         mini:
             type:    thumbnail
             options: { size: [30, 30], mode: outbound, absolute: true }
+        player_main:
+            type:    thumbnail
+            options: { size: [30, 30], mode: outbound, absolute: true }
+        player_joined:
+            type:    thumbnail
+            options: { size: [20, 20], mode: outbound, absolute: true }
+        player_guest:
+            type:    thumbnail
+            options: { size: [15, 15], mode: outbound, absolute: true }
             
 stof_doctrine_extensions:
     default_locale: en_US

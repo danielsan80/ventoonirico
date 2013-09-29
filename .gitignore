@@ -3,7 +3,7 @@
 /app/cache/*
 /app/logs/*
 /app/data/*
-/app/files/images/*
+/app/files/images/users/*
 /web/media/cache/*
 /vendor/
 /composer.phar

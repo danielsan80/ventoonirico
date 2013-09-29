@@ -23,11 +23,9 @@
                     <div class="user pull-right">
                         {{app.user.username}}
                     </div>
-                    {% if app.user.image %}
-                        <div class="image pull-right">
-                            <img src="{{app.user.image | apply_filter('mini', true)}}" />
-                        </div>
-                     {% endif %}
+                    <div class="image pull-right">
+                        <img class="img-polaroid" src="{{user_image(app.user) | apply_filter('mini', true)}}" />
+                    </div>
                 {% else %}
                     <div class="login pull-right">
                         <a href="{{path('fos_user_security_login')}}" class="btn btn-mini btn-mini-micro" >login</a>

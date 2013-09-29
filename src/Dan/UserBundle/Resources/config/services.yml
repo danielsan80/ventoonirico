@@ -62,3 +62,8 @@ services:
             - %fos_user.model.user.class%
         calls:
             - [setKernel,[@kernel]]
+            
+    dan_user.twig.image_extension:
+        class: Dan\UserBundle\Twig\ImageExtension
+        tags:
+            - { name: twig.extension }

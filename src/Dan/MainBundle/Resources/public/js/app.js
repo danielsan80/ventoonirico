@@ -116,7 +116,7 @@ $(function($) {
                 }
                 if (desire) {
                     this.template = _.template($('#game-status-nouser-desire').html()),
-                    this.$el.html(this.template({desire: this.model.game.get('desire')}));
+                    this.$el.html(this.template({game: this.model.game, desire: this.model.game.get('desire')}));
                     return this;
                 }
             }

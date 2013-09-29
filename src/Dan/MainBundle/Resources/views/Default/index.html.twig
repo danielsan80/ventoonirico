@@ -32,8 +32,8 @@
     
     <script type="text/template" id="game">
         <tr id="game_<%= game.id %>" >
-            <td class="image">
-                <a href="http://boardgamegeek.com/boardgame/<%= game.id %>" target="_blank" ><img src="<%= game.thumbnail %>" /></a>
+            <td class="game-image">
+                <a href="http://boardgamegeek.com/boardgame/<%= game.id %>" target="_blank" ><img class="img-polaroid" src="<%= game.thumbnail %>" /></a>
             </td>
             <td>
                 <div class="pull-right game-status" ></div>
@@ -47,20 +47,33 @@
     <script type="text/template" id="game-status-nouser-nodesire">
     </script>
     <script type="text/template" id="game-status-user-nodesire">
-        <div class="well" ><a class="desire-create icon icon-plus" href="#"></a></div>
+        <div class="game-status well" ><a class="desire-create icon icon-plus" href="#"></a></div>
     </script>
     <script type="text/template" id="game-status-nouser-desire">
-        <div class="well" >
-            <img src="<%= String('{{path('user_image', {username: '_username_', filter: 'mini'})}}').replace('_username_', desire.get('owner').get('username')) %>" />
+        <div class="game-status well" >
+            <div class="player player-main">
+                <img class="img-polaroid" src="<%= String('{{path('user_image', {username: '_username_', filter: 'player_main'})}}').replace('_username_', desire.get('owner').get('username')) %>" />
+            </div>
+            <% for(var i=0; i<game.get('maxPlayers')-1; i++) { %>
+                <% if (desire.joined && desire.joined[i]) { %>
+                    <div class="player player-joined">
+                        <img class="img-polaroid" src="<%= String('{{path('user_image', {username: '_username_', filter: 'player_joined'})}}').replace('_username_', desire.joined[i].get('username')) %>" />
+                    </div>
+                <% } else { %>
+                    <div class="player player-nobody">
+                        <img class="img-polaroid" src="{{ '/icons/player-nobody.png' | apply_filter('player_joined') }}" alt="Posto libero" />
+                    </div>
+                <% } %>
+            <% } %>
         </div>
     </script>
     <script type="text/template" id="game-status-user-desire-owner">
-        <div class="well" >
+        <div class="game-status well" >
             <a class="desire-remove" href="#"><img src="<%= String('{{path('user_image', {username: '_username_', filter: 'mini'})}}').replace('_username_', desire.get('owner').get('username')) %>" /></a>
         </div>
     </script>
     <script type="text/template" id="game-status-user-desire-noowner">
-        <div class="well" >
+        <div class="game-status well" >
             <img src="<%= String('{{path('user_image', {username: '_username_', filter: 'mini'})}}').replace('_username_', desire.get('owner').get('username')) %>" />
         </div>
     </script>

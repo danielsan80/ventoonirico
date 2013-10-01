@@ -48,58 +48,11 @@
     <script type="text/template" id="game-status-nouser-nodesire">
     </script>
     <script type="text/template" id="game-status-user-nodesire">
-        <div class="game-status well" ><a class="desire-create icon icon-plus" href="#"></a></div>
+        <div class="well" ><a class="desire-create icon icon-plus" href="#"></a></div>
     </script>
-    {#<script type="text/template" id="game-status-nouser-desire">
-        <div class="game-status well" >
-            <div class="player player-main">
-                {{_self.player_user_image("desire.get('owner')", 'player_main')}}
-            </div>
-            <% for(var i=0; i<game.get('maxPlayers')-1; i++) { %>
-                <% if (desire.joined && desire.joined[i]) { %>
-                    <div class="player player-joined">
-                        {{_self.player_user_image("desire.joined[i]", 'player_joined')}}
-                    </div>
-                <% } else { %>
-                    <div class="player player-nobody">
-                        <img class="img-polaroid" src="{{ '/icons/player-nobody.png' | apply_filter('player_joined') }}" alt="Posto libero" />
-                    </div>
-                <% } %>
-            <% } %>
-        </div>
-    </script>
-    <script type="text/template" id="game-status-user-desire-owner">
-        <div class="game-status well" >
-            <a class="desire-remove" href="#">
-                {{_self.player_user_image("desire.get('owner')", 'player_main')}}
-            </a>
-        </div>
-    </script>
-    <script type="text/template" id="game-status-user-desire-noowner">
-        <div class="game-status well" >
-            {{_self.player_user_image("desire.get('owner')", 'player_main')}}
-        </div>
-    </script>#}
-    
-    
-    
-    
-    
     
     <script type="text/template" id="game-status-desire">
-        <div class="game-status well" >
-            <%= _.template($('#game-status-desire-player_main').html(), {user: user, owner: desire.get('owner')}) %>
-            <%
-                var joins = desire.get('joins');
-                for(var i=0; i<game.get('maxPlayers')-1; i++) {
-                    var join  = joins.at(i);
-                    if ( join) { %>
-                        <%= _.template($('#game-status-desire-player_joined').html(), {user: user, join: join}) %>
-                    <% } else { %>
-                        <%= _.template($('#game-status-desire-player_nobody').html(), {user: user}) %>
-                    <% }
-                 }
-            %>
+        <div class="well" >
         </div>
     </script>
     
@@ -119,10 +72,18 @@
         <div class="player player-joined">
             <% if (user.id && user.id==join.get('user').id) { %>
                 <a class="join-remove" href="#">
-                    {{_self.player_user_image("join.get('user')", 'player_joined')}}
+                    <% if (!guest) { %>
+                        {{_self.player_user_image("join.get('user')", 'player_joined')}}
+                    <% } else { %>
+                        <img class="img-polaroid" src="{{ '/icons/player-guest.png' | apply_filter('player_guest') }}" />
+                    <% } %>
                 </a>
             <% } else { %>
-                {{_self.player_user_image("join.get('user')", 'player_joined')}}
+                <% if (!guest) { %>
+                    {{_self.player_user_image("join.get('user')", 'player_joined')}}
+                <% } else { %>
+                    <img class="img-polaroid" src="{{ '/icons/player-guest.png' | apply_filter('player_guest') }}" />
+                <% } %>
             <% } %>
         </div>
     </script>

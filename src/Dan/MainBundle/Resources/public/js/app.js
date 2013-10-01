@@ -113,6 +113,9 @@ $(function($) {
         }
     });
 
+    $.ventoonirico.UserCollection = Backbone.Collection.extend({
+        model: $.ventoonirico.User
+    });
 
 
 
@@ -189,10 +192,6 @@ $(function($) {
                 }
             }
             
-//            this.template = _.template($('#game-status-desire').html()),
-//            this.$el.html(this.template({user: this.model.user, game: this.model.game, desire: desire}));
-//            return this;
-            
             var desireView = new $.ventoonirico.DesireView({
                 model: {
                     user: this.model.user,
@@ -217,19 +216,34 @@ $(function($) {
 //            this.listenTo(this.model.desire, 'change', this.render);
             this.listenTo(this.model.desire, 'add:joins', this.render);
             this.listenTo(this.model.desire, 'remove:joins', this.render);
-            this.render()
+            this.setElement($('#game-status-desire').html());
+            this.render();
         },
         events: {
             "click .join-add": "addJoin",
             "click .join-remove": "removeJoin"
         },
-        template: _.template($('#game-status-desire').html()),
         render: function() {
-            this.$el.html(this.template({
-                user: this.model.user,
-                game: this.model.game,
-                desire: this.model.desire
-            }));
+            var user = this.model.user;
+            var game = this.model.game;
+            var desire = this.model.game.get('desire');
+            
+            this.$el.html(_.template($('#game-status-desire-player_main').html(), {user: user, owner: desire.get('owner')}));
+
+            var joins = desire.get('joins');
+            var users = new $.ventoonirico.UserCollection([desire.get('owner')]);
+            
+            for(var i=0; i<game.get('maxPlayers')-1; i++) {
+                var join  = joins.at(i);
+                if ( join) {
+                    var guest = users.get(join.get('user')) != undefined;
+                    users.push(join.get('user'));
+                    this.$el.append(_.template($('#game-status-desire-player_joined').html(), {user: user, join: join, guest:guest}));
+                } else {
+                    this.$el.append(_.template($('#game-status-desire-player_nobody').html(), {user: user}));
+                }
+            }
+    
             return this;
         },
         addJoin: function() {

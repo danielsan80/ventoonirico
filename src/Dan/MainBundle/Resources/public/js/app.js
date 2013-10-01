@@ -255,6 +255,49 @@ $(function($) {
             return false;
         }
     });
+    
+    $.ventoonirico.DesiredGameListView = Backbone.View.extend({
+        initialize: function() {
+            this.listenTo(this.model, 'sync', this.render);
+        },
+        template: _.template($('#desired-game-list').html()),
+        render: function() {
+            var desiredGames = this.model.filter(function(game){
+                console.log(game.get('desire') != null);
+                return (game.get('desire') != null)
+            });
+            console.log(desiredGames);
+            this.$el.parents().find(".loading").hide();
+            this.$el.html(this.template(desiredGames));
+            desiredGames.forEach(this.renderGame);
+            return this;
+        },
+        renderGame: function(game) {
+            var desiredGameView = new $.ventoonirico.DesiredGameView({
+                model: game
+            });
+            this.$('div.desired-game-list').append(desiredGameView.render().el);
+        }
+    });
+    
+    $.ventoonirico.DesiredGameView = Backbone.View.extend({
+        tagName: 'div',
+        initialize: function() {
+            this.listenTo(this.model, 'change', this.render);
+        },
+        template: _.template($('#desired-game').html()),
+        render: function() {
+            this.setElement(this.template({game: this.model.toJSON()}));
+            var gameStatusView = new $.ventoonirico.GameStatusView({
+                el: this.$el.find(".game-status"),
+                model: {
+                    game: this.model,
+                    user: $.ventoonirico.user
+                }
+            });
+            return this;
+        }
+    });
 
     
     $.ventoonirico.IndexView = Backbone.View.extend({
@@ -270,10 +313,12 @@ $(function($) {
 
             var gameCollection = new $.ventoonirico.GameCollection();
 
-            var gameListView = new $.ventoonirico.GameListView({'model': gameCollection});
             var gameCountView = new $.ventoonirico.GameCountView({'model': gameCollection});
+            var desiredGameListView = new $.ventoonirico.DesiredGameListView({'model': gameCollection});
+            var gameListView = new $.ventoonirico.GameListView({'model': gameCollection});
 
             this.$("#game-list").append(gameListView.el);
+            this.$("#desired-game-list").append(desiredGameListView.el);
             this.$("#game-count").append(gameCountView.el);
             
             gameCollection.fetch();

@@ -17,6 +17,7 @@
     
     <script type="text/template" id="games">
         <div id="game-count"></div>
+        <div id="desired-game-list"></div>
         <div id="game-list"><div class="loading"></div></div>
     </script>
     
@@ -28,6 +29,11 @@
     <script type="text/template" id="game-list">
         <table class="game-list table table-bordered">
         </table>
+    </script>
+    
+    <script type="text/template" id="desired-game-list">
+        <div class="desired-game-list">
+        </div>
     </script>
     
     
@@ -43,6 +49,16 @@
                 <%= game.minPlayers %> - <%= game.maxPlayers %> giocatori<br/>
             </td>
         </tr>
+    </script>
+    
+    <script type="text/template" id="desired-game">
+        <div id="desired-game_<%= game.id %>" class="pull-left well" style="margin-right: 10px;" >
+            <a href="http://boardgamegeek.com/boardgame/<%= game.id %>" target="_blank" ><img class="img-polaroid pull-left" style="margin-right:10px;" src="<%= game.thumbnail %>" /></a>
+            <div class="pull-left" >
+                <div class="game-status" ></div>
+                <h5><%= game.name %></h5>
+            </div>
+        </div>
     </script>
     
     <script type="text/template" id="game-status-nouser-nodesire">

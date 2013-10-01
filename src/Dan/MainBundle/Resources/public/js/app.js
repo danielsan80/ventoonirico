@@ -58,6 +58,20 @@ $(function($) {
             var join = new $.ventoonirico.Join({user: user, desire: this});
             join.save();
             this.get('joins').add(join);
+        },
+        removeJoin: function(user) {
+            var joins = this.get('joins');
+            var i=0;
+            while (i<joins.length) {
+                var join = joins.at(i);
+                if (join.get('user').id == user.id) {
+                    join.destroy();
+                    joins.remove(join);
+                    this.set('joins',joins);
+                    break;
+                }
+                i++;
+            }
         }
     });
     
@@ -99,6 +113,9 @@ $(function($) {
         }
     });
 
+
+
+
     $.ventoonirico.GameCountView = Backbone.View.extend({
         initialize: function() {
             this.listenTo(this.model, 'sync', this.render);
@@ -129,69 +146,6 @@ $(function($) {
         }
     });
     
-    $.ventoonirico.GameStatusView = Backbone.View.extend({
-        initialize: function() {
-            this.listenTo(this.model.game, 'change', this.render);
-            this.listenTo(this.model.user, 'change', this.render);
-            this.render()
-        },
-        events: {
-            "click .desire-create": "createDesire",
-            "click .desire-remove": "removeDesire",
-            "click .join-add": "addJoin"
-        },
-        render: function() {
-            var desire = this.model.game.get('desire');
-            if (!this.model.user.isLogged()) {
-                if (!desire) {
-                    this.template = _.template($('#game-status-nouser-nodesire').html()),
-                    this.$el.html(this.template({}));
-                    return this;
-                }
-                if (desire) {
-                    this.template = _.template($('#game-status-desire').html()),
-                    this.$el.html(this.template({user: this.model.user, game: this.model.game, desire: desire}));
-                    return this;
-                }
-            }
-            if (this.model.user.isLogged()) {
-                if (!desire) {
-                    this.template = _.template($('#game-status-user-nodesire').html()),
-                    this.$el.html(this.template(this.model));
-                    return this;
-                }
-                if (desire) {
-                    
-                    this.template = _.template($('#game-status-desire').html()),
-                    this.$el.html(this.template({user: this.model.user, game: this.model.game, desire: desire}));
-                    return this;
-                    
-//                    if (desire.get('owner').id==this.model.user.id) {
-//                        this.template = _.template($('#game-status-user-desire-owner').html()),
-//                        this.$el.html(this.template({desire: desire}));
-//                        return this;
-//                    } else {
-//                        this.template = _.template($('#game-status-user-desire-noowner').html()),
-//                        this.$el.html(this.template(this.model));
-//                        return this;
-//                    }
-                }
-            }
-        },
-        createDesire: function() {
-            this.model.game.createDesire(this.model.user);
-            return false;
-        },        
-        removeDesire: function() {
-            this.model.game.removeDesire();
-            return false;
-        },
-        addJoin: function() {
-            this.model.game.get('desire').addJoin(this.model.user);
-            return false;
-        }
-    });
-
     $.ventoonirico.GameView = Backbone.View.extend({
         tagName: 'tr',
         initialize: function() {
@@ -210,6 +164,84 @@ $(function($) {
             return this;
         }
     });
+    
+    $.ventoonirico.GameStatusView = Backbone.View.extend({
+        initialize: function() {
+            this.listenTo(this.model.game, 'change', this.render);
+            this.listenTo(this.model.user, 'change', this.render);
+            this.render()
+        },
+        events: {
+            "click .desire-create": "createDesire",
+            "click .desire-remove": "removeDesire",
+        },
+        render: function() {
+            var desire = this.model.game.get('desire');
+            if (!desire) {
+                if (this.model.user.isLogged()) {
+                    this.template = _.template($('#game-status-user-nodesire').html()),
+                    this.$el.html(this.template(this.model));
+                    return this;
+                } else {
+                    this.template = _.template($('#game-status-nouser-nodesire').html()),
+                    this.$el.html(this.template({}));
+                    return this;
+                }
+            }
+            
+//            this.template = _.template($('#game-status-desire').html()),
+//            this.$el.html(this.template({user: this.model.user, game: this.model.game, desire: desire}));
+//            return this;
+            
+            var desireView = new $.ventoonirico.DesireView({
+                model: {
+                    user: this.model.user,
+                    game: this.model.game,
+                    desire: desire
+                }                    
+            });
+            this.$el.html(desireView.el);
+        },
+        createDesire: function() {
+            this.model.game.createDesire(this.model.user);
+            return false;
+        },        
+        removeDesire: function() {
+            this.model.game.removeDesire();
+            return false;
+        }
+    });
+    
+    $.ventoonirico.DesireView = Backbone.View.extend({
+        initialize: function() {
+//            this.listenTo(this.model.desire, 'change', this.render);
+            this.listenTo(this.model.desire, 'add:joins', this.render);
+            this.listenTo(this.model.desire, 'remove:joins', this.render);
+            this.render()
+        },
+        events: {
+            "click .join-add": "addJoin",
+            "click .join-remove": "removeJoin"
+        },
+        template: _.template($('#game-status-desire').html()),
+        render: function() {
+            this.$el.html(this.template({
+                user: this.model.user,
+                game: this.model.game,
+                desire: this.model.desire
+            }));
+            return this;
+        },
+        addJoin: function() {
+            this.model.desire.addJoin(this.model.user);
+            return false;
+        },
+        removeJoin: function() {
+            this.model.desire.removeJoin(this.model.user);
+            return false;
+        }
+    });
+
     
     $.ventoonirico.IndexView = Backbone.View.extend({
         el: $("#app"),

@@ -60,7 +60,7 @@ class Desire
 
     /**
      * @var array
-     * @ORM\OneToMany(targetEntity="Join", mappedBy="desire")
+     * @ORM\OneToMany(targetEntity="Join", mappedBy="desire", cascade={"all"}, orphanRemoval=true)
      * @ORM\OrderBy({"id" = "ASC"})
      * @Serializer\Expose
      * @Serializer\Type("ArrayCollection<Dan\MainBundle\Entity\Join>")

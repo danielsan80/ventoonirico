@@ -18,10 +18,13 @@ class UserController extends Controller
     
     
     /**
-     * @Route("/{username}/image", name="user_image")
+     * @Route("/{username}/image", name="user_image"))
      */
-    public function imageAction($username, $filter='mini')
+    public function imageAction($username)
     {
+        if (!($filter = $this->getRequest()->query->get('filter'))) {
+            $filter = 'mini';
+        }
         $userManager = $this->get('model.manager.user');
         $imageExtension = $this->get('dan_user.twig.image_extension');
 

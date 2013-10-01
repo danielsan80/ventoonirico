@@ -53,11 +53,11 @@ class ApiController extends Controller
         $manager = $this->get('model.manager.game');
         $serializer = $this->get('serializer');
         $games = $manager->getAllGames();
-        
+
         $games = $manager->shiftGames($games);
 
         $result = $serializer->serialize($games, 'json');
-        
+
         $response = new Response();
         $response->setContent($result);
 
@@ -110,10 +110,10 @@ class ApiController extends Controller
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
         $desireRepo = $em->getRepository('DanMainBundle:Desire')->setUser($user);
-        $desire = $this->deserialize('Dan\MainBundle\Entity\Desire',$request);
-        
+        $desire = $this->deserialize('Dan\MainBundle\Entity\Desire', $request);
+
         $em->persist($desire);
-        $em->flush($desire);        
+        $em->flush($desire);
 
         $response = new Response();
         $response->setContent($this->serialize($desire));
@@ -121,8 +121,7 @@ class ApiController extends Controller
 
         return $response;
     }
-    
-    
+
     /**
      * Request 
      * 
@@ -139,10 +138,10 @@ class ApiController extends Controller
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
         $joinRepo = $em->getRepository('DanMainBundle:Join');
-        $join = $this->deserialize('Dan\MainBundle\Entity\Join',$request);
-        
+        $join = $this->deserialize('Dan\MainBundle\Entity\Join', $request);
+
         $em->persist($join);
-        $em->flush($join);        
+        $em->flush($join);
 
         $response = new Response();
         $response->setContent($this->serialize($join));
@@ -150,8 +149,36 @@ class ApiController extends Controller
 
         return $response;
     }
-    
-    
+
+    /**
+     * Request 
+     * 
+     * @Route("/joins/{id}", name="delete_join")
+     * @Method("DELETE")
+     * 
+     * @return json
+     */
+    public function deleteJoinAction($id)
+    {
+
+        $user = $this->get('user');
+
+        $em = $this->getDoctrine()->getEntityManager();
+        $joinRepo = $em->getRepository('DanMainBundle:Join');
+        $join = $joinRepo->findOneById($id);
+        if ($join) {
+            if ($join->getUser()->getId() == $user->getId()) {
+                $em->remove($join);
+                $em->flush();
+                return new Response('', 200);
+            } else {
+                return new Response('', 401);
+            }
+        } else {
+            return new Response('', 410);
+        }
+    }
+
     /**
      * Request 
      * 
@@ -235,7 +262,7 @@ class ApiController extends Controller
 
         $response = new Response();
         if ($desire) {
-            if ($desire->getOwner()->getId()==$user->getId()) {
+            if ($desire->getOwner()->getId() == $user->getId()) {
                 $em->remove($desire);
                 $em->flush();
                 $response->setStatusCode(200);
@@ -245,7 +272,7 @@ class ApiController extends Controller
         } else {
             $response->setStatusCode(410);
         }
-        
+
         return $response;
     }
 

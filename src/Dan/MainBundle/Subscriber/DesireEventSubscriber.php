@@ -14,43 +14,86 @@ class DesireEventSubscriber implements \JMS\Serializer\EventDispatcher\EventSubs
             array('event' => 'serializer.post_deserialize', 'method' => 'onPostDeserialize'),
         );
     }
+    
+    public function setEntityManager($em)
+    {
+        $this->em = $em;
+    }
 
     public function onPreDeserialize(\JMS\Serializer\EventDispatcher\PreDeserializeEvent $event)
     {
-        $type = $event->getType();
-        if ($type['name']=='Dan\MainBundle\Entity\Desire') {
-            $data = $event->getData();
-            if (isset($data['game']) && !is_array($data['game'])) {
-                $data['game'] = array('id' => $data['game']);
-            }
-            if (isset($data['owner']) && !is_array($data['owner'])) {
-                $data['owner'] = array('id' => $data['owner']);
-            }
-            $event->setData($data);
-        }
+        $this->normalizeDesire($event);
+        $this->normalizeJoin($event);
     }
     
     public function onPostDeserialize(\JMS\Serializer\EventDispatcher\ObjectEvent $event)
     {
+        $this->mergeDesireRelatedObjects($event);
+        $this->mergeJoinRelatedObjects($event);
+    }
+    
+    
+    private function normalizeDesire($event)
+    {
         $type = $event->getType();
         if ($type['name']=='Dan\MainBundle\Entity\Desire') {
-            $desire = $event->getObject();
-            
-            $user = $desire->getOwner();
-            $user = $this->em->merge($user);
-            $this->em->refresh($user);
-            $desire->setOwner($user);
-            
-            $game = $desire->getGame();
-            $game = $this->em->merge($game);
-            $this->em->refresh($game);
-            $desire->setGame($game);
+            $data = $event->getData();
+            $data = $this->normalizeData($data, 'game');
+            $data = $this->normalizeData($data, 'owner');
+            $event->setData($data);
         }
     }
-
-    public function setEntityManager($em)
+    
+    private function normalizeJoin($event)
     {
-        $this->em = $em;
+        $type = $event->getType();
+        if ($type['name']=='Dan\MainBundle\Entity\Join') {
+            $data = $event->getData();
+            $data = $this->normalizeData($data, 'desire');
+            $data = $this->normalizeData($data, 'user');
+            $event->setData($data);
+        }
+    }
+    
+    private function normalizeData($data, $key)
+    {
+        if (isset($data[$key]) && !is_array($data[$key])) {
+            $data[$key] = array('id' => $data[$key]);
+        }
+        return $data;
+    }
+    
+    private function mergeDesireRelatedObjects($event)
+    {
+        $type = $event->getType();
+        
+        if ($type['name']=='Dan\MainBundle\Entity\Desire') {
+            $this->mergeRelatedObject($event, 'owner');
+            $this->mergeRelatedObject($event, 'game');
+        }
+    }
+    private function mergeJoinRelatedObjects($event)
+    {
+        $type = $event->getType();
+        if ($type['name']=='Dan\MainBundle\Entity\Join') {
+            $this->mergeRelatedObject($event, 'desire');
+            $this->mergeRelatedObject($event, 'user');
+        }
+    }
+    
+    private function mergeRelatedObject($event, $relatedObjectName) {
+        
+        $object = $event->getObject();
+        $getRelatedObject = 'get'. ucfirst($relatedObjectName);
+        $setRelatedObject = 'set'. ucfirst($relatedObjectName);
+        
+        $relatedObject = $object->$getRelatedObject();
+        if ($relatedObject) {
+            $relatedObject = $this->em->merge($relatedObject);
+            $this->em->refresh($relatedObject);
+            $object->$setRelatedObject($relatedObject);
+        }
+        
     }
 
 }

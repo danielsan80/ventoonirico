@@ -10,6 +10,7 @@ use JMS\Serializer\Annotation as Serializer;
 use Dan\UserBundle\Entity\User;
 use Dan\MainBundle\Entity\Game;
 use Dan\MainBundle\Entity\Join;
+use Dan\MainBundle\Entity\Decorator\JoinedUser;
 
 /**
  * Desire
@@ -20,16 +21,16 @@ use Dan\MainBundle\Entity\Join;
  */
 class Desire
 {
-    
+
     /**
      * Constructor 
      */
     public function __construct(User $owner)
     {
         $this->owner = $owner;
-        //$this->joinedUsers = new ArrayCollection();
+        $this->joins = new ArrayCollection();
     }
-    
+
     /**
      * @var integer
      *
@@ -40,7 +41,7 @@ class Desire
      * @Serializer\Type("integer")
      */
     private $id;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Dan\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
@@ -49,7 +50,6 @@ class Desire
      */
     private $owner;
 
-    
     /**
      * @ORM\ManyToOne(targetEntity="Dan\MainBundle\Entity\Game")
      * @ORM\JoinColumn(name="game_id", referencedColumnName="id")
@@ -57,13 +57,13 @@ class Desire
      * @Serializer\Type("Dan\MainBundle\Entity\Game")
      */
     private $game;
-    
+
     /**
      * @var array
      * @ORM\OneToMany(targetEntity="Join", mappedBy="desire")
      * @ORM\OrderBy({"id" = "ASC"})
-     * Serializer\Expose
-     * Serializer\Type("ArrayCollection<Dan\MainBundle\Entity\Join>")
+     * @Serializer\Expose
+     * @Serializer\Type("ArrayCollection<Dan\MainBundle\Entity\Join>")
      */
     private $joins;
 
@@ -97,7 +97,6 @@ class Desire
      */
     private $reward;
 
-
     /**
      * Get id
      *
@@ -113,7 +112,7 @@ class Desire
         $this->owner = $owner;
         return $this;
     }
-    
+
     /**
      * Get user
      *
@@ -123,7 +122,7 @@ class Desire
     {
         return $this->owner;
     }
-    
+
     /**
      * Set game
      *
@@ -133,7 +132,7 @@ class Desire
     public function setGame(Game $game)
     {
         $this->game = $game;
-    
+
         return $this;
     }
 
@@ -146,11 +145,11 @@ class Desire
     {
         return $this->game;
     }
-    
+
     public function setJoins($joins)
     {
         $this->joins = $joins;
-    
+
         return $this;
     }
 
@@ -158,28 +157,30 @@ class Desire
     {
         return $this->joins;
     }
-    
-    
+
     public function addJoin(Join $join)
     {
         $this->joins[] = $join;
     }
-    
+
     /**
-     * @Serializer\VirtualProperty
-     * @Serializer\SerializedName("joined")
-     */    
+     * Serializer\VirtualProperty
+     * Serializer\SerializedName("joined")
+     */
     public function getJoinedUsers()
     {
         $joins = $this->getJoins();
         $result = new ArrayCollection();
-        foreach($joins as $join) {
-            $result->add(new JoinedUser($join));            
+        if (!$joins) {
+            return $result;
+        }
+        foreach ($joins as $join) {
+            $result->add(new JoinedUser($join));
         }
         return $result;
     }
-    
-    public function addJoinedUser(User $user, $options =null)
+
+    public function addJoinedUser(User $user, $options = null)
     {
         $join = new Join($this, $user);
         $join->setOptions($options);
@@ -195,7 +196,7 @@ class Desire
     public function setCreatedAt($createAt)
     {
         $this->createAt = $createAt;
-    
+
         return $this;
     }
 
@@ -218,7 +219,7 @@ class Desire
     public function setUpdatedAt($updateAt)
     {
         $this->updateAt = $updateAt;
-    
+
         return $this;
     }
 
@@ -241,7 +242,7 @@ class Desire
     public function setNote($note)
     {
         $this->note = $note;
-    
+
         return $this;
     }
 
@@ -264,7 +265,7 @@ class Desire
     public function setReward($reward)
     {
         $this->reward = $reward;
-    
+
         return $this;
     }
 
@@ -277,5 +278,5 @@ class Desire
     {
         return $this->reward;
     }
-    
+
 }

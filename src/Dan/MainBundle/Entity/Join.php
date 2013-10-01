@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 use JMS\Serializer\Annotation as Serializer;
 use Dan\MainBundle\Entity\Desire;
-use Dan\MainBundle\Entity\User;
+use Dan\UserBundle\Entity\User;
 
 /**
  * Join
@@ -23,6 +23,8 @@ class Join
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Serializer\Expose
+     * @Serializer\Type("integer")
      */
     private $id;
     
@@ -31,8 +33,6 @@ class Join
      * @ORM\JoinColumn(name="desire_id", referencedColumnName="id")
      * @Serializer\Expose
      * @Serializer\Type("Dan\MainBundle\Entity\Desire")
-     * @Serializer\Expose
-     * @Serializer\Type("integer")
      */
     private $desire;
     
@@ -47,7 +47,7 @@ class Join
     /**
      * @var string
      *
-     * @ORM\Column(name="note", type="text")
+     * @ORM\Column(name="note", type="text", nullable=true)
      */
     private $note;
 

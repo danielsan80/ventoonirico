@@ -110,7 +110,6 @@ class ApiController extends Controller
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
         $desireRepo = $em->getRepository('DanMainBundle:Desire')->setUser($user);
-
         $desire = $this->deserialize('Dan\MainBundle\Entity\Desire',$request);
         
         $em->persist($desire);
@@ -122,6 +121,36 @@ class ApiController extends Controller
 
         return $response;
     }
+    
+    
+    /**
+     * Request 
+     * 
+     * @Route("/joins", name="post_join")
+     * @Method("POST")
+     * 
+     * @return json
+     */
+    public function postJoinAction()
+    {
+
+        $user = $this->get('user');
+
+        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getEntityManager();
+        $joinRepo = $em->getRepository('DanMainBundle:Join');
+        $join = $this->deserialize('Dan\MainBundle\Entity\Join',$request);
+        
+        $em->persist($join);
+        $em->flush($join);        
+
+        $response = new Response();
+        $response->setContent($this->serialize($join));
+        $response->headers->set('ContentType', 'application/json');
+
+        return $response;
+    }
+    
     
     /**
      * Request 

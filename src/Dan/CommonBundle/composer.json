@@ -1,0 +1,31 @@
+{
+    "name": "dan/common-bundle",
+    "description": "An indipendent toolkit for all my projects",
+    "keywords": ["common", "toolkit"],
+    "homepage": "https://github.com/danielsan80/DanCommonBundle.git",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "repositories":[
+        {
+            "type":"git",
+            "url":"git://github.com/danielsan80/DanCommonBundle.git"
+        }
+    ],
+
+    "authors": [
+        {
+            "name": "Danilo Sanchi",
+            "email": "danilo.sanchi@gmail.com",
+            "homepage": "http://danilosanchi.net"
+        }
+    ],
+    "require": {
+        "symfony/framework-bundle": "2.1.*"
+    },
+    "suggest": {
+    },
+    "autoload": {
+        "psr-0": { "Dan\\CommonBundle": "" }
+    },
+    "target-dir": "Dan/CommonBundle"
+}

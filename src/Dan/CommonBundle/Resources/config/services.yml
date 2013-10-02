@@ -1,0 +1,23 @@
+parameters:
+#    dan_common.example.class: Dan\CommonBundle\Example
+
+services:
+#    dan_common.example:
+#        class: %dan_common.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+    dan.clock:
+        class: Dan\CommonBundle\Time\Clock
+        
+    dan.helper.period:
+        class: Dan\CommonBundle\Helper\PeriodHelper
+        
+#    dan.type.color:
+#        class: Dan\CommonBundle\Form\Type\ColorType
+#        tags:
+#            - { name: form.type, alias: dan_color }
+#            
+#    dan.type.tagit:
+#        class: Dan\CommonBundle\Form\Type\TagitType
+#        tags:
+#            - { name: form.type, alias: dan_tagit }

@@ -1,0 +1,25 @@
+{% block dan_color_widget %}
+{% spaceless %}
+    {% set color = value %}
+    {% if not ((value >= '#00000' and value <= '#999999') or (value >= '#aaaaaa' and value <= '#ffffff')) %}
+        {% set color = '#ffffff' %}
+    {% endif %}
+    <div class="input-append color" data-color="{{ color }}" data-color-format="rgb">
+        <input type="text" {{ block('widget_attributes') }} class="span2" value="{{ value }}">
+        <span class="add-on"><i style="background-color: {{ color }}"></i></span>
+    </div>
+{% endspaceless %}
+{% endblock %}
+
+{% block dan_tagit_widget %}
+{% spaceless %}
+    <span class="tags-container">
+        {% set tags = value %}
+        <ul class="dan_tagit" id="transaction_tags" {{ block('widget_attributes') }} >
+            {% for tag in tags %}
+                <li>{{tag}}</li> 
+            {% endfor %}
+        </ul>
+    </span>
+{% endspaceless %}
+{% endblock %}

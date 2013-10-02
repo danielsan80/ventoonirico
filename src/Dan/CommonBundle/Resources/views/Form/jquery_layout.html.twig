@@ -1,0 +1,30 @@
+{% block form_javascript %}
+{% spaceless %}
+    {% for child in form %}
+        {{ form_javascript(child) }}
+    {% endfor %}
+{% endspaceless %}
+{% endblock form_javascript %}
+
+{% block field_javascript "" %}
+
+{% block dan_color_javascript %}
+{% spaceless %}
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            var $configs = {format: 'hex'};
+
+            $('#{{ id }}').parents('div.color').colorpicker($configs);
+        });
+    </script>
+{% endspaceless %}
+{% endblock dan_color_javascript %}
+
+{% block dan_tagit_javascript %}
+{% spaceless %}
+    <script type="text/javascript">
+        $('.tags-container').dan_tagit();
+    </script>
+{% endspaceless %}
+{% endblock %}
+

@@ -1,6 +1,7 @@
 set :application, "ventoonirico"
 set :repository,  "git@github.com:danielsan80/ventoonirico.git"
-set :serverName, "sg111.servergrove.com" # The server's hostname
+#set :serverName, "sg111.servergrove.com" # The server's hostname
+set :serverName, "ventoonirico.danilosanchi.net" # The server's hostname
 
 set :scm,         :git
 set :domain,      "ventoonirico.danilosanchi.net"
@@ -29,25 +30,25 @@ role :db,         domain, :primary => true
 set  :keep_releases,  3
 
 # Update vendors during the deploy
-set :use_composer, true
-set :update_vendors,  false
-set :copy_vendors, false
+#set :use_composer, true
+#set :update_vendors,  false
+#set :copy_vendors, false
 #set :vendors_mode, "install"
 
-set :assets_install,        false
-set :cache_warmup,          false
+#set :assets_install,        false
+#set :cache_warmup,          false
 
 before "deploy:finalize_update" do
-#    run "cd #{release_path} && rm -Rf app/logs"
-#    run "cd #{release_path} && rm -Rf web/media"
-#    run "cd #{release_path} && chmod -R 777 app/cache"
+    run "cd #{release_path} && rm -Rf app/logs"
+    run "cd #{release_path} && rm -Rf web/media"
+    run "cd #{release_path} && chmod -R 777 app/cache"
 end
 
-#after "deploy:update", "deploy:cleanup"
+after "deploy:update", "deploy:cleanup"
 
 after "deploy" do
-#    deploy.vendors
-#    deploy.chmod
+    deploy.vendors
+    deploy.chmod
 end
 
 namespace :deploy do

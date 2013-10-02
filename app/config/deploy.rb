@@ -14,8 +14,8 @@ set :deploy_via,      :rsync_with_remote_cache
 set :user,       "ventoonirico"
 ssh_options[:port] = 22123
 
-set :shared_children, ["vendor", "web", "app", "app/logs", "app/files", "/web/media"]
-set :shared_files,    ["app/config/parameters.yml", "vendor", "app/logs", "app/files", "web/media"]
+set :shared_children, ["vendor", "web", "app", "app/config", "app/logs", "app/files/images/users", "/web/media"]
+set :shared_files,    ["app/config/parameters.yml", "vendor", "app/logs", "app/files/images/users", "web/media"]
 set :shared_file_dir,    "."
 
 set  :use_sudo,      false
@@ -24,7 +24,7 @@ set  :keep_releases,  3
 
 before "deploy:finalize_update" do
     run "cd #{release_path} && rm -Rf app/logs"
-    run "cd #{release_path} && rm -Rf app/files"
+    run "cd #{release_path} && rm -Rf app/files/images/users"
     run "cd #{release_path} && rm -Rf web/media"
     run "cd #{release_path} && chmod -R 777 app/cache"
 end
@@ -32,11 +32,13 @@ end
 after "deploy:update", "deploy:cleanup"
 
 after "deploy" do
-    deploy.vendors
-    deploy.chmod
+    dan.vendors
+    dan.chmod
+    dan.migrations
+    dan.cc
 end
 
-namespace :deploy do
+namespace :dan do
     desc "copy old vendors"
     task :copy_vendors do
         run "cd #{shared_path} && rm -Rf _vendor"
@@ -56,12 +58,17 @@ namespace :deploy do
     task :chmod do
         run "cd #{shared_path} && chmod -R 777 app/logs"
         run "cd #{current_path} && chmod -R 777 app/cache"
-        run "cd #{shared_path} && chmod -R 777 app/files"
+        run "cd #{shared_path} && chmod -R 777 app/files/images/users"
         run "cd #{shared_path} && chmod -R 777 web/media"
     end
 
     desc "execute the migrations"
-    task :chmod do
+    task :migrations do
         run "cd #{current_path} && php app/console doctrine:migrations:migrate --no-interaction"
+    end
+
+    desc "clear cache"
+    task :cc do
+        run "rm -Rf #{current_path}/app/cache/*"
     end
 end

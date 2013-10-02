@@ -7429,6 +7429,17 @@ form ul.errors li {
   line-height: 16px;
   text-align: right;
 }
+.game-status .player {
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: bottom;
+}
+.game-status .player-main {
+  margin-left: 0;
+}
+.table td.game-image {
+  text-align: center;
+}
 @-ms-viewport {
   width: device-width;
 }

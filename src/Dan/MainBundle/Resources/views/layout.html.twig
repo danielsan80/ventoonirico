@@ -65,6 +65,15 @@
             filter="?yui_js"
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
+        
+        <script type="text/javascript">
+            if (window.location.hash == '#_=_'){
+                window.location.hash = '';
+            }
+            if (window.location.pathname == '/_=_'){
+                window.location.pathname = '';
+            }
+        </script>
 
     {% endjavascripts %}
 {% endblock foot_script %} 

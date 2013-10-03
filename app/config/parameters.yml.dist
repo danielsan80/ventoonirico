@@ -17,4 +17,7 @@ parameters:
     google_client_id: 123456789
     google_client_secret: s3cr3t
     google_base_url: http://yourdomain.com/app_dev.php
+
+    facebook_client_id: 123456789
+    facebook_client_secret: s3cr3t
         

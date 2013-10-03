@@ -48,6 +48,19 @@ security:
                 path:           /admin/logout
                 target:         /admin/login
             anonymous:    true
+            oauth:
+                resource_owners:
+                    google:             "/login/check-google"
+                    facebook:             "/login/check-facebook"
+                login_path:        /admin/login
+                failure_path:      /admin/login
+                oauth_user_provider:
+                    service: oauth.user_provider
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000 # 365 giorni in secondi
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
 
         main:
             pattern: ^/
@@ -61,6 +74,7 @@ security:
             oauth:
                 resource_owners:
                     google:             "/login/check-google"
+                    facebook:           "/login/check-facebook"
                 login_path:        /login
                 failure_path:      /login
                 oauth_user_provider:

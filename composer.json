@@ -24,9 +24,6 @@
         
         "friendsofsymfony/user-bundle": "*",
         
-        "bitgandtter/google-bundle": "dev-master",
-        "bitgandtter/google-api": "dev-master",
-        
         "sonata-project/admin-bundle": "*",
         "sonata-project/doctrine-orm-admin-bundle": "2.1.*",
         "sonata-project/intl-bundle": "2.1.*",

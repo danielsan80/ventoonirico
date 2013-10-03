@@ -43,7 +43,7 @@
     <script type="text/template" id="game">
         <tr id="game_<%= game.id %>" >
             <td class="game-image">
-                <a href="http://boardgamegeek.com/boardgame/<%= game.id %>" target="_blank" ><img class="img-polaroid" src="<%= game.thumbnail %>" /></a>
+                <a href="http://boardgamegeek.com/boardgame/<%= game.bggId %>" target="_blank" ><img class="img-polaroid" src="<%= game.thumbnail %>" /></a>
             </td>
             <td>
                 <div class="pull-right game-status" ></div>
@@ -56,7 +56,7 @@
     
     <script type="text/template" id="desired-game">
         <div id="desired-game_<%= game.id %>" class="pull-left well" style="margin-right: 10px;" >
-            <a href="http://boardgamegeek.com/boardgame/<%= game.id %>" target="_blank" ><img class="img-polaroid pull-left" style="margin-right:10px;" src="<%= game.thumbnail %>" /></a>
+            <a href="http://boardgamegeek.com/boardgame/<%= game.bggId %>" target="_blank" ><img class="img-polaroid pull-left" style="margin-right:10px;" src="<%= game.thumbnail %>" /></a>
             <div class="pull-left" >
                 <div class="game-status" ></div>
                 <h5><%= game.name %></h5>

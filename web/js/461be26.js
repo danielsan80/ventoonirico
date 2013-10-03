@@ -5765,10 +5765,8 @@ $(function($) {
         template: _.template($('#desired-game-list').html()),
         render: function() {
             var desiredGames = this.model.filter(function(game){
-                console.log(game.get('desire') != null);
                 return (game.get('desire') != null)
             });
-            console.log(desiredGames);
             this.$el.parents().find(".loading").hide();
             this.$el.html(this.template(desiredGames));
             desiredGames.forEach(this.renderGame);

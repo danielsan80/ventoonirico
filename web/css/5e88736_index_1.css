@@ -7446,6 +7446,9 @@ form ul.errors li {
 .table td.game-image {
   text-align: center;
 }
+.desired-game-list .game {
+  margin-bottom: 10px;
+}
 @-ms-viewport {
   width: device-width;
 }

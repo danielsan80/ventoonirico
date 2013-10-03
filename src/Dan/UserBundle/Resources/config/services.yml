@@ -7,7 +7,7 @@ services:
         class: "%oauth.user_provider.class%"
         arguments: 
             - @fos_user.user_manager
-            - {google: googleId}
+            - {google: googleId, facebook: facebookId}
 
 #    fos_google.user_provider:
 #        class: Dan\UserBundle\Security\GoogleProvider

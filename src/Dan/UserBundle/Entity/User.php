@@ -26,6 +26,16 @@ class User extends BaseUser
      * @ORM\Column(name="google_access_token", type="string", length=255, nullable=true)
      */
     protected $googleAccessToken;
+ 
+    /**
+     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
+     */
+    protected $facebookId;
+ 
+    /**
+     * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
+     */
+    protected $facebookAccessToken;
     
     /**
      * @ORM\Column(name="image", type="text", nullable=true)
@@ -61,6 +71,26 @@ class User extends BaseUser
     public function getGoogleAccessToken()
     {
         return $this->googleAccessToken;
+    }
+    
+    public function setFacebookId( $facebookId )
+    {
+        $this->facebookId = $facebookId;
+    }
+
+    public function getFacebookId()
+    {
+        return $this->facebookId;
+    }
+    
+    public function setFacebookAccessToken( $accessToken )
+    {
+        $this->facebookAccessToken = $accessToken;
+    }
+
+    public function getFacebookAccessToken()
+    {
+        return $this->facebookAccessToken;
     }
     
     public function setImage( $url )

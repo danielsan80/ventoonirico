@@ -66,13 +66,15 @@ class FOSUBUserProvider extends BaseClass implements UserProviderInterface
             $user->$setServiceAccessToken($response->getAccessToken());
             //I have set all requested data with the user's username
             //modify here with relevant data
-            if ($response->getEmail()) {
-                $user->setUsername($response->getEmail());
-                $user->setEmail($response->getEmail());
-            } else {
-                $user->setUsername($response->getUsername());
-                $user->setEmail($response->getUsername());
+            if (!($email = $response->getEmail())) {
+                $email = $response->getUsername();
             }
+
+            $pos = strpos($email,'@');
+            $pos = $pos!==false?$pos:null;
+            $username = substr($email,0,$pos);
+            $user->setUsername($username);
+            $user->setEmail($email);
             $user->setPassword('');
             $user->setEnabled(true);
             

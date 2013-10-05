@@ -72,8 +72,10 @@ class Desire
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created_at", type="datetime")
+     * @Serializer\Expose
+     * @Serializer\Type("DateTime")
      */
-    private $createAt;
+    private $createdAt;
 
     /**
      * @var datetime $updatedAt
@@ -81,7 +83,7 @@ class Desire
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated_at", type="datetime")
      */
-    private $updateAt;
+    private $updatedAt;
 
     /**
      * @var string
@@ -193,32 +195,32 @@ class Desire
      * @param \DateTime $createAt
      * @return Desire
      */
-    public function setCreatedAt($createAt)
+    public function setCreatedAt($createdAt)
     {
-        $this->createAt = $createAt;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get createAt
+     * Get createdAt
      *
      * @return \DateTime 
      */
     public function getCreatedAt()
     {
-        return $this->createAt;
+        return $this->createdAt;
     }
 
     /**
      * Set updateAt
      *
-     * @param \DateTime $updateAt
+     * @param \DateTime $updatedAt
      * @return Desire
      */
-    public function setUpdatedAt($updateAt)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->updateAt = $updateAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

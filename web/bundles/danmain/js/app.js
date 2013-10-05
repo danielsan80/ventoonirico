@@ -265,6 +265,9 @@ $(function($) {
             var desiredGames = this.model.filter(function(game){
                 return (game.get('desire') != null)
             });
+            desiredGames = _.sortBy(desiredGames, function(game) {
+                return game.get("desire").get('created_at');
+            });
             this.$el.parents().find(".loading").hide();
             this.$el.html(this.template(desiredGames));
             desiredGames.forEach(this.renderGame);
@@ -280,7 +283,7 @@ $(function($) {
             if (index==games.length-1) {
                 this.$('.masonry').masonry({
                     itemSelector: '.item',
-                    "gutter": 3
+                    "gutter": 10
                 });
                 setTimeout(function() {
                     this.$('.masonry').masonry('layout');

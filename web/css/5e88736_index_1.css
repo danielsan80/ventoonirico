@@ -7446,8 +7446,42 @@ form ul.errors li {
 .table td.game-image {
   text-align: center;
 }
-.desired-game-list .game {
+.desired-game-list {
+  position: relative;
+}
+.desired-game-list .well {
+  padding: 9px 9px 0px 9px;
   margin-bottom: 10px;
+}
+.desired-game-list h5 {
+  margin: 0 0 10px 0;
+}
+.desired-game-list .game {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.desired-game-list .game .image {
+  margin-bottom: 10px;
+}
+.desired-game-list .game .image img {
+  height: 120px;
+}
+.desired-game-list .game .player {
+  margin-bottom: 10px;
+}
+.masonry .item {
+  width: 200px;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.masonry .item.w2 {
+  width: 400px;
+}
+.masonry .item.w3 {
+  width: 600px;
+}
+.masonry .item.w4 {
+  width: 800px;
 }
 @-ms-viewport {
   width: device-width;

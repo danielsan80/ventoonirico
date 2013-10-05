@@ -280,7 +280,7 @@ $(function($) {
             if (index==games.length-1) {
                 this.$('.masonry').masonry({
                     itemSelector: '.item',
-                    "gutter": 3
+                    "gutter": 10
                 });
                 setTimeout(function() {
                     this.$('.masonry').masonry('layout');

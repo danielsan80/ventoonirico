@@ -270,11 +270,22 @@ $(function($) {
             desiredGames.forEach(this.renderGame);
             return this;
         },
-        renderGame: function(game) {
+        renderGame: function(game, index, games) {
             var desiredGameView = new $.ventoonirico.DesiredGameView({
                 model: game
             });
-            this.$('div.desired-game-list').append(desiredGameView.render().el);
+            var el = desiredGameView.render().el;
+            this.$('div.desired-game-list').append(el);
+            
+            if (index==games.length-1) {
+                this.$('.masonry').masonry({
+                    itemSelector: '.item',
+                    "gutter": 3
+                });
+                setTimeout(function() {
+                    this.$('.masonry').masonry('layout');
+                },5000);
+            }
         }
     });
     

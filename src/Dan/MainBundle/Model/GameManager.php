@@ -45,6 +45,12 @@ class GameManager
         return $games;
     }
     
+    public function getDesiredGames()
+    {
+        $games = $this->getRepository()->findDesired();
+        return $games;
+    }
+    
     private function refreshGames()
     {
         $repo = $this->getRepository();

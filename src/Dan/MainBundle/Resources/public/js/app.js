@@ -32,6 +32,11 @@ $(function($) {
         model: $.ventoonirico.Game
     });
     
+    $.ventoonirico.DesiredGameCollection = Backbone.Collection.extend({
+        url: $.ventoonirico.urlPrefix + '/api/games?filter=desired',
+        model: $.ventoonirico.Game
+    });
+    
     $.ventoonirico.Desire = Backbone.RelationalModel.extend({
         urlRoot: $.ventoonirico.urlPrefix + '/api/desires',
         relations: [
@@ -262,15 +267,8 @@ $(function($) {
         },
         template: _.template($('#desired-game-list').html()),
         render: function() {
-            var desiredGames = this.model.filter(function(game){
-                return (game.get('desire') != null)
-            });
-            desiredGames = _.sortBy(desiredGames, function(game) {
-                return game.get("desire").get('created_at');
-            });
-            this.$el.parents().find(".loading").hide();
-            this.$el.html(this.template(desiredGames));
-            desiredGames.forEach(this.renderGame);
+            this.$el.html(this.template(this.model));
+            this.model.forEach(this.renderGame);
             return this;
         },
         renderGame: function(game, index, games) {
@@ -324,17 +322,19 @@ $(function($) {
             this.$el.html(this.template({}));
 
             var gameCollection = new $.ventoonirico.GameCollection();
+            var desiredGameCollection = new $.ventoonirico.DesiredGameCollection();
 
             var gameCountView = new $.ventoonirico.GameCountView({'model': gameCollection});
-            var desiredGameListView = new $.ventoonirico.DesiredGameListView({'model': gameCollection});
+            var desiredGameListView = new $.ventoonirico.DesiredGameListView({'model': desiredGameCollection});
             var gameListView = new $.ventoonirico.GameListView({'model': gameCollection});
 
             this.$("#game-list").append(gameListView.el);
             this.$("#desired-game-list").append(desiredGameListView.el);
             this.$("#game-count").append(gameCountView.el);
             
-            gameCollection.fetch();
+            desiredGameCollection.fetch();
             $.ventoonirico.user.fetch();
+            gameCollection.fetch();
         },
     });
 

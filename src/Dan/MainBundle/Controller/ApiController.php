@@ -50,11 +50,33 @@ class ApiController extends Controller
      */
     public function getGamesAction()
     {
+        if ($this->getRequest()->query->get('filter')=='desired') {
+            return $this->forward('DanMainBundle:Api:getDesiredGames');
+        }
         $manager = $this->get('model.manager.game');
         $serializer = $this->get('serializer');
         $games = $manager->getAllGames();
 
         $games = $manager->shiftGames($games);
+
+        $result = $serializer->serialize($games, 'json');
+
+        $response = new Response();
+        $response->setContent($result);
+
+        return $response;
+    }
+    
+    /**
+     * Request 
+     * 
+     * @return json
+     */
+    public function getDesiredGamesAction()
+    {
+        $manager = $this->get('model.manager.game');
+        $serializer = $this->get('serializer');
+        $games = $manager->getDesiredGames();
 
         $result = $serializer->serialize($games, 'json');
 

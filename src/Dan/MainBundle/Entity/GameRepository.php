@@ -18,4 +18,12 @@ class GameRepository extends EntityRepository
                 ->orderBy('g.name','asc');
         return $qb->getQuery()->getResult();
     }
+    
+    public function findDesired()
+    {
+        $qb = $this->createQueryBuilder('g')
+                ->join('g.desires', 'd')
+                ->orderBy('d.createdAt','asc');
+        return $qb->getQuery()->getResult();
+    }
 }

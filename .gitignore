@@ -4,6 +4,7 @@
 /app/logs/*
 /app/data/*
 /app/files/images/users/*
+/app/sessions/*
 /web/media/cache/*
 /vendor/
 /composer.phar

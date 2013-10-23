@@ -1,5 +1,9 @@
-$(function($) {
-
+define([
+  'jquery-loader', 
+  'underscore', 
+  'backbone-loader',
+  'masonry/masonry'
+], function($, _, Backbone, Masonry){
     $.ventoonirico = {};
     
     $.ventoonirico.user = null;
@@ -279,13 +283,10 @@ $(function($) {
             this.$('div.desired-game-list').append(el);
             
             if (index==games.length-1) {
-                this.$('.masonry').masonry({
+                new Masonry(this.$('.masonry').get(0),{
                     itemSelector: '.item',
                     "gutter": 10
                 });
-                setTimeout(function() {
-                    this.$('.masonry').masonry('layout');
-                },5000);
             }
         }
     });
@@ -356,7 +357,7 @@ $(function($) {
 
     $.ventoonirico.app = null;
 
-    $.ventoonirico.bootstrap = function() {
+    $.ventoonirico.initialize = function() {
         
         $.ventoonirico.app = new $.ventoonirico.Router();
         Backbone.history.start({
@@ -364,6 +365,6 @@ $(function($) {
         });
     };
 
-    $.ventoonirico.bootstrap();
+    return $.ventoonirico;
 
-}(jQuery));
+});

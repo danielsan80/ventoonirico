@@ -10,14 +10,12 @@ define([
             {
                 type: Backbone.HasOne,
                 key: 'user',
-                relatedModel: User,
-                includeInJSON: 'id'
+                relatedModel: User
             },
             {
                 type: Backbone.HasOne,
                 key: 'desire',
-                relatedModel: Desire,
-                includeInJSON: 'id'
+                relatedModel: Desire
             }
         ]
     });

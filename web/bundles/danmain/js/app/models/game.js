@@ -2,15 +2,15 @@ define([
     'backbone-loader',
     'app/util/prefix',
     'app/models/desire',
-], function(Backbone, prefix, Desire){
-     var Game = Backbone.RelationalModel.extend({
+], function(Backbone, prefix, Desire) {
+
+    var Game = Backbone.RelationalModel.extend({
         urlRoot: prefix + '/api/games',
         relations: [
             {
                 type: Backbone.HasOne,
                 key: 'desire',
                 relatedModel: Desire,
-                includeInJSON: 'id'
             }
         ],
         createDesire: function(user) {
@@ -24,6 +24,6 @@ define([
             desire.destroy();
         },
     });
-    
+
     return Game;
 });

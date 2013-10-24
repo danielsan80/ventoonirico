@@ -5,21 +5,20 @@ define([
     'app/models/user',
     'app/models/join',
     'app/collections/joins',
-], function(Backbone, prefix, Game, User, Join, JoinCollection){
-     var Desire = Backbone.RelationalModel.extend({
+], function(Backbone, prefix, Game, User, Join, JoinCollection) {
+
+    var Desire = Backbone.RelationalModel.extend({
         urlRoot: prefix + '/api/desires',
         relations: [
             {
                 type: Backbone.HasOne,
                 key: 'game',
-                relatedModel: Game,
-                includeInJSON: 'id'
+                relatedModel: Game
             },
             {
                 type: Backbone.HasOne,
                 key: 'owner',
-                relatedModel: User,
-                includeInJSON: 'id'
+                relatedModel: User
             },
             {
                 type: Backbone.HasMany,
@@ -35,19 +34,19 @@ define([
         },
         removeJoin: function(user) {
             var joins = this.get('joins');
-            var i=0;
-            while (i<joins.length) {
+            var i = 0;
+            while (i < joins.length) {
                 var join = joins.at(i);
                 if (join.get('user').id == user.id) {
                     join.destroy();
                     joins.remove(join);
-                    this.set('joins',joins);
+                    this.set('joins', joins);
                     break;
                 }
                 i++;
             }
         }
     });
-    
+
     return Desire;
 });

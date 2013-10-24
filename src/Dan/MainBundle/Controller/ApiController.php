@@ -35,6 +35,8 @@ class ApiController extends Controller
         $serializer = $this->get('jms_serializer');
 
         $user = $this->get('user');
+        $manager = $this->get('model.manager.user');
+        $user = $manager->findUserBy(array('id' => $user->getId()));
         $response = new Response($this->serialize($user), 200, array('Content-Type' => 'application/json'));
 
         return $response;

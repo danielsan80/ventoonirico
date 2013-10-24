@@ -3,115 +3,14 @@ define([
   'underscore', 
   'backbone-loader',
   'masonry/masonry',
-  'app/models/user',
   'app/collections/users',
-  'app/util/prefix',
+  'app/collections/games',
+  'app/collections/desired-games',
   'app/util/current-user',
-], function($, _, Backbone, Masonry, User, UserCollection, prefix, currentUser){
+
+], function($, _, Backbone, Masonry, UserCollection, GameCollection, DesiredGameCollection, currentUser){
     $.ventoonirico = {};
 
-    $.ventoonirico.Game = Backbone.RelationalModel.extend({
-        urlRoot: prefix + '/api/games',
-        relations: [
-            {
-                type: Backbone.HasOne,
-                key: 'desire',
-                relatedModel: '$.ventoonirico.Desire',
-                includeInJSON: 'id'
-            }
-        ],
-        createDesire: function(user) {
-            var desire = new $.ventoonirico.Desire({owner: user, game: this});
-            desire.save();
-            this.set('desire', desire);
-        },
-        removeDesire: function() {
-            var desire = this.get('desire');
-            this.set('desire', false);
-            desire.destroy();
-        },
-    });
-
-    $.ventoonirico.GameCollection = Backbone.Collection.extend({
-        url: prefix + '/api/games',
-        model: $.ventoonirico.Game
-    });
-    
-    $.ventoonirico.DesiredGameCollection = Backbone.Collection.extend({
-        url: prefix + '/api/games?filter=desired',
-        model: $.ventoonirico.Game
-    });
-    
-    $.ventoonirico.Desire = Backbone.RelationalModel.extend({
-        urlRoot: prefix + '/api/desires',
-        relations: [
-            {
-                type: Backbone.HasOne,
-                key: 'game',
-                relatedModel: '$.ventoonirico.Game',
-                includeInJSON: 'id'
-            },
-            {
-                type: Backbone.HasOne,
-                key: 'owner',
-                relatedModel: User,
-                includeInJSON: 'id'
-            },
-            {
-                type: Backbone.HasMany,
-                key: 'joins',
-                relatedModel: '$.ventoonirico.Join',
-                collectionType: '$.ventoonirico.JoinCollection'
-            }
-        ],
-        addJoin: function(user) {
-            var join = new $.ventoonirico.Join({user: user, desire: this});
-            join.save();
-            this.get('joins').add(join);
-        },
-        removeJoin: function(user) {
-            var joins = this.get('joins');
-            var i=0;
-            while (i<joins.length) {
-                var join = joins.at(i);
-                if (join.get('user').id == user.id) {
-                    join.destroy();
-                    joins.remove(join);
-                    this.set('joins',joins);
-                    break;
-                }
-                i++;
-            }
-        }
-    });
-    
-    $.ventoonirico.DesireCollection = Backbone.Collection.extend({
-        url: prefix + '/api/desires',
-        model: $.ventoonirico.Desire
-    });
-
-    $.ventoonirico.Join = Backbone.RelationalModel.extend({
-        urlRoot: prefix + '/api/joins',
-        relations: [
-            {
-                type: Backbone.HasOne,
-                key: 'user',
-                relatedModel: User,
-                includeInJSON: 'id'
-            },
-            {
-                type: Backbone.HasOne,
-                key: 'desire',
-                relatedModel: '$.ventoonirico.Desire',
-                includeInJSON: 'id'
-            }
-        ]
-    });
- 
-    $.ventoonirico.JoinCollection = Backbone.Collection.extend({
-        model: $.ventoonirico.Join
-    });
-    
     $.ventoonirico.GameCountView = Backbone.View.extend({
         initialize: function() {
             this.listenTo(this.model, 'sync', this.render);
@@ -305,8 +204,8 @@ define([
         },
         render: function() {
             this.$el.html(this.template({}));
-            var gameCollection = new $.ventoonirico.GameCollection();
-            var desiredGameCollection = new $.ventoonirico.DesiredGameCollection();
+            var gameCollection = new GameCollection();
+            var desiredGameCollection = new DesiredGameCollection();
 
             var gameCountView = new $.ventoonirico.GameCountView({'model': gameCollection});
             var desiredGameListView = new $.ventoonirico.DesiredGameListView({'model': desiredGameCollection});

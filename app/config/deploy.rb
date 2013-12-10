@@ -14,8 +14,8 @@ set :deploy_via,      :rsync_with_remote_cache
 set :user,       "ventoonirico"
 ssh_options[:port] = 22123
 
-set :shared_children, ["vendor", "web", "app", "app/config", "app/logs", "app/files/images/users", "/web/media"]
-set :shared_files,    ["app/config/parameters.yml", "vendor", "app/logs", "app/files/images/users", "web/media"]
+set :shared_children, ["vendor", "web", "app", "app/config", "app/logs", "app/sessions", "app/spool", "app/files/images/users", "/web/media"]
+set :shared_files,    ["app/config/parameters.yml", "vendor", "app/logs",  "app/sessions", "app/spool", "app/files/images/users", "web/media"]
 set :shared_file_dir,    "."
 
 set  :use_sudo,      false
@@ -24,6 +24,8 @@ set  :keep_releases,  3
 
 before "deploy:finalize_update" do
     run "cd #{release_path} && rm -Rf app/logs"
+    run "cd #{release_path} && rm -Rf app/sessions"
+    run "cd #{release_path} && rm -Rf app/spool"
     run "cd #{release_path} && rm -Rf app/files/images/users"
     run "cd #{release_path} && rm -Rf web/media"
     run "cd #{release_path} && chmod -R 777 app/cache"
@@ -39,13 +41,6 @@ after "deploy" do
 end
 
 namespace :dan do
-    desc "copy old vendors"
-    task :copy_vendors do
-        run "cd #{shared_path} && rm -Rf _vendor"
-        run "cd #{shared_path} && cp -R vendor _vendor"
-        run "cd #{current_path} && rm vendor"
-        run "cd #{current_path} && ln -sf #{shared_path}/_vendor vendor"
-    end
 
     desc "Link and update vendors"
     task :vendors do
@@ -58,6 +53,8 @@ namespace :dan do
     task :chmod do
         run "cd #{shared_path} && chmod -R 777 app/logs"
         run "cd #{current_path} && chmod -R 777 app/cache"
+        run "cd #{current_path} && chmod -R 777 app/sessions"
+        run "cd #{current_path} && chmod -R 777 app/spool"
         run "cd #{shared_path} && chmod -R 777 app/files/images/users"
         run "cd #{shared_path} && chmod -R 777 web/media"
     end

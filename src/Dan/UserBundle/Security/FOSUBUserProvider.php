@@ -90,13 +90,16 @@ class FOSUBUserProvider extends BaseClass implements UserProviderInterface
         if (!$user->$getServiceId()) {
             $user->$setServiceId($username);            
             $user->$setServiceAccessToken($response->getAccessToken());
-            if (!$user->getImage()) {
-                $this->userManager->setUserImage($user, $response->getProfilePicture());
-            }
             
             $this->userManager->updateUser($user);
             return $user;
         }
+        
+        if ($user->$getServiceId() && !$user->getImage()) {
+            $this->userManager->setUserImage($user, $response->getProfilePicture());
+        }
+
+        $this->userManager->updateUser($user);
         
  
         //if user exists - go with the HWIOAuth way

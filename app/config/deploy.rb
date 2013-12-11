@@ -30,13 +30,11 @@ before "deploy:finalize_update" do
     dan.chmod
     dan.vendors
     dan.migrations
+    dan.cc
+    dan.cache_warmup
 end
 
 after "deploy:update", "deploy:cleanup"
-
-after "deploy" do
-    dan.cc
-end
 
 namespace :dan do
 
@@ -53,31 +51,16 @@ namespace :dan do
         files += shared_links.map { |d| File.join(release_path, d) }
         run "#{try_sudo} rm -Rf #{files.join(' ')}"
 
-#        run "cd #{release_path} && rm -Rf app/logs"
-#        run "cd #{release_path} && rm -Rf app/sessions"
-#        run "cd #{release_path} && rm -Rf app/spool"
-#        run "cd #{release_path} && rm -Rf app/files/images/users"
-#        run "cd #{release_path} && rm -Rf web/media"
-
         shared_links.map do |file|
             run "cd #{release_path} && ln -sf #{shared_path}/#{file} #{file}"
         end
-#        run "cd #{release_path} && ln -sf #{shared_path}/vendor vendor"
-#        run "cd #{release_path} && ln -sf #{shared_path}/app/config app/config"
-#        run "cd #{release_path} && ln -sf #{shared_path}/app/logs app/logs"
-#        run "cd #{release_path} && ln -sf #{shared_path}/app/sessions app/sessions"
-#        run "cd #{release_path} && ln -sf #{shared_path}/app/spool app/spool"
-#        run "cd #{release_path} && ln -sf #{shared_path}/app/files/images/users app/files/images/users"
-#        run "cd #{release_path} && ln -sf #{shared_path}/web/media web/media"
-
     end
 
-    desc "Link and update vendors"
+    desc "Install vendors"
     task :vendors do
         run "cd #{release_path} && curl -sS https://getcomposer.org/installer | php"
         run "cd #{release_path} && php composer.phar install"
     end
-
 
     desc "chmod writable files and dir"
     task :chmod do
@@ -94,8 +77,15 @@ namespace :dan do
         run "cd #{release_path} && php app/console doctrine:migrations:migrate --no-interaction"
     end
 
+    desc "cache warmup"
+    task :cache_warmup do
+        run "cd #{release_path} && php app/console --env=prod cache:warmup"
+    end
+
     desc "clear cache"
     task :cc do
-        run "rm -Rf #{current_path}/app/cache/*"
+        run "cd #{release_path} && rm -Rf app/cache/*"
+        run "cd #{release_path} && chmod -R 777 app/cache"
     end
+
 end

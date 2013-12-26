@@ -32,6 +32,7 @@ before "deploy:finalize_update" do
     dan.migrations
     dan.cc
     dan.cache_warmup
+    dan.chmod
 end
 
 after "deploy:update", "deploy:cleanup"
@@ -64,10 +65,8 @@ namespace :dan do
 
     desc "chmod writable files and dir"
     task :chmod do
-        run "cd #{shared_path} && chmod -R 777 app/logs"
         run "cd #{release_path} && chmod -R 777 app/cache"
-        run "cd #{release_path} && chmod -R 777 app/sessions"
-        run "cd #{release_path} && chmod -R 777 app/spool"
+        run "cd #{shared_path} && chmod -R 777 app/logs app/sessions app/spool"
         run "cd #{shared_path} && chmod -R 777 app/files/images/users"
         run "cd #{shared_path} && chmod -R 777 web/media"
     end

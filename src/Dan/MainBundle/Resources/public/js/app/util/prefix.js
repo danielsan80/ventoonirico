@@ -1,3 +1,3 @@
 define([], function(){
-    return window.location.pathname.substring(1);;
+    return window.location.pathname.substring(1);
 });

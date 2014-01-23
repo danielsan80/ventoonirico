@@ -44,7 +44,7 @@ class Desire
 
     /**
      * @ORM\ManyToOne(targetEntity="Dan\UserBundle\Entity\User", inversedBy="desires")
-     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="owner_id", referencedColumnName="id", nullable=true)
      * @Serializer\Expose
      * @Serializer\Type("Dan\UserBundle\Entity\User")
      */

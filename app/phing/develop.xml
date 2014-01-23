@@ -22,6 +22,9 @@
             description="Run design task (cache,assets,assetic)">
         <echo msg="Cache" />
         <phingcall target="cc" />
+        <echo msg="r.js" />
+        <exec command="cd src/Dan/MainBundle/Resources/public/js &amp;&amp; r.js -o build.js" outputProperty="return" />
+        <echo message="${return}"></echo>   
         <echo msg="Assets" />
         <exec command="php app/console assets:install web" outputProperty="return" />
         <echo message="${return}"></echo>       

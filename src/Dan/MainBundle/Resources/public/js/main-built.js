@@ -7397,7 +7397,18 @@ define('app/models/user',[
     'app/util/prefix',
 ], function(Backbone, prefix){
     var User = Backbone.RelationalModel.extend({
-        urlRoot: prefix + '/api/users'
+        urlRoot: prefix + '/api/users',
+        desiresLimit: 3,
+        notifyRemoveDesire: function() {
+            this.set('desires_count', this.get('desires_count')-1);
+        },
+        notifyCreateDesire: function() {
+            this.set('desires_count', this.get('desires_count')+1);
+        },
+        canCreateDesire: function() {
+            return this.get('desires_count') < this.desiresLimit;
+        }
+        
     });
     
     return User;
@@ -7511,11 +7522,26 @@ define('app/models/game',[
             var desire = new Desire({owner: user, game: this});
             desire.save();
             this.set('desire', desire);
+            user.notifyCreateDesire();
         },
-        removeDesire: function() {
+        removeDesire: function(user) {
             var desire = this.get('desire');
             this.set('desire', false);
             desire.destroy();
+        },
+        leaveDesire: function(user) {
+            var desire = this.get('desire');
+            if (desire.get('owner').id == user.id) {
+                desire.set('owner', null);
+                user.notifyRemoveDesire();
+            } else {
+                desire.removeJoin(user);
+            }
+            if (!desire.get('joins').length) {
+                this.removeDesire();
+            } else {
+                desire.save();
+            }
         },
     });
 
@@ -7600,7 +7626,15 @@ define('app/views/desire',[
             var game = this.model.game;
             var desire = this.model.game.get('desire');
             
-            this.$el.html(_.template($('#game-status-desire-player_main').html(), {user: user, owner: desire.get('owner')}));
+            if (desire.get('owner')) {
+                this.$el.html(_.template($('#game-status-desire-owner-player_main').html(), {user: user, owner: desire.get('owner')}));
+            } else {
+                if (user.canCreateDesire()) {
+                    this.$el.html(_.template($('#game-status-desire-noowner-player_main').html(), {user: user, owner: desire.get('owner')}));
+                } else {
+                    this.$el.html(_.template($('#game-status-desire-noowner-player_main-limited').html(), {user: user, owner: desire.get('owner')}));
+                }
+            }
 
             var joins = desire.get('joins');
             var users = new UserCollection([desire.get('owner')]);
@@ -7638,6 +7672,7 @@ define('app/views/game-status',[
 ], function($, _, Backbone, DesireView){
 
     var GameStatusView = Backbone.View.extend({
+        
         initialize: function() {
             this.listenTo(this.model.game, 'change', this.render);
             this.listenTo(this.model.user, 'change', this.render);
@@ -7645,15 +7680,22 @@ define('app/views/game-status',[
         },
         events: {
             "click .desire-create": "createDesire",
-            "click .desire-remove": "removeDesire",
+            "click .desire-take": "takeDesire",
+            "click .desire-leave": "leaveDesire"
         },
         render: function() {
             var desire = this.model.game.get('desire');
             if (!desire) {
                 if (this.model.user.isLogged()) {
-                    this.template = _.template($('#game-status-user-nodesire').html()),
-                    this.$el.html(this.template(this.model));
-                    return this;
+                    if (this.model.user.canCreateDesire()) {
+                        this.template = _.template($('#game-status-user-nodesire').html()),
+                        this.$el.html(this.template(this.model));
+                        return this;
+                    } else {
+                        this.template = _.template($('#game-status-user-nodesire-limited').html()),
+                        this.$el.html(this.template(this.model));
+                        return this;
+                    }
                 } else {
                     this.template = _.template($('#game-status-nouser-nodesire').html()),
                     this.$el.html(this.template({}));
@@ -7674,8 +7716,8 @@ define('app/views/game-status',[
             this.model.game.createDesire(this.model.user);
             return false;
         },        
-        removeDesire: function() {
-            this.model.game.removeDesire();
+        leaveDesire: function() {
+            this.model.game.leaveDesire(this.model.user);
             return false;
         }
     });
@@ -7917,8 +7959,6 @@ require.config({
         
         'backbone-loader': 'libs/loader/backbone',
         'jquery-loader': 'libs/loader/jquery',
-        
-        'templates': '../templates',
         
         'eventie': 'libs/bower_components/eventie',
         'doc-ready': 'libs/bower_components/doc-ready',

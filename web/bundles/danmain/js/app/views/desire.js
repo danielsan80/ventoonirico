@@ -22,7 +22,15 @@ define([
             var game = this.model.game;
             var desire = this.model.game.get('desire');
             
-            this.$el.html(_.template($('#game-status-desire-player_main').html(), {user: user, owner: desire.get('owner')}));
+            if (desire.get('owner')) {
+                this.$el.html(_.template($('#game-status-desire-owner-player_main').html(), {user: user, owner: desire.get('owner')}));
+            } else {
+                if (user.canCreateDesire()) {
+                    this.$el.html(_.template($('#game-status-desire-noowner-player_main').html(), {user: user, owner: desire.get('owner')}));
+                } else {
+                    this.$el.html(_.template($('#game-status-desire-noowner-player_main-limited').html(), {user: user, owner: desire.get('owner')}));
+                }
+            }
 
             var joins = desire.get('joins');
             var users = new UserCollection([desire.get('owner')]);

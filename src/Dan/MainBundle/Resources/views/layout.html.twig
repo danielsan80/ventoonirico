@@ -27,7 +27,11 @@
 {% endblock %}
     
 {% block foot_script %}
-    <script data-main="{{ asset('/bundles/danmain/js/main') }}" src="{{ asset('/bundles/danmain/js/libs/require/require.js') }}"></script>
+    {% if app.environment=='prod' %}
+        <script data-main="{{ asset('/bundles/danmain/js/main-built') }}" src="{{ asset('/bundles/danmain/js/libs/require/require.js') }}"></script>
+    {% else %}
+        <script data-main="{{ asset('/bundles/danmain/js/main') }}" src="{{ asset('/bundles/danmain/js/libs/require/require.js') }}"></script>
+    {% endif %}
     {% include 'DanMainBundle::_main.js.html.twig' %}
 {% endblock %}
 

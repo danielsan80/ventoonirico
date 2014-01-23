@@ -7,7 +7,7 @@
     <div class="well" ><a class="desire-create icon icon-plus" href="#"></a></div>
 </script>
 
-<script type="text/template" id="game-status-user-nodesire-not_allowed">
+<script type="text/template" id="game-status-user-nodesire-limited">
     <div class="well" ><i class="icon icon-ban-circle" ></i></div>
 </script>
 
@@ -16,14 +16,36 @@
     </div>
 </script>
 
-<script type="text/template" id="game-status-desire-player_main">
+<script type="text/template" id="game-status-desire-owner-player_main">
     <div class="player player-main">
         <% if (user.id && user.id==owner.id) { %>
-            <a class="desire-remove" href="#">
+            <a class="desire-leave" href="#">
                 {{player_user_image("owner", 'player_main')}}
             </a>
         <% } else { %>
             {{player_user_image("owner", 'player_main')}}
+        <% } %>
+    </div>
+</script>
+
+<script type="text/template" id="game-status-desire-noowner-player_main">
+    <div class="player player-main">
+        <% if (user.id) { %>
+            <a class="desire-take" href="#">
+                <img class="img-polaroid" src="{{ '/icons/player-nobody.png' | apply_filter('player_main') }}" alt="Posto libero" />
+            </a>
+        <% } else { %>
+            <img class="img-polaroid" src="{{ '/icons/player-nobody.png' | apply_filter('player_main') }}" alt="Posto libero" />
+        <% } %>
+    </div>
+</script>
+
+<script type="text/template" id="game-status-desire-noowner-player_main-limited">
+    <div class="player player-main">
+        <% if (user.id) { %>
+            <img class="img-polaroid" src="{{ '/icons/player-limited.png' | apply_filter('player_main') }}" alt="Posto libero" />
+        <% } else { %>
+            <img class="img-polaroid" src="{{ '/icons/player-nobody.png' | apply_filter('player_main') }}" alt="Posto libero" />
         <% } %>
     </div>
 </script>

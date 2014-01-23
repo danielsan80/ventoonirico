@@ -7,7 +7,6 @@ define([
 
     var GameStatusView = Backbone.View.extend({
         
-        desires_limit: 3,
         initialize: function() {
             this.listenTo(this.model.game, 'change', this.render);
             this.listenTo(this.model.user, 'change', this.render);
@@ -15,18 +14,19 @@ define([
         },
         events: {
             "click .desire-create": "createDesire",
-            "click .desire-remove": "removeDesire",
+            "click .desire-take": "takeDesire",
+            "click .desire-leave": "leaveDesire"
         },
         render: function() {
             var desire = this.model.game.get('desire');
             if (!desire) {
                 if (this.model.user.isLogged()) {
-                    if (this.model.user.get('desires_count')>=this.desires_limit) {
-                        this.template = _.template($('#game-status-user-nodesire-not_allowed').html()),
+                    if (this.model.user.canCreateDesire()) {
+                        this.template = _.template($('#game-status-user-nodesire').html()),
                         this.$el.html(this.template(this.model));
                         return this;
                     } else {
-                        this.template = _.template($('#game-status-user-nodesire').html()),
+                        this.template = _.template($('#game-status-user-nodesire-limited').html()),
                         this.$el.html(this.template(this.model));
                         return this;
                     }
@@ -50,8 +50,8 @@ define([
             this.model.game.createDesire(this.model.user);
             return false;
         },        
-        removeDesire: function() {
-            this.model.game.removeDesire(this.model.user);
+        leaveDesire: function() {
+            this.model.game.leaveDesire(this.model.user);
             return false;
         }
     });

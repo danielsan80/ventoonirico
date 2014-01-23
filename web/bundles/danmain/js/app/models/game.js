@@ -23,7 +23,20 @@ define([
             var desire = this.get('desire');
             this.set('desire', false);
             desire.destroy();
-            user.notifyRemoveDesire();
+        },
+        leaveDesire: function(user) {
+            var desire = this.get('desire');
+            if (desire.get('owner').id == user.id) {
+                desire.set('owner', null);
+                user.notifyRemoveDesire();
+            } else {
+                desire.removeJoin(user);
+            }
+            if (!desire.get('joins').length) {
+                this.removeDesire();
+            } else {
+                desire.save();
+            }
         },
     });
 

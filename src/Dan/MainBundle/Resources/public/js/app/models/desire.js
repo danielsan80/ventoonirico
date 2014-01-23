@@ -45,6 +45,10 @@ define([
                 }
                 i++;
             }
+            if (!joins.length) {
+                console.log(this);
+                this.get('game').removeDesire(this);
+            }
         }
     });
 

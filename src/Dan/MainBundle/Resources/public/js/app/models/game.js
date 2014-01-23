@@ -11,6 +11,11 @@ define([
                 type: Backbone.HasOne,
                 key: 'desire',
                 relatedModel: Desire,
+                reverseRelation: {
+			key: 'game',
+			includeInJSON: 'id',
+                        type: Backbone.HasOne,
+		}
             }
         ],
         createDesire: function(user) {
@@ -19,7 +24,7 @@ define([
             this.set('desire', desire);
             user.notifyCreateDesire();
         },
-        removeDesire: function(user) {
+        removeDesire: function() {
             var desire = this.get('desire');
             this.set('desire', false);
             desire.destroy();

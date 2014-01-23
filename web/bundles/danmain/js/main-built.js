@@ -7497,6 +7497,10 @@ define('app/models/desire',[
                 }
                 i++;
             }
+            if (!joins.length) {
+                console.log(this);
+                this.get('game').removeDesire(this);
+            }
         }
     });
 
@@ -7516,6 +7520,11 @@ define('app/models/game',[
                 type: Backbone.HasOne,
                 key: 'desire',
                 relatedModel: Desire,
+                reverseRelation: {
+			key: 'game',
+			includeInJSON: 'id',
+                        type: Backbone.HasOne,
+		}
             }
         ],
         createDesire: function(user) {
@@ -7524,7 +7533,7 @@ define('app/models/game',[
             this.set('desire', desire);
             user.notifyCreateDesire();
         },
-        removeDesire: function(user) {
+        removeDesire: function() {
             var desire = this.get('desire');
             this.set('desire', false);
             desire.destroy();

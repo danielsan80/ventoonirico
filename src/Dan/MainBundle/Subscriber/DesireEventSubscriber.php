@@ -12,7 +12,6 @@ class DesireEventSubscriber implements \JMS\Serializer\EventDispatcher\EventSubs
         return array(
             array('event' => 'serializer.pre_deserialize', 'method' => 'onPreDeserialize'),
             array('event' => 'serializer.post_deserialize', 'method' => 'onPostDeserialize'),
-            array('event' => 'serializer.post_serialize', 'method' => 'onPostSerialize'),
         );
     }
     

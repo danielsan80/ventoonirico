@@ -7802,12 +7802,16 @@ define('app/views/desired-game-list',[
             this.$('div.desired-game-list').append(el);
             
             if (index==games.length-1) {
-                new Masonry(this.$('.masonry').get(0),{
+                var masonry = new Masonry(this.$('.masonry').get(0),{
                     itemSelector: '.item',
                     "gutter": 10
                 });
+                setInterval(function(){
+                    masonry.layout();
+                }, 20000)
             }
-        }
+        },
+        
     });
     return DesiredGameListView;
 });

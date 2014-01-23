@@ -1,6 +1,7 @@
 parameters:
 #    dan_common.example.class: Dan\CommonBundle\Example
 
+#    assetic.filter.lessphp.class: Dan\CommonBundle\Assetic\Filter\LessphpNotCachedFilter
 services:
 #    dan_common.example:
 #        class: %dan_common.example.class%

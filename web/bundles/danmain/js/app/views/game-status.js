@@ -19,9 +19,15 @@ define([
             var desire = this.model.game.get('desire');
             if (!desire) {
                 if (this.model.user.isLogged()) {
-                    this.template = _.template($('#game-status-user-nodesire').html()),
-                    this.$el.html(this.template(this.model));
-                    return this;
+                    if (this.model.user.get('desires_count')>=3) {
+                        this.template = _.template($('#game-status-user-nodesire-not_allowed').html()),
+                        this.$el.html(this.template(this.model));
+                        return this;
+                    } else {
+                        this.template = _.template($('#game-status-user-nodesire').html()),
+                        this.$el.html(this.template(this.model));
+                        return this;
+                    }
                 } else {
                     this.template = _.template($('#game-status-nouser-nodesire').html()),
                     this.$el.html(this.template({}));
@@ -43,7 +49,7 @@ define([
             return false;
         },        
         removeDesire: function() {
-            this.model.game.removeDesire();
+            this.model.game.removeDesire(this.model.user);
             return false;
         }
     });

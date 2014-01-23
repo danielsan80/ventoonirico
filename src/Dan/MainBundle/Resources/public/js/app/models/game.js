@@ -17,11 +17,13 @@ define([
             var desire = new Desire({owner: user, game: this});
             desire.save();
             this.set('desire', desire);
+            user.notifyCreateDesire();
         },
-        removeDesire: function() {
+        removeDesire: function(user) {
             var desire = this.get('desire');
             this.set('desire', false);
             desire.destroy();
+            user.notifyRemoveDesire();
         },
     });
 

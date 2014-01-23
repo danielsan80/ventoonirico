@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class DefaultController extends Controller
 {
-    
+
     /**
      * Home page
      * 
@@ -21,12 +21,38 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        if ($this->getRequest()->getHost()=='ventoonirico') {
-            return $this->redirect('http://ventoonirico.local.com'.$this->generateUrl('home'));
-        }
-        if (strrpos($this->getRequest()->getRequestUri(),'/')!==0) {
-            return $this->redirect(substr($this->generateUrl('home'),0,-1));
+        if ($response = $this->checkUrl('home')) {
+            return $response;
         }
         return array();
     }
+
+    /**
+     * Spec Runner
+     * 
+     * @Route("test", name="test")
+     * @Template
+     */
+    public function testAction()
+    {
+        if ($response = $this->checkUrl('test')) {
+            return $response;
+        }
+        return array();
+    }
+
+    private function checkUrl($route, $args = array())
+    {
+        if ($this->getRequest()->getHost() == 'ventoonirico') {
+            return $this->redirect('http://ventoonirico.local.com' . $this->generateUrl());
+        }
+        $uri = explode('#', $this->getRequest()->getRequestUri());
+        $uri = explode('?', $uri[0]);
+        $uri = $uri[0];        
+        if (substr($uri, -1, 0) == '/') {
+            return $this->redirect(substr($this->generateUrl($route, $args), 0, -1));
+        }
+        return null;
+    }
+
 }

@@ -10,8 +10,6 @@ require.config({
         'backbone-loader': 'libs/loader/backbone',
         'jquery-loader': 'libs/loader/jquery',
         
-        'templates': '../templates',
-        
         'eventie': 'libs/bower_components/eventie',
         'doc-ready': 'libs/bower_components/doc-ready',
         'eventEmitter': 'libs/bower_components/eventEmitter',

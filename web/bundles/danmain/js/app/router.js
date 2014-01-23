@@ -1,7 +1,7 @@
 define([
   'backbone',
   'app/views/index',
-  'app//util/prefix',
+  'app/util/prefix'
 ], function(Backbone, IndexView, prefix) {
     
     Router = Backbone.Router.extend({

@@ -289,6 +289,7 @@ class ApiController extends Controller
             if ($desire->getOwner()->getId() == $user->getId()) {
                 $em->remove($desire);
                 $em->flush();
+                
                 $response->setStatusCode(200);
             } else {
                 $response->setStatusCode(401);

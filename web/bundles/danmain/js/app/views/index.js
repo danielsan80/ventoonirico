@@ -23,6 +23,7 @@ define([
             var gameCollection = new GameCollection();
             var desiredGameCollection = new DesiredGameCollection();
 
+            
             var gameCountView = new GameCountView({'model': gameCollection});
             var desiredGameListView = new DesiredGameListView({'model': desiredGameCollection});
             var gameListView = new GameListView({'model': gameCollection});

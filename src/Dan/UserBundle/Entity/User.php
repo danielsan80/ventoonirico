@@ -4,6 +4,8 @@ namespace Dan\UserBundle\Entity;
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="dan_user")
@@ -41,11 +43,19 @@ class User extends BaseUser
      * @ORM\Column(name="image", type="text", nullable=true)
      */
     protected $image;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Dan\MainBundle\Entity\Desire", mappedBy="owner")
+     * Serializer\Expose
+     * Serializer\Type("ArrayCollection<Dan\MainBundle\Entity\Desire>")
+     */
+    private $desires;
+
 
     public function __construct()
     {
         parent::__construct();
-        // your own logic
+        $this->desires = new ArrayCollection();
     }
 
     public function getId()
@@ -103,13 +113,36 @@ class User extends BaseUser
         return $this->image;
     }
     
-    public function getAsJson()
+    public function setDesires($desires)
     {
-        return json_encode(array(
-           'id' => $this->getId(),
-           'image' => $this->getImage(),
-           'username' => $this->getUsername(),
-        ));
+        $this->desires = $desires;
+    
+        return $this;
+    }
+
+    public function getDesiresCount()
+    {
+        return $this->desires->count();
     }
     
-}
+    public function getDesires()
+    {
+        return $this->desires;
+    }
+    
+    /**
+     * @Serializer\VirtualProperty
+     * @Serializer\SerializedName("desire")
+     */
+    public function getLastDesire()
+    {
+        return $this->desires->first();
+    }
+    
+    public function addDesire($desire)
+    {
+        $this->desires[] = $desire;
+    }
+
+    
+    }

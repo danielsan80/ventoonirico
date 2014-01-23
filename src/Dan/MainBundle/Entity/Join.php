@@ -29,7 +29,7 @@ class Join
     private $id;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Dan\MainBundle\Entity\Desire")
+     * @ORM\ManyToOne(targetEntity="Dan\MainBundle\Entity\Desire", inversedBy="joins")
      * @ORM\JoinColumn(name="desire_id", referencedColumnName="id")
      * @Serializer\Expose
      * @Serializer\Type("Dan\MainBundle\Entity\Desire")

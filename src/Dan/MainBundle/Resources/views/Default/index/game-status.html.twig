@@ -1,0 +1,61 @@
+{% from 'DanMainBundle:Default:index/macros.html.twig' import player_user_image %}
+
+<script type="text/template" id="game-status-nouser-nodesire">
+</script>
+
+<script type="text/template" id="game-status-user-nodesire">
+    <div class="well" ><a class="desire-create icon icon-plus" href="#"></a></div>
+</script>
+
+<script type="text/template" id="game-status-user-nodesire-not_allowed">
+    <div class="well" ><i class="icon icon-ban-circle" ></i></div>
+</script>
+
+<script type="text/template" id="game-status-desire">
+    <div class="well" >
+    </div>
+</script>
+
+<script type="text/template" id="game-status-desire-player_main">
+    <div class="player player-main">
+        <% if (user.id && user.id==owner.id) { %>
+            <a class="desire-remove" href="#">
+                {{player_user_image("owner", 'player_main')}}
+            </a>
+        <% } else { %>
+            {{player_user_image("owner", 'player_main')}}
+        <% } %>
+    </div>
+</script>
+
+<script type="text/template" id="game-status-desire-player_joined">
+    <div class="player player-joined">
+        <% if (user.id && user.id==join.get('user').id) { %>
+            <a class="join-remove" href="#">
+                <% if (!guest) { %>
+                    {{player_user_image("join.get('user')", 'player_joined')}}
+                <% } else { %>
+                    <img class="img-polaroid" src="{{ '/icons/player-guest.png' | apply_filter('player_guest') }}" />
+                <% } %>
+            </a>
+        <% } else { %>
+            <% if (!guest) { %>
+                {{player_user_image("join.get('user')", 'player_joined')}}
+            <% } else { %>
+                <img class="img-polaroid" src="{{ '/icons/player-guest.png' | apply_filter('player_guest') }}" />
+            <% } %>
+        <% } %>
+    </div>
+</script>
+
+<script type="text/template" id="game-status-desire-player_nobody">
+    <div class="player player-nobody">
+        <% if (user.id) { %>
+            <a class="join-add" href="#">
+                <img class="img-polaroid" src="{{ '/icons/player-nobody.png' | apply_filter('player_joined') }}" alt="Posto libero" />
+            </a>
+        <% } else { %>
+            <img class="img-polaroid" src="{{ '/icons/player-nobody.png' | apply_filter('player_joined') }}" alt="Posto libero" />
+        <% } %>
+    </div>
+</script>

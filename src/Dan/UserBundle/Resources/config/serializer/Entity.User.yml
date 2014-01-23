@@ -1,5 +1,10 @@
 Dan\UserBundle\Entity\User:
     exclusion_policy: ALL
+    virtual_properties:
+        getDesiresCount:
+            name: desires_count
+            expose: true
+            type: integer
     properties:
         image:
             expose: true

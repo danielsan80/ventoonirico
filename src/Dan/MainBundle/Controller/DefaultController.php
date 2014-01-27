@@ -21,6 +21,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        $this->get('session')->set('slack', true);
         if ($response = $this->checkUrl('home')) {
             return $response;
         }

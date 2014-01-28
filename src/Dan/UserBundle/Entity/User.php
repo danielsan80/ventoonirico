@@ -3,6 +3,7 @@ namespace Dan\UserBundle\Entity;
 
 use Sonata\UserBundle\Entity\BaseUser as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 
 use Doctrine\Common\Collections\ArrayCollection;
 

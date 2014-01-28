@@ -1,18 +1,20 @@
+server "158.58.169.11", :app, :web, :db, :primary => true
+
 set :application, "ventoonirico"
-set :domain,      "ventoonirico.danilosanchi.net"
-set :deploy_to,   "/var/www/vhosts/ventoonirico.danilosanchi.net/symfony_projects/"
+set :domain,      "prova.danilosanchi.net"
+set :deploy_to,   "/var/www/ventoonirico"
 
-role :web,        domain
-role :app,        domain                    
-role :db,         domain, :primary => true 
+#role :web,        domain
+#role :app,        domain                    
+#role :db,         domain, :primary => true 
 
-set :serverName, "sg111.servergrove.com" # The server's hostname
+set :serverName, "158.58.169.11" # The server's hostname
 set :repository,  "git@github.com:danielsan80/ventoonirico.git"
 set :scm,         :git
 
 set :deploy_via,      :rsync_with_remote_cache
-set :user,       "ventoonirico"
-ssh_options[:port] = 22123
+set :user,       "root"
+ssh_options[:port] = 22
 
 set :shared_dirs,   ["app/config", "app/logs", "app/sessions", "app/spool", "app/files/images/users", "web/media"]
 set :shared_links,  ["app/logs", "app/sessions", "app/spool", "app/files/images/users", "web/media", "app/config/parameters.yml"]
@@ -83,6 +85,7 @@ namespace :dan do
 
     desc "clear cache"
     task :cc do
+#        run "cd #{release_path} && php app/console apc:cc"
         run "cd #{release_path} && rm -Rf app/cache/*"
         run "cd #{release_path} && chmod -R 777 app/cache"
     end

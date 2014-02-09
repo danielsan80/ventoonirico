@@ -7483,9 +7483,6 @@ form ul.errors li {
 .masonry .item.w4 {
   width: 800px;
 }
-@-ms-viewport {
-  width: device-width;
-}
 .clearfix {
   *zoom: 1;
 }

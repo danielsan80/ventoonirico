@@ -55,13 +55,13 @@ sonata_user:
     prefix: /admin
     
 google_login:
-    pattern: /login/check-google
+    pattern: (/admin)?/login/check-google
     
 facebook_login:
-    pattern: /login/check-facebook
+    pattern: (/admin)?/login/check-facebook
     
-#_security_check:
-#    pattern:  /login_check
+_security_check:
+    pattern:  (/admin)?/login_check
 #_security_logout:
 #    pattern:  /logout
     

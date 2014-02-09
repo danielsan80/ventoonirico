@@ -1,11 +1,11 @@
 define([
+    'module',
     'backbone-loader',
-    'app/util/prefix',
     'app/models/desire',
-], function(Backbone, prefix, Desire) {
+], function(module, Backbone, Desire) {
 
     var Game = Backbone.RelationalModel.extend({
-        urlRoot: prefix + '/api/games',
+        urlRoot: module.config().urlRoot,
         relations: [
             {
                 type: Backbone.HasOne,

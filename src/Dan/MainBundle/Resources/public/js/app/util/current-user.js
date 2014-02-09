@@ -1,9 +1,11 @@
 define([
-    'app/util/prefix',
-    'app/models/user'
-], function(prefix, User){
+    'module',
+    'app/models/user',
+], function(module, User){
+    var config = module.config();
+
     var CurrentUser = User.extend({
-        url: prefix + '/api/user',
+        url: config.url,
         isLogged: function() {
             return this.get('id');
         }

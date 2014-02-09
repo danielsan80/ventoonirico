@@ -1,10 +1,12 @@
 define([
+    'module',
     'backbone-loader',
     'app/models/desire',
-    'app/util/prefix',
-], function(Backbone, Desire, prefix){
+], function(module, Backbone, Desire){
+    var config = module.config();
+    
     var DesireCollection = Backbone.Collection.extend({
-        url: prefix + '/api/desires',
+        url: config.url,
         model: Desire
     });
     return DesireCollection;

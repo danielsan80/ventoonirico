@@ -16,33 +16,35 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-            new JMS\AopBundle\JMSAopBundle(),
-            new JMS\DiExtraBundle\JMSDiExtraBundle($this),
-            new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
+            
+            new JMS\SerializerBundle\JMSSerializerBundle(),
             
             new FOS\UserBundle\FOSUserBundle(),
             
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+            
+            new Liip\FunctionalTestBundle\LiipFunctionalTestBundle(),
+            new Liip\DoctrineCacheBundle\LiipDoctrineCacheBundle(),
+
+            new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Sonata\jQueryBundle\SonatajQueryBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
-            new SimpleThings\EntityAudit\SimpleThingsEntityAuditBundle(),
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             
-            new Liip\DoctrineCacheBundle\LiipDoctrineCacheBundle(),
-            
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
             new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
-            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
-            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             
-            new JMS\SerializerBundle\JMSSerializerBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
                         
+            new Dan\CommonBundle\DanCommonBundle(),
             new Dan\MainBundle\DanMainBundle(),
             new Dan\UserBundle\DanUserBundle(),
-            new Dan\CommonBundle\DanCommonBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

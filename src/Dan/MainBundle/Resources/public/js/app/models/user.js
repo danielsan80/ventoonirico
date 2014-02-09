@@ -1,10 +1,10 @@
 define([
+    'module',
     'backbone-loader',
-    'app/util/prefix',
-], function(Backbone, prefix){
+], function(module, Backbone){
     var User = Backbone.RelationalModel.extend({
-        urlRoot: prefix + '/api/users',
-        desiresLimit: 3,
+        urlRoot: module.config().urlRoot,
+        desiresLimit: module.config().desiresLimit,
         notifyRemoveDesire: function() {
             this.set('desires_count', this.get('desires_count')-1);
         },

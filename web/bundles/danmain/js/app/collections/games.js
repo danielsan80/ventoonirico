@@ -1,10 +1,12 @@
 define([
+    'module',
     'backbone-loader',
     'app/models/game',
-    'app/util/prefix',
-], function(Backbone, Game, prefix){
+], function(module, Backbone, Game){
+    var config = module.config();
+    
     var GameCollection = Backbone.Collection.extend({
-        url: prefix + '/api/games',
+        url: config.url,
         model: Game
     });
     return GameCollection;

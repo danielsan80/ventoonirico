@@ -7388,17 +7388,13 @@ define('backbone-loader',[
   ], function(Backbone) {
     return Backbone;
 });
-define('app/util/prefix',[], function(){
-    return window.location.pathname.substring(1);
-});
-
 define('app/models/user',[
+    'module',
     'backbone-loader',
-    'app/util/prefix',
-], function(Backbone, prefix){
+], function(module, Backbone){
     var User = Backbone.RelationalModel.extend({
-        urlRoot: prefix + '/api/users',
-        desiresLimit: 3,
+        urlRoot: module.config().urlRoot,
+        desiresLimit: module.config().desiresLimit,
         notifyRemoveDesire: function() {
             this.set('desires_count', this.get('desires_count')-1);
         },
@@ -7415,13 +7411,13 @@ define('app/models/user',[
 });
 
 define('app/models/join',[
+    'module',
     'backbone-loader',
-    'app/util/prefix',
     'app/models/user',
     'app/models/desire',
-], function(Backbone, prefix, User, Desire){
+], function(module,Backbone, User, Desire){
      var Join = Backbone.RelationalModel.extend({
-        urlRoot: prefix + '/api/joins',
+        urlRoot: module.config().urlRoot,
         relations: [
             {
                 type: Backbone.HasOne,
@@ -7451,16 +7447,16 @@ define('app/collections/joins',[
 });
 
 define('app/models/desire',[
+    'module',
     'backbone-loader',
-    'app/util/prefix',
     'app/models/game',
     'app/models/user',
     'app/models/join',
     'app/collections/joins',
-], function(Backbone, prefix, Game, User, Join, JoinCollection) {
+], function(module, Backbone, Game, User, Join, JoinCollection) {
 
     var Desire = Backbone.RelationalModel.extend({
-        urlRoot: prefix + '/api/desires',
+        urlRoot: module.config().urlRoot,
         relations: [
             {
                 type: Backbone.HasOne,
@@ -7508,13 +7504,13 @@ define('app/models/desire',[
 });
 
 define('app/models/game',[
+    'module',
     'backbone-loader',
-    'app/util/prefix',
     'app/models/desire',
-], function(Backbone, prefix, Desire) {
+], function(module, Backbone, Desire) {
 
     var Game = Backbone.RelationalModel.extend({
-        urlRoot: prefix + '/api/games',
+        urlRoot: module.config().urlRoot,
         relations: [
             {
                 type: Backbone.HasOne,
@@ -7558,24 +7554,27 @@ define('app/models/game',[
 });
 
 define('app/collections/games',[
+    'module',
     'backbone-loader',
     'app/models/game',
-    'app/util/prefix',
-], function(Backbone, Game, prefix){
+], function(module, Backbone, Game){
+    var config = module.config();
+    
     var GameCollection = Backbone.Collection.extend({
-        url: prefix + '/api/games',
+        url: config.url,
         model: Game
     });
     return GameCollection;
 });
 
 define('app/collections/desired-games',[
+    'module',
     'backbone-loader',
     'app/models/game',
-    'app/util/prefix',
-], function(Backbone, Game, prefix){
+], function(module, Backbone, Game){
+    
     var DesiredGameCollection = Backbone.Collection.extend({
-        url: prefix + '/api/games?filter=desired',
+        url: module.config().url,
         model: Game
     });
     return DesiredGameCollection;
@@ -7734,11 +7733,13 @@ define('app/views/game-status',[
 });
 
 define('app/util/current-user',[
-    'app/util/prefix',
-    'app/models/user'
-], function(prefix, User){
+    'module',
+    'app/models/user',
+], function(module, User){
+    var config = module.config();
+
     var CurrentUser = User.extend({
-        url: prefix + '/api/user',
+        url: config.url,
         isLogged: function() {
             return this.get('id');
         }
@@ -7915,6 +7916,13 @@ define('app/views/index',[
 
     return IndexView;
 
+});
+
+define('app/util/prefix',[], function(){
+    if (window.location.pathname.substring(0, 12) == '/app_dev.php') {
+        return 'app_dev.php';
+    }
+    return '';
 });
 
 define('app/router',[

@@ -1,7 +1,3 @@
-jms_security_extra:
-    secure_all_services: false
-    expressions: true
-
 security:
     
     encoders:
@@ -11,7 +7,7 @@ security:
         ROLE_ADMIN:       [ROLE_USER, ROLE_SONATA_ADMIN]
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
         SONATA:
-            - ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT  # if you are using acl then this line must be commented
+#            - ROLE_SONATA_PAGE_ADMIN_PAGE_EDIT  # if you are using acl then this line must be commented
 
     providers:
         chain_provider:
@@ -34,9 +30,9 @@ security:
             security: false
 
         admin:
+            pattern:            ^/admin(.*)
             switch_user:        true
             context:            user
-            pattern:            /admin(.*)
             form_login:
                 provider:       fos_userbundle
                 login_path:     /admin/login
@@ -48,14 +44,14 @@ security:
                 path:           /admin/logout
                 target:         /admin/login
             anonymous:    true
-            oauth:
-                resource_owners:
-                    google:             "/login/check-google"
-                    facebook:             "/login/check-facebook"
-                login_path:        /admin/login
-                failure_path:      /admin/login
-                oauth_user_provider:
-                    service: oauth.user_provider
+#            oauth:
+#                resource_owners:
+#                  google:          "/admin/login/check-google"
+#                  facebook:        "/admin/login/check-facebook"
+#                login_path:        /admin/login
+#                failure_path:      /admin/login
+#                oauth_user_provider:
+#                    service: oauth.user_provider
             remember_me:
                 key:      "%secret%"
                 lifetime: 31536000 # 365 giorni in secondi

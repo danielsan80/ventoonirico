@@ -64,7 +64,7 @@ class BGGService
         $responses = $guzzleClient->send($requests);
 
         foreach ($responses as $response) {
-            $url = $response->getRequest()->getUrl();
+            $url = (string)$response->getEffectiveUrl();
             preg_match('/(?P<username>\w+)\\?/', $url, $matches);
             $username = $matches['username'];
             $name = $users[$username];

@@ -1,11 +1,11 @@
 define([
+    'module',
     'backbone-loader',
-    'app/util/prefix',
     'app/models/user',
     'app/models/desire',
-], function(Backbone, prefix, User, Desire){
+], function(module,Backbone, User, Desire){
      var Join = Backbone.RelationalModel.extend({
-        urlRoot: prefix + '/api/joins',
+        urlRoot: module.config().urlRoot,
         relations: [
             {
                 type: Backbone.HasOne,

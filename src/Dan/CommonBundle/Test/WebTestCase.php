@@ -10,22 +10,26 @@ class WebTestCase extends BaseWebTestCase
     
     protected function getFixturesToLoad()
     {
-        return array(
-             'Dan\UserBundle\DataFixtures\ORM\LoadUserData',
-             'Dan\UserBundle\DataFixtures\ORM\LoadGroupData',
-        );
+        return array();
     }
     
     public function setUp()
     {
-        $this->loadFixtures($this->getFixturesToLoad());
+        parent::setUp();
+        $executor = $this->loadFixtures($this->getFixtures());
+        $this->referenceRepository = $executor->getReferenceRepository();
     }
     
-    /**
-     * Show the current response in Chrome
-     *
-     * @param Client $client 
-     */
+    public function getFixtures()
+    {
+        return array();
+    }
+    
+    public function getReference($key)
+    {
+        return $this->referenceRepository->getReference($key);
+    }
+    
     protected function showInBrowser($client)
     {
         $kernel = $client->getKernel();

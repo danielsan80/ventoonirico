@@ -3,6 +3,7 @@
 use Idephix\Idephix;
 use Idephix\Extension\Deploy\Deploy;
 use Idephix\Extension\PHPUnit\PHPUnit;
+use Idephix\Extension\Project\Project;
 use Idephix\SSH\SshClient;
 
 $idx = new Idephix();
@@ -23,7 +24,7 @@ $idx->
     add('chmod',
         function() use ($idx)
         {
-            $dirs = "app/cache app/logs app/files web/sessions web/media";
+            $dirs = "app/cache app/logs app/files app/sessions web/media";
             $idx->local("chmod -R 777 ".$dirs);
             $idx->local("setfacl -Rn -m u:www-data:rwX -m u:`whoami`:rwX ".$dirs);
             $idx->local("setfacl -dRn -m u:www-data:rwX -m u:`whoami`:rwX ".$dirs);

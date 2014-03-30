@@ -9,6 +9,7 @@ use Idephix\SSH\SshClient;
 $idx = new Idephix();
 
 $idx->
+    /** Clear project logs, caches and so on */
     add('clean',
         function() use ($idx)
         {
@@ -16,6 +17,7 @@ $idx->
             $idx->local("rm -rf web/media/cache/*");
 
         })->
+    /** Clear cache (app/cache) */
     add('cc',
         function() use ($idx)
         {
@@ -89,7 +91,6 @@ $idx->
         {
             $idx->local("app/console doctrine:database:drop --force");
             $idx->local("app/console doctrine:database:create");
-            $idx->local("app/console doctrine:fixtures:load --no-interaction");
         })->
     add('database:migrate',
         function() use ($idx)
@@ -109,7 +110,7 @@ $idx->
             $idx->runTask('vendors:install');
             $idx->runTask('database:reset');
             $idx->runTask('database:migrate');
-            $idx->runTask('database:migrate');
+            $idx->runTask('database:fixtures');
             $idx->runTask('test:run', $show?'--show':$kill?'--kill':null, $show && $kill?'--kill':null);
         })->
     add('selenium:start',

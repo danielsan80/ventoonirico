@@ -7456,7 +7456,7 @@ define('app/models/desire',[
 ], function(module, Backbone, Game, User, Join, JoinCollection) {
 
     var Desire = Backbone.RelationalModel.extend({
-        urlRoot: module.config().urlRoot,
+        urlRoot: module.config().urlRoot.replace('__id__',''),
         relations: [
             {
                 type: Backbone.HasOne,
@@ -7935,6 +7935,7 @@ define('app/router',[
         routes: function(){
             var routes = new Array();
             routes[prefix + ""] = "index";
+            routes[prefix + "/"] = "index";
             return routes;
         },
         index: function() {

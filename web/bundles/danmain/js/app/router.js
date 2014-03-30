@@ -8,6 +8,7 @@ define([
         routes: function(){
             var routes = new Array();
             routes[prefix + ""] = "index";
+            routes[prefix + "/"] = "index";
             return routes;
         },
         index: function() {

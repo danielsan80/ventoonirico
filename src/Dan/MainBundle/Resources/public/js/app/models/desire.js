@@ -8,7 +8,7 @@ define([
 ], function(module, Backbone, Game, User, Join, JoinCollection) {
 
     var Desire = Backbone.RelationalModel.extend({
-        urlRoot: module.config().urlRoot,
+        urlRoot: module.config().urlRoot.replace('__id__',''),
         relations: [
             {
                 type: Backbone.HasOne,

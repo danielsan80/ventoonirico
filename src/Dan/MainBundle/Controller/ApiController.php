@@ -32,7 +32,7 @@ class ApiController extends Controller
      */
     public function getUserAction()
     {
-        $serializer = $this->get('jms_serializer');
+        $serializer = $this->get('serializer');
 
         $user = $this->get('user');
         if ($user) {
@@ -163,7 +163,6 @@ class ApiController extends Controller
 
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
-        $joinRepo = $em->getRepository('DanMainBundle:Join');
         $join = $this->deserialize('Dan\MainBundle\Entity\Join', $request);
 
         $em->persist($join);
@@ -191,7 +190,7 @@ class ApiController extends Controller
 
         $em = $this->getDoctrine()->getEntityManager();
         $joinRepo = $em->getRepository('DanMainBundle:Join');
-        $join = $joinRepo->findOneById($id);
+        $join = $joinRepo->find($id);
         if ($join) {
             if ($join->getUser()->getId() == $user->getId()) {
                 $em->remove($join);
@@ -221,11 +220,11 @@ class ApiController extends Controller
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
         $desireRepo = $em->getRepository('DanMainBundle:Desire');
-        $desires = $desireRepo->find($id);
+        $desire = $desireRepo->find($id);
 
         $response = new Response();
-        if ($desires) {
-            $response->setContent($desire->getAsJson());
+        if ($desire) {
+            $response->setContent($this->serialize($desire));
         } else {
             $response->setStatusCode('404');
         }
@@ -247,23 +246,20 @@ class ApiController extends Controller
         $user = $this->get('user');
 
         $request = $this->getRequest();
-        $gameId = $request->get('gameId');
         $em = $this->getDoctrine()->getEntityManager();
-        $desireRepo = $em->getRepository('DanMainBundle:Desire');
-        $desires = $desireRepo->find($id);
-
+        $desire = $this->deserialize('Dan\MainBundle\Entity\Desire', $request);
+        
         $response = new Response();
-        if ($desires) {
-            $desire = $desires[0];
+        if ($desire) {
+            $em->merge($desire);
         } else {
             $desire = new Desire($user);
-            $desire->setGameId($gameId);
             $em->persist($desire);
         }
 
         $em->flush();
 
-        $response->setContent($desire->getAsJson());
+        $response->setContent($this->serialize($desire));
         return $response;
     }
 

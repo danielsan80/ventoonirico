@@ -7,6 +7,7 @@ use Idephix\Extension\Project\Project;
 use Idephix\SSH\SshClient;
 
 $idx = new Idephix();
+$idx->seleniumServerJar = '/var/lib/selenium/selenium-server.jar';
 
 $idx->
     /** Clear project logs, caches and so on */
@@ -42,7 +43,7 @@ $idx->
                 $idx->runTask('selenium:start');
             }
             sleep(2);
-            $idx->local('phpunit -c app/');
+            $idx->local('phpunit -c app');
             if ($kill) {
                 $idx->runTask('selenium:stop', '--kill');
             } else {
@@ -117,9 +118,9 @@ $idx->
         function($show=false) use($idx){
             file_put_contents('/tmp/selenium.log', '');
             if ($show) {
-                $idx->local('java -jar bin/selenium-server-standalone-2.38.0.jar >/tmp/selenium.log 2>&1 &');
+                $idx->local('java -jar '.$idx->seleniumServerJar.' >/tmp/selenium.log 2>&1 &');
             } else {
-                $idx->local('xvfb-run java -jar bin/selenium-server-standalone-2.38.0.jar >/tmp/selenium.log 2>&1 &');
+                $idx->local('xvfb-run java -jar '.$idx->seleniumServerJar.' >/tmp/selenium.log 2>&1 &');
             }
         })->
     add('selenium:stop',

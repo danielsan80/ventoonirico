@@ -15,14 +15,10 @@ class WebTestCase extends BaseWebTestCase
     
     public function setUp()
     {
+        
         parent::setUp();
-        $executor = $this->loadFixtures($this->getFixtures());
+        $executor = $this->loadFixtures($this->getFixturesToLoad());
         $this->referenceRepository = $executor->getReferenceRepository();
-    }
-    
-    public function getFixtures()
-    {
-        return array();
     }
     
     public function getReference($key)

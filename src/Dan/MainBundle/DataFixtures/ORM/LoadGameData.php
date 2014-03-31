@@ -1,6 +1,6 @@
 <?php
 
-namespace Dan\UserBundle\DataFixtures\ORM;
+namespace Dan\MainBundle\DataFixtures\ORM;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;

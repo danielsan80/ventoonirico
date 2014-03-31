@@ -1,10 +1,16 @@
+parameters:
+    base_url: 'http://ventoonirico.local.com/app_test.php'
+
 imports:
     - { resource: config_dev.yml }
 
 framework:
     test: ~
     session:
+        name: MOCKSESSID
         storage_id: session.storage.mock_file
+    profiler:
+        collect: false
 
 web_profiler:
     toolbar: false
@@ -12,3 +18,10 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+    
+doctrine:
+    dbal:
+        dbname: %database_name%_test
+
+dan_user:
+    images_dir: %kernel.cache_dir%/images_users

@@ -1,4 +1,5 @@
 parameters:
+    base_url:          http://ventoonirico.local.com
     database_driver:   pdo_mysql
     database_host:     127.0.0.1
     database_port:     ~
@@ -11,6 +12,7 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
+    base_url:          en
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
 

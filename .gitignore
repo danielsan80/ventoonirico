@@ -6,6 +6,7 @@
 /app/files/images/users/*
 /app/sessions/*
 /web/media/cache/*
+/web/media/test/*
 /vendor/
 /composer.phar
 

@@ -6,8 +6,6 @@ define([
     
     Router = Backbone.Router.extend({
         routes: function(){
-            
-            console.log(prefix);
             var routes = new Array();
             routes[prefix + ""] = "index";
             routes[prefix + "/"] = "index";

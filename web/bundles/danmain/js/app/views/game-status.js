@@ -50,6 +50,10 @@ define([
             this.model.game.createDesire(this.model.user);
             return false;
         },        
+        takeDesire: function() {
+            this.model.game.takeDesire(this.model.user);
+            return false;
+        },
         leaveDesire: function() {
             this.model.game.leaveDesire(this.model.user);
             return false;

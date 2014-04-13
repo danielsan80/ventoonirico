@@ -29,6 +29,12 @@ define([
             this.set('desire', false);
             desire.destroy();
         },
+        takeDesire: function(user) {
+            var desire = this.get('desire');
+            desire.set('owner', user);
+            desire.save();
+            user.notifyCreateDesire();
+        },
         leaveDesire: function(user) {
             var desire = this.get('desire');
             if (desire.get('owner').id == user.id) {
@@ -42,7 +48,7 @@ define([
             } else {
                 desire.save();
             }
-        },
+        }
     });
 
     return Game;

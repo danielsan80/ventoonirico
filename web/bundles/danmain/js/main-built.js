@@ -7494,7 +7494,6 @@ define('app/models/desire',[
                 i++;
             }
             if (!joins.length) {
-                console.log(this);
                 this.get('game').removeDesire(this);
             }
         }
@@ -7534,6 +7533,12 @@ define('app/models/game',[
             this.set('desire', false);
             desire.destroy();
         },
+        takeDesire: function(user) {
+            var desire = this.get('desire');
+            desire.set('owner', user);
+            desire.save();
+            user.notifyCreateDesire();
+        },
         leaveDesire: function(user) {
             var desire = this.get('desire');
             if (desire.get('owner').id == user.id) {
@@ -7547,7 +7552,7 @@ define('app/models/game',[
             } else {
                 desire.save();
             }
-        },
+        }
     });
 
     return Game;
@@ -7724,6 +7729,10 @@ define('app/views/game-status',[
             this.model.game.createDesire(this.model.user);
             return false;
         },        
+        takeDesire: function() {
+            this.model.game.takeDesire(this.model.user);
+            return false;
+        },
         leaveDesire: function() {
             this.model.game.leaveDesire(this.model.user);
             return false;
@@ -7936,8 +7945,6 @@ define('app/router',[
     
     Router = Backbone.Router.extend({
         routes: function(){
-            
-            console.log(prefix);
             var routes = new Array();
             routes[prefix + ""] = "index";
             routes[prefix + "/"] = "index";

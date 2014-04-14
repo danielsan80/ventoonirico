@@ -1,7 +1,7 @@
 server "158.58.169.11", :app, :web, :db, :primary => true
 
 set :application, "ventoonirico"
-set :domain,      "prova.danilosanchi.net"
+set :domain,      "ventoonirico.danilosanchi.net"
 set :deploy_to,   "/var/www/ventoonirico"
 
 #role :web,        domain

@@ -15,7 +15,9 @@ define([
         },
         events: {
             "click .join-add": "addJoin",
-            "click .join-remove": "removeJoin"
+            "click .join-remove": "removeJoin",
+            "click .desire-take": "takeDesire",
+            "click .desire-leave": "leaveDesire"
         },
         render: function() {
             var user = this.model.user;
@@ -54,6 +56,14 @@ define([
         },
         removeJoin: function() {
             this.model.desire.removeJoin(this.model.user);
+            return false;
+        },        
+        takeDesire: function() {
+            this.model.game.takeDesire(this.model.user);
+            return false;
+        },
+        leaveDesire: function() {
+            this.model.game.leaveDesire(this.model.user);
             return false;
         }
     });

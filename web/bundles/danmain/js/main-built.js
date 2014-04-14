@@ -7493,8 +7493,26 @@ define('app/models/desire',[
                 }
                 i++;
             }
-            if (!joins.length) {
+            if (!this.get('owner') && !joins.length) {
                 this.get('game').removeDesire(this);
+            }
+        },
+        takeDesire: function(user) {
+            this.set('owner', user);
+            this.save();
+            user.notifyCreateDesire();
+        },
+        leaveDesire: function(user) {
+            if (this.get('owner').id == user.id) {
+                this.set('owner', null);
+                user.notifyRemoveDesire();
+            } else {
+                this.removeJoin(user);
+            }
+            if (!this.get('joins').length) {
+                this.removeDesire();
+            } else {
+                this.save();
             }
         }
     });
@@ -7535,23 +7553,11 @@ define('app/models/game',[
         },
         takeDesire: function(user) {
             var desire = this.get('desire');
-            desire.set('owner', user);
-            desire.save();
-            user.notifyCreateDesire();
+            return desire.takeDesire(user);
         },
         leaveDesire: function(user) {
             var desire = this.get('desire');
-            if (desire.get('owner').id == user.id) {
-                desire.set('owner', null);
-                user.notifyRemoveDesire();
-            } else {
-                desire.removeJoin(user);
-            }
-            if (!desire.get('joins').length) {
-                this.removeDesire();
-            } else {
-                desire.save();
-            }
+            return desire.leaveDesire(user);
         }
     });
 
@@ -7632,7 +7638,9 @@ define('app/views/desire',[
         },
         events: {
             "click .join-add": "addJoin",
-            "click .join-remove": "removeJoin"
+            "click .join-remove": "removeJoin",
+            "click .desire-take": "takeDesire",
+            "click .desire-leave": "leaveDesire"
         },
         render: function() {
             var user = this.model.user;
@@ -7671,6 +7679,14 @@ define('app/views/desire',[
         },
         removeJoin: function() {
             this.model.desire.removeJoin(this.model.user);
+            return false;
+        },        
+        takeDesire: function() {
+            this.model.game.takeDesire(this.model.user);
+            return false;
+        },
+        leaveDesire: function() {
+            this.model.game.leaveDesire(this.model.user);
             return false;
         }
     });

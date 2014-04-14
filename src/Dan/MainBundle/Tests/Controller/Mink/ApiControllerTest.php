@@ -48,8 +48,8 @@ class ApiControllerTest extends MinkTestCase
         $this->find($session, '.player-main a.desire-take', $desires[0])->click();
         
         $this->waitFor($session, '.desire-leave');
-        $noOwnedDesireLinks = $this->findAll($session, '.player-main a.desire-leave', $desires[0]);
-        $this->assertCount(0, $noOwnedDesireLinks);
+        $ownedDesireLinks = $this->findAll($session, '.player-main a.desire-leave', $desires[0]);
+        $this->assertCount(1, $ownedDesireLinks);
         
     }
         

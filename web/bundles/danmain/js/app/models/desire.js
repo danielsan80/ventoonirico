@@ -45,8 +45,26 @@ define([
                 }
                 i++;
             }
-            if (!joins.length) {
+            if (!this.get('owner') && !joins.length) {
                 this.get('game').removeDesire(this);
+            }
+        },
+        takeDesire: function(user) {
+            this.set('owner', user);
+            this.save();
+            user.notifyCreateDesire();
+        },
+        leaveDesire: function(user) {
+            if (this.get('owner').id == user.id) {
+                this.set('owner', null);
+                user.notifyRemoveDesire();
+            } else {
+                this.removeJoin(user);
+            }
+            if (!this.get('joins').length) {
+                this.removeDesire();
+            } else {
+                this.save();
             }
         }
     });

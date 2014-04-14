@@ -7,3 +7,5 @@
         />
     {% endautoescape %}
 {% endmacro %}
+        
+{% macro is_super_admin() %}{{ is_granted('ROLE_SUPER_ADMIN')?'true':'false' }}{% endmacro %}

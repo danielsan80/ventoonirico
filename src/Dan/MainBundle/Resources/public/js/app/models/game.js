@@ -31,23 +31,11 @@ define([
         },
         takeDesire: function(user) {
             var desire = this.get('desire');
-            desire.set('owner', user);
-            desire.save();
-            user.notifyCreateDesire();
+            return desire.takeDesire(user);
         },
         leaveDesire: function(user) {
             var desire = this.get('desire');
-            if (desire.get('owner').id == user.id) {
-                desire.set('owner', null);
-                user.notifyRemoveDesire();
-            } else {
-                desire.removeJoin(user);
-            }
-            if (!desire.get('joins').length) {
-                this.removeDesire();
-            } else {
-                desire.save();
-            }
+            return desire.leaveDesire(user);
         }
     });
 

@@ -7480,6 +7480,10 @@ define('app/models/desire',[
             join.save();
             this.get('joins').add(join);
         },
+        removeJoinById: function(id) {
+            var user = this.get('joins').get(id).get('user');
+            this.removeJoin(user);
+        },
         removeJoin: function(user) {
             var joins = this.get('joins');
             var i = 0;
@@ -7677,8 +7681,10 @@ define('app/views/desire',[
             this.model.desire.addJoin(this.model.user);
             return false;
         },
-        removeJoin: function() {
-            this.model.desire.removeJoin(this.model.user);
+        removeJoin: function(e) {
+            var id = $(e.currentTarget).data('join-id');
+            this.model.desire.removeJoinById(id);
+            //this.model.desire.removeJoin(this.model.user);
             return false;
         },        
         takeDesire: function() {

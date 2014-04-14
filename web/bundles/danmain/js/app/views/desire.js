@@ -54,8 +54,10 @@ define([
             this.model.desire.addJoin(this.model.user);
             return false;
         },
-        removeJoin: function() {
-            this.model.desire.removeJoin(this.model.user);
+        removeJoin: function(e) {
+            var id = $(e.currentTarget).data('join-id');
+            this.model.desire.removeJoinById(id);
+            //this.model.desire.removeJoin(this.model.user);
             return false;
         },        
         takeDesire: function() {

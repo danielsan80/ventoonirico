@@ -71,4 +71,9 @@ class Controller extends BaseController
         return $serializer->serialize($entity, $format);
     }
     
+    protected function isGranted($role)
+    {
+        return $this->get('security.context')->isGranted($role);
+    }
+    
 }

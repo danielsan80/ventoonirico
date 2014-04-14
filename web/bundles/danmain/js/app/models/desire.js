@@ -32,6 +32,10 @@ define([
             join.save();
             this.get('joins').add(join);
         },
+        removeJoinById: function(id) {
+            var user = this.get('joins').get(id).get('user');
+            this.removeJoin(user);
+        },
         removeJoin: function(user) {
             var joins = this.get('joins');
             var i = 0;

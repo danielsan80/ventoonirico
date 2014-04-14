@@ -51,9 +51,9 @@
 </script>
 
 <script type="text/template" id="game-status-desire-player_joined">
-    <div class="player player-joined">
-        <% if (user.id && user.id==join.get('user').id) { %>
-            <a class="join-remove" href="#">
+    <div class="player player-joined" >
+        <% if ((user.id && user.id==join.get('user').id) || {{is_super_admin()}}) { %>
+            <a class="join-remove" href="#" data-join-id="<%= join.id %>" >
                 <% if (!guest) { %>
                     {{player_user_image("join.get('user')", 'player_joined')}}
                 <% } else { %>

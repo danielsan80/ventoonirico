@@ -192,7 +192,7 @@ class ApiController extends Controller
         $joinRepo = $em->getRepository('DanMainBundle:Join');
         $join = $joinRepo->find($id);
         if ($join) {
-            if ($join->getUser()->getId() == $user->getId()) {
+            if ($join->getUser()->getId() == $user->getId() || $this->isGranted('ROLE_SUPER_ADMIN')) {
                 $em->remove($join);
                 $em->flush();
                 return new Response('', 200);

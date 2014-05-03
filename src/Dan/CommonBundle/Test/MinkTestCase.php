@@ -146,10 +146,11 @@ class MinkTestCase extends WebTestCase
     }
     
     public function close(Session $session) {
-        $session->stop();        
+        $session->stop(); 
+        $session->executeScript('window.close();');
     }
     
-    public function waitFor(Session $session, $selector, $timeout=20)
+    public function waitFor(Session $session, $selector, $timeout=30)
     {
         $session->wait($timeout * 1000, "$('".$selector."').length > 0");
         return $this->find($session, $selector);

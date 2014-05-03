@@ -123,6 +123,28 @@ class ApiController extends Controller
     /**
      * Request 
      * 
+     * @Route("/desires", name="get_desires")
+     * @Method("GET")
+     * 
+     * @return json
+     */
+    public function getDesiresAction()
+    {
+        $manager = $this->get('model.manager.desires');
+        $serializer = $this->get('serializer');
+        $desires = $manager->getDesires();
+
+        $result = $serializer->serialize($desires, 'json');
+
+        $response = new Response();
+        $response->setContent($result);
+
+        return $response;
+    }
+    
+    /**
+     * Request 
+     * 
      * @Route("/desires", name="post_desire")
      * @Method("POST")
      * 
@@ -247,17 +269,16 @@ class ApiController extends Controller
 
         $request = $this->getRequest();
         $em = $this->getDoctrine()->getEntityManager();
+        $repo = $em->getRepository('DanMainBundle:Desire');
         $desire = $this->deserialize('Dan\MainBundle\Entity\Desire', $request);
         
         $response = new Response();
-        if ($desire) {
-            $em->merge($desire);
-        } else {
-            $desire = new Desire($user);
-            $em->persist($desire);
-        }
-
+        if (!$desire) {
+            $this->createNotFoundException();
+        }    
+        $em->merge($desire);
         $em->flush();
+        $desire = $repo->find($id);
 
         $response->setContent($this->serialize($desire));
         return $response;
@@ -284,7 +305,7 @@ class ApiController extends Controller
 
         $response = new Response();
         if ($desire) {
-            if ($desire->getOwner()->getId() == $user->getId()) {
+            if ($desire->getOwner()->getId() == $user->getId() || $this->isGranted('ROLE_SUPER_ADMIN')) {
                 $em->remove($desire);
                 $em->flush();
                 

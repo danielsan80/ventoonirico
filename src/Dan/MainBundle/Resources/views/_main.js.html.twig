@@ -8,13 +8,13 @@
                 'url': '{{ path('get_games', {'filter':'desired'})}}'
             },
             'app/collections/desires': {
-                'url': '{{ path('get_desire', {id:'__id__'})|replace('/__id__','')}}'
+                'url': '{{ path('get_desires')}}'
             },
             'app/collections/games': {
                 'url': '{{ path('get_games')}}'
             },
             'app/models/desire': {
-                'urlRoot': '{{ path('get_desire', {id:'__id__'})|replace('/__id__','')}}'
+                'urlRoot': '{{ path('get_desires')}}'
             },
             'app/models/game': {
                 'urlRoot': '{{ path('get_games')}}'

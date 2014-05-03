@@ -7,7 +7,7 @@ define([
 
     var DesireView = Backbone.View.extend({
         initialize: function() {
-//            this.listenTo(this.model.desire, 'change', this.render);
+            this.listenTo(this.model.desire, 'change', this.render);
             this.listenTo(this.model.desire, 'add:joins', this.render);
             this.listenTo(this.model.desire, 'remove:joins', this.render);
             this.setElement($('#game-status-desire').html());

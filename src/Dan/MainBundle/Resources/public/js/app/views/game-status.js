@@ -14,8 +14,6 @@ define([
         },
         events: {
             "click .desire-create": "createDesire",
-            "click .desire-take": "takeDesire",
-            "click .desire-leave": "leaveDesire"
         },
         render: function() {
             var desire = this.model.game.get('desire');
@@ -48,14 +46,6 @@ define([
         },
         createDesire: function() {
             this.model.game.createDesire(this.model.user);
-            return false;
-        },        
-        takeDesire: function() {
-            this.model.game.takeDesire(this.model.user);
-            return false;
-        },
-        leaveDesire: function() {
-            this.model.game.leaveDesire(this.model.user);
             return false;
         }
     });

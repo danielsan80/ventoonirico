@@ -7456,7 +7456,7 @@ define('app/models/desire',[
 ], function(module, Backbone, Game, User, Join, JoinCollection) {
 
     var Desire = Backbone.RelationalModel.extend({
-        urlRoot: module.config().urlRoot.replace('__id__',''),
+        urlRoot: module.config().urlRoot,
         relations: [
             {
                 type: Backbone.HasOne,
@@ -7476,13 +7476,24 @@ define('app/models/desire',[
             }
         ],
         addJoin: function(user) {
-            var join = new Join({user: user, desire: this});
-            join.save();
-            this.get('joins').add(join);
+            var desire = this
+            var join = new Join({user: user, desire: desire});
+            join.save({}, {
+                success:function(e){
+                    desire.get('joins').add(join);
+            }});
+            
         },
         removeJoinById: function(id) {
-            var user = this.get('joins').get(id).get('user');
-            this.removeJoin(user);
+            var joins = this.get('joins');
+            var join = joins.get(id);
+            joins.remove(join);
+            join.destroy();
+            
+            if (!this.get('owner') && !joins.length) {
+                this.get('game').removeDesire(this);
+            }
+            
         },
         removeJoin: function(user) {
             var joins = this.get('joins');
@@ -7492,7 +7503,7 @@ define('app/models/desire',[
                 if (join.get('user').id == user.id) {
                     join.destroy();
                     joins.remove(join);
-                    this.set('joins', joins);
+                    //this.set('joins', joins);
                     break;
                 }
                 i++;
@@ -7507,14 +7518,17 @@ define('app/models/desire',[
             user.notifyCreateDesire();
         },
         leaveDesire: function(user) {
-            if (this.get('owner').id == user.id) {
+                var owner = this.get('owner');
                 this.set('owner', null);
-                user.notifyRemoveDesire();
-            } else {
-                this.removeJoin(user);
-            }
+                owner.notifyRemoveDesire();
+//            if (this.get('owner').id == user.id) {
+//                this.set('owner', null);
+//                user.notifyRemoveDesire();
+//            } else {
+//                this.removeJoin(user);
+//            }
             if (!this.get('joins').length) {
-                this.removeDesire();
+                this.get('game').removeDesire();
             } else {
                 this.save();
             }
@@ -7634,7 +7648,7 @@ define('app/views/desire',[
 
     var DesireView = Backbone.View.extend({
         initialize: function() {
-//            this.listenTo(this.model.desire, 'change', this.render);
+            this.listenTo(this.model.desire, 'change', this.render);
             this.listenTo(this.model.desire, 'add:joins', this.render);
             this.listenTo(this.model.desire, 'remove:joins', this.render);
             this.setElement($('#game-status-desire').html());
@@ -7715,8 +7729,6 @@ define('app/views/game-status',[
         },
         events: {
             "click .desire-create": "createDesire",
-            "click .desire-take": "takeDesire",
-            "click .desire-leave": "leaveDesire"
         },
         render: function() {
             var desire = this.model.game.get('desire');
@@ -7749,14 +7761,6 @@ define('app/views/game-status',[
         },
         createDesire: function() {
             this.model.game.createDesire(this.model.user);
-            return false;
-        },        
-        takeDesire: function() {
-            this.model.game.takeDesire(this.model.user);
-            return false;
-        },
-        leaveDesire: function() {
-            this.model.game.leaveDesire(this.model.user);
             return false;
         }
     });
@@ -7801,7 +7805,7 @@ define('app/views/desired-game',[
                     game: this.model,
                     user: currentUser
                 } 
-           });
+            });
             return this;
         }
     });

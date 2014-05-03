@@ -20,7 +20,7 @@ define([
                     game: this.model,
                     user: currentUser
                 } 
-           });
+            });
             return this;
         }
     });

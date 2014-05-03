@@ -18,7 +18,7 @@
 
 <script type="text/template" id="game-status-desire-owner-player_main">
     <div class="player player-main">
-        <% if (user.id && user.id==owner.id) { %>
+        <% if ((user.id && user.id==owner.id) || {{is_super_admin()}}) { %>
             <a class="desire-leave" href="#">
                 {{player_user_image("owner", 'player_main')}}
             </a>

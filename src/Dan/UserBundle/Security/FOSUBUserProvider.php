@@ -16,6 +16,8 @@ class FOSUBUserProvider extends BaseClass implements UserProviderInterface
     public function connect(UserInterface $user, UserResponseInterface $response)
     {
         $property = $this->getProperty($response);
+        
+        
         $username = $response->getUsername();
  
         //on connect - get the access token and the user ID
@@ -46,7 +48,6 @@ class FOSUBUserProvider extends BaseClass implements UserProviderInterface
     {
         $username = $response->getUsername();
         $email = $response->getEmail();
-        
         
         $service = $response->getResourceOwner()->getName();
         $getServiceId = 'get'.ucfirst($service).'Id';

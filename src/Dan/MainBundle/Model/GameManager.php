@@ -55,29 +55,30 @@ class GameManager
     {
         $repo = $this->getRepository();
         $now = new \DateTime();
-        if (false === $this->cache->fetch('games')) {
-            $games = $this->bgg->getGames();
-            foreach($games as $game) {
-                $storedGame = $repo->findOneByBggId($game->getBggId());
-                if ($storedGame) {
-                    $storedGame->setUpdatedAt();                    
-                    if (!($storedGame->isEquals($game))) {
-                        $storedGame->merge($game);
-                    }
-                    $this->em->persist($storedGame);
-                } else {
-                    $this->em->persist($game);
+        
+        $games = $this->bgg->getGames();
+
+        foreach($games as $game) {
+            $storedGame = $repo->findOneByBggId($game->getBggId());
+            if ($storedGame) {
+                $storedGame->setUpdatedAt();                    
+                if (!($storedGame->isEquals($game))) {
+                    $storedGame->merge($game);
                 }
+                $this->em->persist($storedGame);
+            } else {
+                $this->em->persist($game);
             }
-            $staleGames = $repo->getStaleGames($now);
-            foreach($staleGames as $game) {
-                $this->em->remove($game);
-//                $game->setOwners(array());
-            }
-            $this->em->flush();
-                
-            $this->cache->save('games', $games, 3600/4); //TTL 1h
         }
+        $this->em->flush();
+        
+        $staleGames = $repo->getStaleGames($now);
+        foreach($staleGames as $game) {
+            $this->em->remove($game);
+//                $game->setOwners(array());
+        }
+        $this->em->flush();
+                
     }
 
     

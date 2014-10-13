@@ -26,4 +26,17 @@ class GameRepository extends EntityRepository
                 ->orderBy('d.createdAt','asc');
         return $qb->getQuery()->getResult();
     }
+    
+    public function getStaleGames($date = null)
+    {
+        if (!$date) {
+            $date = new \DateTime('-1 day');
+        }
+        $qb = $this->createQueryBuilder('g')
+                ->where('g.updatedAt < :date')
+                ->setParameter('date', $date)
+                ->orderBy('g.name','asc');
+        
+        return $qb->getQuery()->getResult();
+    }
 }

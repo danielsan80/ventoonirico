@@ -34,13 +34,13 @@ class GameManager
 
     public function getGameByBggId($bggId)
     {
-        $this->refreshGames();
+//        $this->refreshGames();
         return $this->getRepository()->findByBggId($bggId);
     }
     
     public function getAllGames()
     {
-        $this->refreshGames();
+//        $this->refreshGames();
         $games = $this->getRepository()->findAll();
         return $games;
     }
@@ -51,22 +51,28 @@ class GameManager
         return $games;
     }
     
-    private function refreshGames()
+    public function refreshGames()
     {
         $repo = $this->getRepository();
+        $now = new \DateTime();
         if (false === $this->cache->fetch('games')) {
             $games = $this->bgg->getGames();
             foreach($games as $game) {
                 $storedGame = $repo->findOneByBggId($game->getBggId());
                 if ($storedGame) {
-                    
+                    $storedGame->setUpdatedAt();                    
                     if (!($storedGame->isEquals($game))) {
                         $storedGame->merge($game);
-                        $this->em->persist($storedGame);
                     }
+                    $this->em->persist($storedGame);
                 } else {
                     $this->em->persist($game);
                 }
+            }
+            $staleGames = $repo->getStaleGames($now);
+            foreach($staleGames as $game) {
+                $this->em->remove($game);
+//                $game->setOwners(array());
             }
             $this->em->flush();
                 

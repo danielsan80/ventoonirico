@@ -6,6 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Yaml\Yaml;
 use JMS\Serializer\Annotation as Serializer;
 
+use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * Game
  *
@@ -57,7 +60,7 @@ class Game
     
     /**
      * @var array
-     * @ORM\OneToMany(targetEntity="Desire", mappedBy="game")
+     * @ORM\OneToMany(targetEntity="Desire", mappedBy="game", cascade={"all"}, orphanRemoval=true)
      * @ORM\OrderBy({"id" = "DESC"})
      * Serializer\Expose
      * Serializer\Type("ArrayCollection<Dan\MainBundle\Entity\Desire>")
@@ -92,6 +95,22 @@ class Game
      * @Serializer\SerializedName("maxPlayers")
      */
     private $maxPlayers;
+    
+    /**
+     * @var datetime $cratedAt
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    protected $createdAt;
+
+    /**
+     * @var datetime $updatedAt
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    protected $updatedAt;
 
 
     public function __construct($item=null, $options = null)
@@ -350,6 +369,59 @@ class Game
         return $this->maxPlayers;
     }
     
+    
+        
+    /**
+     * Set createdAt
+     *
+     * @param datetime $createdAt
+     * @return Report
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+        
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return datetime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param datetime $updatedAt
+     * @return Report
+     */
+    public function setUpdatedAt($updatedAt=null)
+    {
+        
+        if (!$updatedAt) {
+            $updatedAt = new \DateTime();
+        } 
+        $this->updatedAt = $updatedAt;
+        
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return datetime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+    
+
     
     private function getCompareProperties()
     {

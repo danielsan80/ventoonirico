@@ -147,7 +147,6 @@ class MinkTestCase extends WebTestCase
     
     public function close(Session $session) {
         $session->stop(); 
-        $session->executeScript('window.close();');
     }
     
     public function waitFor(Session $session, $selector, $timeout=30)

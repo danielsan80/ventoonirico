@@ -21,9 +21,11 @@ class RefreshGamesCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getContainer();
+        $logger = $container->get('logger');
 
         $gameManager = $container->get('model.manager.game');
         $gameManager->refreshGames();
+        $logger->info('REFRESH GAMES');
         $output->writeln('DONE');
     }
 }

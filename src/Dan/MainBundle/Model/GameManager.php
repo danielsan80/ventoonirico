@@ -54,7 +54,7 @@ class GameManager
     public function refreshGames()
     {
         $repo = $this->getRepository();
-        $now = new \DateTime();
+        $aDayAgo = new \DateTime('-1 day');
         
         $games = $this->bgg->getGames();
 
@@ -72,7 +72,7 @@ class GameManager
         }
         $this->em->flush();
         
-        $staleGames = $repo->getStaleGames($now);
+        $staleGames = $repo->getStaleGames($aDayAgo);
         foreach($staleGames as $game) {
             $this->em->remove($game);
 //                $game->setOwners(array());

@@ -33,7 +33,7 @@ class GameRepository extends EntityRepository
             $date = new \DateTime('-1 day');
         }
         $qb = $this->createQueryBuilder('g')
-                ->where('g.updatedAt < :date')
+                ->where('g.updatedAt IS NULL OR g.updatedAt < :date')
                 ->setParameter('date', $date)
                 ->orderBy('g.name','asc');
         
